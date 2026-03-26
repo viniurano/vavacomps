@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<meta charset="UTF-8">
+
+<style>
+body {
+  background:#080B12;
+  color:white;
+  font-family:Calibri;
+  margin:0;
+  display:flex;
+  justify-content:center;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  display:grid;
+  grid-template-columns: auto 180px;
+  gap:0px;
+  max-width:1200px;
+  transform: scale(1.32);
+  transform-origin: top center;
+}
+
+th input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-family: Calibri;
+  font-size: 14px;
+  text-align: center;
+  width: 80px;
+  cursor: text;
+}
+
+.btn-clean {
+  background:#1B6C8B;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  margin-bottom:10px;
+  transition:0.2s;
+}
+
+.btn-clean:hover {
+  background:#155a73;
+  transform: scale(1.03);
+}
+
+th input:focus {
+  border-bottom: 1px solid #94a3b8;
+}
+/* ===== TABELA ===== */
+table {
+  border-collapse:separate;
+  border-spacing:0 10px;
+}
+
+th {
+  font-size:14px;
+  color:#94a3b8;
+}
+
+td {
+  padding: 0 8px;
+}
+
+/* MAPAS ATIVOS */
+.map-img {
+  width:200px;
+  border-radius:8px;
+  cursor:grab;
+}
+
+/* SLOTS */
+.slot {
+  width:60px;
+  height:60px;
+  margin:auto;
+}
+
+/* AGENTES NA TABELA */
+.agent-img {
+  width:55px;
+  border-radius:6px;
+  cursor:grab;
+}
+
+/* MAPAS EMBAIXO */
+.maps-pool {
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.map-item {
+  width:200px;
+  height:60px;
+  border-radius:8px;
+  object-fit:cover;
+  cursor:grab;
+}
+
+/* AGENTES LATERAL */
+.agents {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:4px;
+  justify-items:center;
+}
+
+.agent {
+  width:55px;
+  height:55px;
+  border-radius:8px;
+  cursor:grab;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="trash" class="trash">
+  <img src="img/trash.png" style="width:50px;">
+</div>
+
+<button onclick="clearAll()" class="btn-clean">
+  Limpar
+</button>
+
+  <!-- TABELA -->
+  <div>
+    <table id="tabela"></table>
+
+    <h3 style="margin-top:20px;">Mapas</h3>
+    <div id="mapsPool" class="maps-pool"></div>
+  </div>
+
+  <!-- AGENTES -->
+  <div>
+    <h3>Agentes</h3>
+    <div id="agents" class="agents"></div>
+  </div>
+
+</div>
+
+<script>
+const players = ["P1","P2","P3","P4","P5"];
+
+let mapasAtivos = [
+  {nome:"bind", img:"img/maps/bind.png"},
+  {nome:"breeze", img:"img/maps/breeze.png"},
+  {nome:"fracture", img:"img/maps/fracture.png"},
+  {nome:"haven", img:"img/maps/haven.png"},
+  {nome:"lotus", img:"img/maps/lotus.png"},
+  {nome:"pearl", img:"img/maps/pearl.png"},
+  {nome:"split", img:"img/maps/split.png"}
+];
+
+let mapasPool = [
+  {nome:"ascent", img:"img/maps/ascent.png"},
+  {nome:"icebox", img:"img/maps/icebox.png"},
+  {nome:"sunset", img:"img/maps/sunset.png"},
+  {nome:"abyss", img:"img/maps/abyss.png"},
+  {nome:"corrode", img:"img/maps/corrode.png"}
+];
+
+const agentes = [
+  {img:"img/agents/Iso.png"},
+  {img:"img/agents/astra.png"},
+  {img:"img/agents/Breach.png"},
+  {img:"img/agents/Chamber.png"},
+  {img:"img/agents/Jett.png"},
+  {img:"img/agents/Brimstone.png"},
+  {img:"img/agents/fade.png"},
+  {img:"img/agents/Cypher.png"},
+  {img:"img/agents/neon.png"},
+  {img:"img/agents/Clove.png"},
+  {img:"img/agents/Gekko.png"},
+  {img:"img/agents/Deadlock.png"},
+  {img:"img/agents/Phoenix.png"},
+  {img:"img/agents/Harbor.png"},
+  {img:"img/agents/Kayo.png"},
+  {img:"img/agents/Killjoy.png"},
+  {img:"img/agents/Raze.png"},
+  {img:"img/agents/Miks.png"},
+  {img:"img/agents/Skye.png"},
+  {img:"img/agents/Sage.png"},
+  {img:"img/agents/Reyna.png"},
+  {img:"img/agents/Omen.png"},
+  {img:"img/agents/Sova.png"},
+  {img:"img/agents/Veto.png"},
+  {img:"img/agents/Yoru.png"},
+  {img:"img/agents/Viper.png"},
+  {img:"img/agents/Tejo.png"},
+  {img:"img/agents/Vyse.png"},
+  {img:"img/agents/Waylay.png"}
+];
+
+window.exportImage = function(){
+  const tabela = document.getElementById("tabela");
+
+  html2canvas(tabela, {
+    backgroundColor: null, // mantém fundo dark
+    scale: 2 // melhora qualidade
+  }).then(canvas=>{
+    const link = document.createElement("a");
+    link.download = "comp.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+
+function clearAll(){
+  grid = Array(7).fill().map(()=>Array(5).fill(null));
+  render();
+}
+
+let grid = Array(7).fill().map(()=>Array(5).fill(null));
+let dragged = null;
+
+/* ===== RENDER ===== */
+function render() {
+  const tabela = document.getElementById("tabela");
+
+    let html = "<tr><th></th>";
+    players.forEach((p, index)=>{
+  html+=`<th>
+    <input value="${p}" onchange="players[${index}] = this.value">
+  </th>`;
+});
+    html+="</tr>";
+  mapasAtivos.forEach((m,i)=>{
+    html+=`<tr>
+      <td><img src="${m.img}" class="map-img" draggable="true" data-index="${i}"></td>`;
+
+    for(let j=0;j<5;j++){
+      let agent = grid[i][j];
+      html+=`<td><div class="slot" data-i="${i}" data-j="${j}">
+        ${agent ? `<img src="${agent}" class="agent-img" draggable="true">` : ""}
+      </div></td>`;
+    }
+
+    html+="</tr>";
+  });
+
+  tabela.innerHTML = html;
+  addEvents();
+}
+
+/* ===== EVENTS ===== */
+function addEvents() {
+
+  document.querySelectorAll(".map-img").forEach(el=>{
+    el.ondragstart = ()=> dragged = {type:"map", index:el.dataset.index};
+
+    el.ondragover = e=>e.preventDefault();
+
+    el.ondrop = ()=>{
+      if(dragged.type==="map"){
+        let temp = mapasAtivos[el.dataset.index];
+        mapasAtivos[el.dataset.index] = mapasAtivos[dragged.index];
+        mapasAtivos[dragged.index] = temp;
+
+        let tempGrid = grid[el.dataset.index];
+        grid[el.dataset.index] = grid[dragged.index];
+        grid[dragged.index] = tempGrid;
+
+        render();
+      }
+
+      if(dragged.type==="mapPool"){
+        let i = el.dataset.index;
+
+        let old = mapasAtivos[i];
+        mapasAtivos[i] = dragged.data;
+
+        mapasPool = mapasPool.filter(m=>m.nome!==dragged.data.nome);
+        mapasPool.push(old);
+
+        renderPool();
+        render();
+      }
+    };
+  });
+
+  document.querySelectorAll(".slot").forEach(slot=>{
+    slot.ondragover = e=>e.preventDefault();
+
+    slot.ondrop = ()=>{
+      if(dragged.type==="agent"){
+        let i = slot.dataset.i;
+        let j = slot.dataset.j;
+
+        let temp = grid[i][j];
+        grid[i][j] = dragged.src;
+
+        if(dragged.from){
+          grid[dragged.from.i][dragged.from.j] = temp;
+        }
+
+        render();
+      }
+    };
+  });
+
+  document.querySelectorAll(".agent-img").forEach(img=>{
+    img.ondragstart = ()=>{
+      let parent = img.parentElement;
+      dragged = {
+        type:"agent",
+        src:img.src,
+        from:{
+          i:parent.dataset.i,
+          j:parent.dataset.j
+        }
+      };
+    };
+  });
+}
+
+const trash = document.getElementById("trash");
+
+trash.ondragover = e => e.preventDefault();
+
+trash.ondrop = ()=>{
+  if(dragged.type === "agent" && dragged.from){
+    grid[dragged.from.i][dragged.from.j] = null;
+    render();
+  }
+};
+
+/* ===== AGENTES ===== */
+const agentsDiv = document.getElementById("agents");
+
+agentes.forEach(a=>{
+  const el = document.createElement("img");
+  el.src = a.img;
+  el.className="agent";
+  el.draggable=true;
+
+  el.ondragstart = ()=> dragged = {type:"agent", src:a.img};
+
+  agentsDiv.appendChild(el);
+});
+
+/* ===== MAP POOL ===== */
+function renderPool(){
+  const pool = document.getElementById("mapsPool");
+  pool.innerHTML="";
+
+  mapasPool.forEach(m=>{
+    const el = document.createElement("img");
+    el.src = m.img;
+    el.className="map-item";
+    el.draggable=true;
+
+    el.ondragstart = ()=> dragged = {type:"mapPool", data:m};
+
+    pool.appendChild(el);
+  });
+}
+
+renderPool();
+render();
+</script>
+
+</body>
+</html>
