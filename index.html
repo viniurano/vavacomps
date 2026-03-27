@@ -11,17 +11,76 @@ body {
   font-family:Calibri;
   margin:0;
   display:flex;
-  justify-content:center;
+  justify-content:flex-start; /* 👈 muda isso */
+  padding-left:110px; /* 👈 controla o quanto vai pra direita */
+  overflow-x: hidden;
+}
+
+
+.maps-toggle {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+
+  background:#1B6C8B;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  z-index:999;
+}
+#mapsContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  background: #080B12;
+  padding: 15px;
+  border-radius: 12px;
+  
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  
+  display: none;
+  z-index: 999;
+}
+#mapsContainer {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#mapsContainer.active {
+  display: block;
+  opacity: 1;
+}
+
+
+#agentsContainer {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+
+  background: #080B12;
+  padding: 12px;
+  border-radius: 12px;
+
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+
+  z-index: 999;
 }
 
 /* CONTAINER PRINCIPAL */
 .container {
   display:grid;
-  grid-template-columns: auto 180px;
-  gap:0px;
-  max-width:1200px;
-  transform: scale(1.32);
-  transform-origin: top center;
+  grid-template-columns: auto;
+  justify-content: center;
+  gap:10px; /* pequeno espaço controlado */
+  max-width:1400px;
+  width:100%;
 }
 
 th input {
@@ -30,7 +89,7 @@ th input {
   outline: none;
   color: white;
   font-family: Calibri;
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
   width: 80px;
   cursor: text;
@@ -51,7 +110,6 @@ th input {
 
 .btn-clean:hover {
   background:#155a73;
-  transform: scale(1.03);
 }
 
 th input:focus {
@@ -74,21 +132,21 @@ td {
 
 /* MAPAS ATIVOS */
 .map-img {
-  width:200px;
+  width:260px;
   border-radius:8px;
   cursor:grab;
 }
 
 /* SLOTS */
 .slot {
-  width:60px;
-  height:60px;
+  width:75px;
+  height:75px;
   margin:auto;
 }
 
 /* AGENTES NA TABELA */
 .agent-img {
-  width:55px;
+  width:70px;
   border-radius:6px;
   cursor:grab;
 }
@@ -101,8 +159,8 @@ td {
 }
 
 .map-item {
-  width:200px;
-  height:60px;
+  width:260px;
+  height:75px;
   border-radius:8px;
   object-fit:cover;
   cursor:grab;
@@ -110,15 +168,23 @@ td {
 
 /* AGENTES LATERAL */
 .agents {
+  position: fixed; /* 👈 MUDA TUDO */
+  right: 430px;
+  top: 100px;
+
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap:4px;
-  justify-items:center;
-}
 
+  background:#0f172a;
+  padding:10px;
+  border-radius:10px;
+
+  z-index:999;
+}
 .agent {
-  width:55px;
-  height:55px;
+  width:70px;
+  height:70px;
   border-radius:8px;
   cursor:grab;
 }
@@ -126,6 +192,7 @@ td {
 </head>
 
 <body>
+<button onclick="toggleMaps()" class="maps-toggle">Mapas ▼</button>
 
 <div class="container">
 
@@ -141,17 +208,14 @@ td {
   <div>
     <table id="tabela"></table>
 
-    <h3 style="margin-top:20px;">Mapas</h3>
-    <div id="mapsPool" class="maps-pool"></div>
-  </div>
+
+
+<div id="mapsContainer">
+  <div id="mapsPool" class="maps-pool"></div>
+</div>
 
   <!-- AGENTES -->
-  <div>
-    <h3>Agentes</h3>
-    <div id="agents" class="agents"></div>
-  </div>
-
-</div>
+  <div id="agents" class="agents"></div>
 
 <script>
 const players = ["P1","P2","P3","P4","P5"];
@@ -206,20 +270,20 @@ const agentes = [
   {img:"img/agents/Waylay.png"}
 ];
 
-window.exportImage = function(){
-  const tabela = document.getElementById("tabela");
+let mapsVisible = false;
 
-  html2canvas(tabela, {
-    backgroundColor: null, // mantém fundo dark
-    scale: 2 // melhora qualidade
-  }).then(canvas=>{
-    const link = document.createElement("a");
-    link.download = "comp.png";
-    link.href = canvas.toDataURL();
-    link.click();
-  });
+function toggleMaps(){
+  const el = document.getElementById("mapsContainer");
+  const btn = document.querySelector(".maps-toggle");
+
+  el.classList.toggle("active");
+
+  if(el.classList.contains("active")){
+    btn.innerText = "Mapas ▼";
+  } else {
+    btn.innerText = "Mapas ▲";
+  }
 }
-
 function clearAll(){
   grid = Array(7).fill().map(()=>Array(5).fill(null));
   render();
