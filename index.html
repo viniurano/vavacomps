@@ -264,10 +264,14 @@ const agentes = [
   {img:"img/agents/Omen.png"},
   {img:"img/agents/Sova.png"},
   {img:"img/agents/Veto.png"},
-  {img:"img/agents/Yoru.png"},
+  {img:"img/agents/Rush.png"},
   {img:"img/agents/Viper.png"},
   {img:"img/agents/Tejo.png"},
   {img:"img/agents/Vyse.png"},
+  {img:"img/agents/Yoru.png"},
+  {img:null},
+  {img:null},
+  {img:null},
   {img:"img/agents/Waylay.png"}
 ];
 
@@ -408,10 +412,20 @@ trash.ondrop = ()=>{
 const agentsDiv = document.getElementById("agents");
 
 agentes.forEach(a=>{
+
+  if(a.img === null){
+    const vazio = document.createElement("div");
+    vazio.className = "agent";
+    vazio.style.visibility = "hidden";
+
+    agentsDiv.appendChild(vazio);
+    return;
+  }
+
   const el = document.createElement("img");
   el.src = a.img;
-  el.className="agent";
-  el.draggable=true;
+  el.className = "agent";
+  el.draggable = true;
 
   el.ondragstart = ()=> dragged = {type:"agent", src:a.img};
 
