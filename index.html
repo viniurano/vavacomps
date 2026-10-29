@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V2.7.3</title>
+<title>Vava Comps — V3.0 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -476,7 +476,9 @@ button:focus-visible,input:focus-visible{
   <div class="vct-filters">
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
-    <label>Campeonato<select class="select-field" id="proEvent"><option value="all">Todos</option><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option></select></label>
+    <label>Campeonato<select class="select-field" id="proEvent"><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option><option value="custom">Outro campeonato (ID)</option></select></label>
+    <label>ID do evento VLR<input class="field" id="proEventId" type="number" min="1" step="1" value="2766" placeholder="Ex.: 2766"></label>
+    <button type="button" id="proLoadEvent">Buscar campeonato</button>
     <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
   </div>
   <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
@@ -814,37 +816,57 @@ function renderPro(){
 $('proBack').addEventListener('click',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
 CONFIG.mapas.forEach(m=>{const option=document.createElement('option');option.value=m.nome;option.textContent=m.nome[0].toUpperCase()+m.nome.slice(1);$('proMap').appendChild(option)});
 ['proSearch','proYear','proEvent','proMap'].forEach(id=>$(id).addEventListener(id==='proSearch'?'input':'change',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()}));
-async function loadProData(){
- PRO_DATA=[];PRO_ERROR='';PRO_TEAM_IDS.clear();
- const sources=[
-  ['dados/vct_comps_geral.json','Champions','Valorant Champions 2026'],
-  ['dados/gc_championship_2026.json','GC Championship','Game Changers Championship 2026']
- ];
- const loaded=[];
- for(const [path,event,eventLabel] of sources){
-  try{
-   const res=await fetch(path,{cache:'no-store'});
-   if(!res.ok)throw new Error('HTTP '+res.status);
-   const data=await res.json(),teams=Object.values(data.equipes||{}),byGame=new Map();
-   teams.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);t.mapas.forEach(m=>byGame.set(m.game_id+'|'+t.team_id,m))});
-   teams.forEach(t=>{
-    const groups=new Map();
-    t.mapas.forEach(m=>{
-     const map=m.mapa.toLowerCase(),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
-     if(!groups.has(key))groups.set(key,{team:t.nome,map,agents,event,eventLabel,year:'2026',matches:[]});
-     const other=byGame.get(m.game_id+'|'+m.adversario_id)||null;
-     groups.get(key).matches.push({...m,other});
-    });
-    PRO_DATA.push(...groups.values());
-   });
-   loaded.push(eventLabel+' · '+teams.length+' equipes · '+Math.floor(byGame.size/2)+' mapas');
-  }catch(err){console.warn('Dados não disponíveis:',path,err)}
- }
- const notice=document.querySelector('#view-vct .notice');
- if(notice)notice.textContent=(loaded.length?loaded.join(' | '):'Nenhum campeonato carregado')+' · Fonte: VLR.gg';
- if(!loaded.length)PRO_ERROR='Nenhum JSON carregado. Confira a pasta dados e execute o servidor local.';
- renderPro();
+// V3.0: consulta sob demanda na API Python, sem arquivos JSON por campeonato.
+const PRO_API_BASE = 'http://127.0.0.1:8001';
+let proRequestId=0;
+function proIngestEvent(data,event,eventLabel,year){
+ const teams=Object.values(data.equipes||{}),byGame=new Map();
+ teams.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);(t.mapas||[]).forEach(m=>byGame.set(m.game_id+'|'+t.team_id,m))});
+ teams.forEach(t=>{
+  const groups=new Map();
+  (t.mapas||[]).forEach(m=>{
+   const map=m.mapa.toLowerCase(),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
+   if(!groups.has(key))groups.set(key,{team:t.nome,map,agents,event,eventLabel,year,matches:[]});
+   const other=byGame.get(m.game_id+'|'+m.adversario_id)||null;
+   groups.get(key).matches.push({...m,other});
+  });
+  PRO_DATA.push(...groups.values());
+ });
+ return {teams:teams.length,maps:Math.floor(byGame.size/2)};
 }
+async function loadProData(){
+ const eventId=Number($('proEventId').value);
+ if(!Number.isSafeInteger(eventId)||eventId<1){PRO_ERROR='Informe um ID de campeonato válido.';renderPro();return}
+ const requestId=++proRequestId,select=$('proEvent'),event=select.value==='custom'?'Evento '+eventId:select.value;
+ const eventLabel=select.options[select.selectedIndex].textContent.replace('Outro campeonato (ID)','Evento VLR '+eventId);
+ const notice=document.querySelector('#view-vct .notice'),button=$('proLoadEvent');
+ button.disabled=true;PRO_ERROR='';if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
+ try{
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),120000);
+  let response;
+  try{response=await fetch(PRO_API_BASE+'/api/eventos/'+eventId,{signal:controller.signal})}finally{clearTimeout(timeout)}
+  if(!response.ok){let err;try{err=await response.json()}catch{}throw new Error(err?.detail||'HTTP '+response.status)}
+  const data=await response.json();
+  if(requestId!==proRequestId)return;
+  PRO_DATA=[];PRO_TEAM_IDS.clear();proSelectedTeam=null;proSelectedMap=null;
+  const year=$('proYear').value;
+  const counts=proIngestEvent(data,event,eventLabel,year);
+  if(notice)notice.textContent=eventLabel+' · '+counts.teams+' equipes · '+counts.maps+' mapas · Fonte: VLR.gg';
+  if(data.meta?.erros?.length)notice.textContent+=' · '+data.meta.erros.length+' séries com erro';
+ }catch(err){
+  if(requestId!==proRequestId)return;
+  PRO_ERROR='Falha ao consultar a API: '+err.message+'. Confirme que o backend está rodando na porta 8001.';
+  if(notice)notice.textContent=PRO_ERROR;
+ }finally{if(requestId===proRequestId){button.disabled=false;renderPro()}}
+}
+$('proEvent').addEventListener('change',()=>{
+ const v=$('proEvent').value;
+ if(v==='Champions')$('proEventId').value='2766';
+ if(v==='GC Championship')$('proEventId').value='3134';
+});
+$('proLoadEvent').addEventListener('click',loadProData);
+$('proEventId').addEventListener('keydown',e=>{if(e.key==='Enter')loadProData()});
+
 loadProData();
 renderTeamSelect();renderTeams();renderPro();
 renderAgents();renderPool();render();
