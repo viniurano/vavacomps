@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vavacomps 2.0</title>
+<title>Vava Comps — V2.7.3</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -113,9 +113,9 @@ button:focus-visible,input:focus-visible{
   }
 
 #tabela th:not(:first-child){
-   width:82px;
-   min-width:82px
-  }
+  width:115px;
+  min-width:115px;
+}
 
 #tabela th input{
    background:transparent;
@@ -126,8 +126,8 @@ button:focus-visible,input:focus-visible{
    font:18px Calibri,Arial,sans-serif;
    text-align:center;
    width:100%;
-   min-width:70px;
-   max-width:145px;
+   min-width:0px;
+   max-width:none;
    padding:4px
   }
 
@@ -146,7 +146,7 @@ button:focus-visible,input:focus-visible{
   }
 
 #tabela td:not(:first-child){
-   width:82px
+   width:115px
   }
 
 .map-img{
@@ -281,9 +281,10 @@ button:focus-visible,input:focus-visible{
 
 .maps-toggle{
    position:fixed;
-   left:20px;
+   left:calc(var(--sidebar-width, 205px) + 20px);
    bottom:20px;
-   z-index:30
+   z-index:40;
+   transition:left .2s
   }
 
 #mapsContainer{
@@ -299,7 +300,7 @@ button:focus-visible,input:focus-visible{
    border-radius:12px;
    box-shadow:0 0 20px #000a;
    display:none;
-   z-index:20
+   z-index:40
   }
 
 #mapsContainer.active{
@@ -375,10 +376,86 @@ button:focus-visible,input:focus-visible{
      }
   }
 
+
+/* V2.6.1 — botão de mapas acompanha a largura do menu */
+@media(max-width:700px){.maps-toggle{left:84px}}
+/* V2.5 — navegação e equipes */
+.app-shell{display:flex;min-height:100vh;align-items:stretch}
+.sidebar{width:205px;flex:0 0 205px;background:#111b2b;border-right:1px solid #2a3b52;padding:18px 12px;position:sticky;top:0;height:100vh;z-index:35;transition:width .2s,flex-basis .2s}
+.sidebar.collapsed{width:64px;flex-basis:64px}
+.sidebar .maps-nav-btn{margin-top:18px;border-top:1px solid #33465e;border-radius:0;padding-top:17px}
+.sidebar .maps-nav-btn.is-open{background:#30445d;color:white}
+.sidebar.collapsed .maps-nav-btn{padding-left:7px;padding-right:7px;justify-content:center}
+.sidebar-brand{font-weight:800;letter-spacing:1px;font-size:17px;white-space:nowrap;margin:10px 4px 26px}
+.sidebar.collapsed .sidebar-brand{font-size:13px;margin:12px 0 28px;text-align:center}
+.nav-btn{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:transparent;color:#c4d0e0;margin-bottom:7px;padding:13px 12px;white-space:nowrap}
+.nav-btn:hover,.nav-btn.active{background:#30445d;color:white}
+.nav-icon{width:23px;text-align:center;flex:0 0 23px;font-size:18px}
+.sidebar.collapsed .nav-text,.sidebar.collapsed .brand-text,.sidebar.collapsed .sidebar-foot{display:none}
+.sidebar.collapsed .nav-btn{padding:12px 7px;justify-content:center}
+.collapse-btn{background:#26374e;color:white;width:100%;padding:9px;margin-bottom:12px}
+.sidebar-foot{font-size:11px;color:var(--muted);position:absolute;bottom:20px;left:17px}
+.main-content{min-width:0;flex:1;overflow-x:auto}
+.view{display:none;padding:20px 24px}.view.active{display:block}
+#view-editor{padding:0}.view-heading{font-size:25px;margin:0 0 7px}.view-subtitle{color:var(--muted);font-size:14px;margin:0 0 22px}
+.workspace{margin:0 auto}
+.team-bar{display:flex;align-items:center;gap:12px;padding:18px 20px 0;flex-wrap:wrap}
+.team-bar label{color:var(--muted);font-size:13px}
+.field,.select-field{background:#1e293b;color:white;border:1px solid #40536c;border-radius:8px;padding:10px 12px;font:15px Calibri,Arial,sans-serif;min-width:170px}
+.secondary-btn{background:#2d4057;color:white}.secondary-btn:hover{background:#3b516d}
+.panel-card{background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:18px;margin-bottom:14px}
+.panel-card h3{margin:0 0 9px}.muted{color:var(--muted)}
+.form-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;max-width:1050px}
+.team-card{background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:18px}
+.team-card.selected{border-color:#a5c3e4}.team-card h3{margin:0 0 8px}.team-card p{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.team-actions{display:flex;gap:7px;flex-wrap:wrap}.team-actions button{padding:8px 11px;font-size:12px}
+.vct-filters{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.vct-filters label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px}
+.pro-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;max-width:1150px}
+.pro-card{background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:16px}
+.pro-card h3{margin:0 0 6px}.pro-card p{margin:6px 0;font-size:13px;color:var(--muted)}
+.pro-agents{display:flex;flex-wrap:wrap;gap:5px;margin:14px 0}.pro-agent{width:49px;height:49px;border-radius:7px;object-fit:cover;background:var(--agent-bg);border:2px solid #40536c}
+.stats-row{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#253449;border-radius:7px;padding:9px;flex:1;min-width:70px;text-align:center}.stat strong{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
+.match-item{background:#253449;border-radius:8px;padding:10px;margin:8px 0}.match-item summary{cursor:pointer}.match-item p{font-size:12px}
+.notice{background:#253449;color:#c9d9e9;border-radius:8px;padding:12px;font-size:13px;max-width:1150px;margin-bottom:16px}
+.pro-team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-width:1100px;margin-top:14px}
+.pro-team-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;padding:18px;background:#1e293b;border:1px solid #33465e;color:white;border-radius:12px}
+.pro-team-button:hover{background:#30445d}.pro-team-button strong{font-size:18px}.pro-team-button small{display:block;color:#94a3b8;margin-top:6px;font-size:12px}
+#proDetail{max-width:1250px}#proDetail[hidden]{display:none}#proTeamHeading{margin:18px 0}
+.vct-table{border-collapse:separate;border-spacing:0 9px;width:max-content;min-width:790px;table-layout:fixed}
+.vct-table th{padding:8px;color:#94a3b8;border-bottom:2px solid #fff;text-align:center;font-weight:normal;min-width:110px}.vct-table th:first-child{min-width:260px}
+.vct-table td{text-align:center;padding:0 5px}.vct-map{position:relative;border:2px solid transparent;background:none;padding:0;border-radius:9px;display:block;overflow:hidden;width:260px;height:75px}.vct-map:hover,.vct-map.selected{border-color:#73c5ef}.vct-map img{width:100%;height:100%;object-fit:cover;display:block}.vct-map span{position:absolute;left:8px;bottom:5px;color:#fff;text-shadow:0 1px 6px #000;font-weight:bold;font-size:12px}
+.vct-agent{width:70px;height:70px;object-fit:cover;border-radius:7px;background:#253449;border:2px solid #40536c}
+.vct-empty{color:#64748b;font-size:24px}.vct-map-details{margin-top:20px;background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:18px;max-width:1030px}.vct-map-details h3{margin:0 0 5px}.vct-detail-agents{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.vct-detail-agents img{width:45px;height:45px;object-fit:cover;border-radius:6px}
+.vct-history{margin-top:16px}.vct-history details{margin:8px 0;padding:10px;background:#253449;border-radius:8px}.vct-history summary{cursor:pointer}.vct-history p{font-size:13px;color:#cbd5e1}
+@media(max-width:700px){.sidebar{width:64px;flex-basis:64px;padding:12px 6px}.sidebar .nav-text,.sidebar .brand-text,.sidebar .sidebar-foot{display:none}.sidebar .nav-btn{padding:12px 7px;justify-content:center}.sidebar-brand{text-align:center;font-size:13px}.view{padding:16px 12px}.team-bar{padding:12px}.sidebar .collapse-btn{display:none}}
+@media print{.sidebar,.team-bar{display:none!important}.main-content{overflow:visible}.view{padding:0}}
+.pro-player-stats{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}
+.pro-player-stats th,.pro-player-stats td{padding:7px 10px;border-bottom:1px solid #41516a;text-align:left;white-space:nowrap}
+.pro-player-stats th{color:#aabbd0}
+#proTeams[hidden]{display:none}
+.vct-inline-details>td{padding:8px 4px 18px!important;text-align:left!important}
+.vct-inline-details .vct-map-details{max-width:none;margin-top:4px}
+.pro-team-logo{width:56px;height:56px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 2px 6px #0005)}
+.pro-team-button>span{flex:1;min-width:0}.pro-team-button>.pro-team-logo{margin-right:2px}
+.pro-heading-row{display:flex;align-items:center;gap:14px}.pro-heading-row .pro-team-logo{width:76px;height:76px}.pro-heading-row h2{margin:0}
 </style>
 </head>
 
 <body>
+<div class="app-shell">
+<button id="mapsToggle" class="maps-toggle" aria-expanded="false">Mapas ▲</button>
+<nav id="sidebar" class="sidebar" aria-label="Menu principal">
+  <div class="sidebar-brand">V<span class="brand-text">AVA COMPS</span></div>
+  <button class="collapse-btn" id="collapseNav" title="Recolher ou expandir menu">☰</button>
+  <button class="nav-btn active" data-view="editor"><span class="nav-icon">▦</span><span class="nav-text">Minhas Comps</span></button>
+  <button class="nav-btn" data-view="vct"><span class="nav-icon">★</span><span class="nav-text">VCT Comps</span></button>
+  <button class="nav-btn" data-view="teams"><span class="nav-icon">♟</span><span class="nav-text">Equipes</span></button>
+  <div class="sidebar-foot">V2.7.3 · VCT real</div>
+</nav>
+<div class="main-content">
+<section class="view active" id="view-editor">
+<div class="team-bar"><label for="activeTeamSelect">Equipe ativa</label><select id="activeTeamSelect" class="select-field"></select><button id="goTeams" class="secondary-btn">Gerenciar equipes</button></div>
 
 <div class="workspace"><main class="page">
   <div class="toolbar" data-html2canvas-ignore="true">
@@ -390,8 +467,26 @@ button:focus-visible,input:focus-visible{
   <div id="captureArea" class="table-wrap"><table id="tabela"></table></div>
 </main>
 <aside class="agents-panel" data-html2canvas-ignore="true"><p class="agents-title">AGENTES POR CLASSE</p><div id="agents" class="agents"></div></aside></div>
-<button id="mapsToggle" class="maps-toggle" aria-expanded="false">Mapas ▲</button>
+
 <div id="mapsContainer" data-html2canvas-ignore="true"><p class="pool-title">MAPAS RESERVAS — arraste para substituir um mapa ativo</p><div id="mapsPool" class="maps-pool"></div></div>
+</section>
+<section class="view" id="view-vct">
+  <h1 class="view-heading">VCT Comps</h1><p class="view-subtitle">Pesquise equipes profissionais e explore composições por mapa.</p>
+  <div class="notice">Carregando dados profissionais...</div>
+  <div class="vct-filters">
+    <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
+    <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
+    <label>Campeonato<select class="select-field" id="proEvent"><option value="all">Todos</option><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option></select></label>
+    <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
+  </div>
+  <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
+</section>
+<section class="view" id="view-teams">
+  <h1 class="view-heading">Minhas equipes</h1><p class="view-subtitle">Crie equipes personalizadas. Cada uma tem jogadores, mapas e composições independentes.</p>
+  <div class="panel-card"><h3>Nova equipe</h3><div class="form-row"><input id="newTeamName" class="field" placeholder="Nome da equipe" maxlength="60"><button id="createTeam">Criar equipe</button></div><span class="muted">A equipe começa com P1 a P5 e composições vazias.</span></div>
+  <div id="teamList" class="team-grid"></div>
+</section>
+</div></div>
 <script>
 'use strict';
 const CONFIG = {
@@ -453,11 +548,41 @@ function loadState(){
   }catch(err){console.warn('Não foi possível carregar o salvamento:',err)}
   return base;
 }
-let state=loadState();
+const TEAMS_KEY='vava-comps-teams-v25';
+const idForTeam=()=>('team-'+Date.now()+'-'+Math.random().toString(36).slice(2,8));
+function loadTeams(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(TEAMS_KEY));
+    if(saved&&Array.isArray(saved.teams)&&saved.teams.length&&saved.teams.every(t=>t&&t.id&&t.data))return saved;
+  }catch(err){console.warn('Falha ao carregar equipes:',err)}
+  return {activeId:'initial',teams:[{id:'initial',name:'Minha equipe',data:loadState()}]};
+}
+let teamStore=loadTeams();
+let state;
+function currentTeam(){return teamStore.teams.find(t=>t.id===teamStore.activeId)||teamStore.teams[0]}
+function syncState(){teamStore.activeId=currentTeam().id;state=currentTeam().data}
+syncState();
+function saveTeams(){try{localStorage.setItem(TEAMS_KEY,JSON.stringify(teamStore));return true}catch(err){console.warn(err);return false}}
+function switchTeam(id){if(!teamStore.teams.some(t=>t.id===id))return;teamStore.activeId=id;syncState();saveTeams();render();renderPool();renderTeams();renderTeamSelect();notify('Equipe alterada')}
+function renderTeamSelect(){const el=$('activeTeamSelect');el.replaceChildren();teamStore.teams.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;el.appendChild(o)});el.value=teamStore.activeId}
+function renderTeams(){
+ const list=$('teamList');list.replaceChildren();
+ teamStore.teams.forEach(team=>{
+  const card=document.createElement('article');card.className='team-card'+(team.id===teamStore.activeId?' selected':'');
+  const title=document.createElement('h3');title.textContent=team.name;card.appendChild(title);
+  const detail=document.createElement('p');detail.textContent=team.data.players.join(' · ');card.appendChild(detail);
+  const actions=document.createElement('div');actions.className='team-actions';
+  const open=document.createElement('button');open.textContent=team.id===teamStore.activeId?'Equipe ativa':'Selecionar';open.disabled=team.id===teamStore.activeId;open.onclick=()=>{switchTeam(team.id);showView('editor')};actions.appendChild(open);
+  const rename=document.createElement('button');rename.className='secondary-btn';rename.textContent='Renomear';rename.onclick=()=>{const name=prompt('Novo nome da equipe:',team.name);if(name===null)return;const n=name.trim();if(!n)return alert('Informe um nome.');team.name=n;saveTeams();renderTeams();renderTeamSelect()};actions.appendChild(rename);
+  const del=document.createElement('button');del.className='secondary-btn';del.textContent='Excluir';del.disabled=teamStore.teams.length===1;del.onclick=()=>{if(!confirm('Excluir a equipe "'+team.name+'" e todas as composições dela?'))return;teamStore.teams=teamStore.teams.filter(t=>t.id!==team.id);syncState();saveTeams();renderTeams();renderTeamSelect();render();renderPool()};actions.appendChild(del);
+  card.appendChild(actions);list.appendChild(card);
+ });
+}
+function showView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));$('mapsToggle').style.display=name==='editor'?'block':'none';if(name!=='editor'){$('mapsContainer').classList.remove('active');$('mapsToggle').textContent='Mapas ▲'}if(name==='teams')renderTeams()}
 let dragged=null;
 let statusTimer;
 function notify(message){$('status').textContent=message;clearTimeout(statusTimer);statusTimer=setTimeout(()=>$('status').textContent='',2500)}
-function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));notify('Salvo automaticamente')}catch(err){notify('Não foi possível salvar neste navegador');console.warn(err)}}
+function save(){if(saveTeams())notify('Salvo automaticamente');else notify('Não foi possível salvar neste navegador')}
 function makeImage(src,className,alt){const img=document.createElement('img');img.src=src;img.className=className;img.alt=alt;img.draggable=true;return img}
 function render(){
   const table=$('tabela');table.replaceChildren();
@@ -563,6 +688,165 @@ $('exportBtn').addEventListener('click',async()=>{
   }catch(err){console.error(err);notify('Erro na imagem: '+err.message)}
   finally{btn.disabled=false;btn.textContent='Copiar composição'}
 });
+
+// V2.5 — navegação, equipes e demonstração da biblioteca VCT.
+document.querySelectorAll('.nav-btn[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+$('collapseNav').addEventListener('click',()=>{const collapsed=$('sidebar').classList.toggle('collapsed');document.documentElement.style.setProperty('--sidebar-width',collapsed?'64px':'205px')});
+$('goTeams').addEventListener('click',()=>showView('teams'));
+$('activeTeamSelect').addEventListener('change',e=>switchTeam(e.target.value));
+$('createTeam').addEventListener('click',()=>{
+ const input=$('newTeamName'),name=input.value.trim();if(!name)return alert('Digite o nome da equipe.');
+ const team={id:idForTeam(),name,data:defaultState()};teamStore.teams.push(team);teamStore.activeId=team.id;syncState();
+ if(!saveTeams()){teamStore.teams.pop();syncState();return alert('Não foi possível salvar a equipe.')}input.value='';renderTeams();renderTeamSelect();render();renderPool();showView('editor');notify('Equipe criada: '+name);
+});
+$('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam').click()});
+
+// V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
+let proSelectedTeam=null,proSelectedMap=null,PRO_DATA=[],PRO_ERROR='';
+const PRO_TEAM_IDS=new Map();
+function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=()=>{img.style.display='none'};return img;}
+const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
+const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
+const proDate=s=>{const a=String(s||'').split('-');return a.length===3?a[2]+'/'+a[1]+'/'+a[0]:s};
+function proEl(tag,cls,txt){
+ const el=document.createElement(tag);if(cls)el.className=cls;if(txt!==undefined)el.textContent=txt;return el;
+}
+function proAgents(parent,names,cls='vct-agent'){
+ names.forEach(n=>{const file=proAgentName(n),a=decorateAgent(makeImage(agentSrc(file),cls,n),agentSrc(file));a.draggable=false;a.title=n;parent.appendChild(a)});
+}
+function proFiltered(){
+ const q=$('proSearch').value.trim().toLowerCase(),y=$('proYear').value,e=$('proEvent').value,m=$('proMap').value;
+ return PRO_DATA.filter(c=>c.team.toLowerCase().includes(q)&&c.year===y&&(e==='all'||c.event===e)&&(m==='all'||c.map===m));
+}
+function proSide(match,side){
+ const w=Number(match['rounds_'+side]||0),other=match.other;
+ const lost=other?Number(other['rounds_'+(side==='ataque'?'defesa':'ataque')]||0):0;
+ return {w,lost,total:w+lost};
+}
+function proStatsRow(parent,items){
+ const row=proEl('div','stats-row');
+ items.forEach(([label,value])=>{const s=proEl('div','stat');s.append(proEl('strong','',value),proEl('span','',label));row.appendChild(s)});
+ parent.appendChild(row);
+}
+function renderPro(){
+ const entries=proFiltered(),names=[...new Set(entries.map(c=>c.team))].sort((a,b)=>a.localeCompare(b));
+ const grid=$('proTeams'),detail=$('proDetail');grid.replaceChildren();
+ if(proSelectedTeam&&!names.includes(proSelectedTeam)){proSelectedTeam=null;proSelectedMap=null}
+ grid.hidden=!!proSelectedTeam;detail.hidden=!proSelectedTeam;
+ if(!proSelectedTeam){
+  if(PRO_ERROR)grid.appendChild(proEl('p','muted',PRO_ERROR));
+  else if(!names.length)grid.appendChild(proEl('p','muted',$('proEvent').value==='GC Championship'&&!PRO_DATA.some(c=>c.event==='GC Championship')?'GC ainda não coletado: execute python scripts/coletar_gc.py':'Nenhuma equipe encontrada com esses filtros.'));
+  names.forEach(name=>{
+   const comps=entries.filter(c=>c.team===name),b=proEl('button','pro-team-button');
+   b.type='button';const left=proEl('span');
+   b.appendChild(proLogo(name));
+   left.append(proEl('strong','',name),proEl('small','',comps.reduce((n,c)=>n+c.matches.length,0)+' mapas jogados · '+comps.length+' composições'));
+   b.append(left,proEl('span','','›'));b.onclick=()=>{proSelectedTeam=name;proSelectedMap=null;renderPro()};grid.appendChild(b);
+  });return;
+ }
+ const comps=entries.filter(c=>c.team===proSelectedTeam),heading=$('proTeamHeading');heading.replaceChildren();
+ const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow,proEl('p','muted','Clique em uma composição para consultar partidas, jogadores e estatísticas reais.'));
+ const table=$('proTable');table.replaceChildren();
+ const head=proEl('thead'),trh=proEl('tr');trh.appendChild(proEl('th','','Mapa / partidas'));
+ // Jogadores são apresentados conforme a partida mais recente da equipe.
+ const recent=comps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data))[0];
+ const roster=recent?recent.jogadores.map(p=>p.nome):CONFIG.jogadores;
+ roster.forEach(n=>trh.appendChild(proEl('th','',n)));head.appendChild(trh);table.appendChild(head);
+ const body=proEl('tbody');let selectedRow=null;
+ const maps=[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
+ maps.forEach(mapName=>{
+  const choices=comps.filter(c=>c.map===mapName).sort((a,b)=>b.matches.length-a.matches.length);
+  choices.forEach((c,idx)=>{
+   const row=proEl('tr'),cell=proEl('td'),btn=proEl('button','vct-map'+(proSelectedMap===c?' selected':''));
+   btn.type='button';btn.title='Abrir '+mapName+' · '+c.matches.length+' partidas';
+   const map=CONFIG.mapas.find(m=>m.nome===mapName);
+   if(map){const img=makeImage(mapSrc(map),'',mapName);img.draggable=false;btn.appendChild(img)}
+   btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'+(choices.length>1?' · #'+(idx+1):'')));
+   btn.onclick=()=>{proSelectedMap=c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
+   const players=c.matches[c.matches.length-1].jogadores;
+   roster.forEach(name=>{
+    const td=proEl('td'),player=players.find(p=>p.nome===name);
+    const agent=player?.agente;
+    if(agent)proAgents(td,[agent]);else td.appendChild(proEl('span','vct-empty','—'));
+    row.appendChild(td);
+   });body.appendChild(row);if(proSelectedMap===c)selectedRow=row;
+  });
+ });table.appendChild(body);
+ const panel=$('proMapDetails');panel.replaceChildren();
+ if(!proSelectedMap||!comps.includes(proSelectedMap))return;
+ const c=proSelectedMap,wrap=proEl('div','vct-map-details');
+ wrap.append(proEl('h3','',c.map.toUpperCase()+' · '+c.eventLabel),proEl('p','muted','Agentes: '+c.agents.join(' · ')));
+ const wins=c.matches.filter(m=>m.vitoria).length,played=c.matches.length;
+ const tr=c.matches.reduce((s,m)=>{const r=proSide(m,'ataque');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
+ const ct=c.matches.reduce((s,m)=>{const r=proSide(m,'defesa');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
+ proStatsRow(wrap,[['Partidas',String(played)],['Vitórias / derrotas',wins+'V / '+(played-wins)+'D'],['WR mapas',proPct(wins,played)],['WR TR',proPct(tr.w,tr.total)],['WR CT',proPct(ct.w,ct.total)]]);
+ const history=proEl('div','vct-history');history.appendChild(proEl('h3','','Histórico de mapas ('+played+')'));
+ [...c.matches].sort((a,b)=>b.data.localeCompare(a.data)).forEach(m=>{
+  const details=proEl('details'),summary=proEl('summary','',
+   proDate(m.data)+' · vs '+m.adversario+' · '+m.placar.join('–')+' · '+(m.vitoria?'Vitória':'Derrota'));
+  details.appendChild(summary);
+  const tr=proSide(m,'ataque'),ct=proSide(m,'defesa');
+  details.appendChild(proEl('p','','TR: '+tr.w+'–'+tr.lost+' ('+proPct(tr.w,tr.total)+') · CT: '+ct.w+'–'+ct.lost+' ('+proPct(ct.w,ct.total)+')'));
+  details.appendChild(proEl('p','','Composição adversária:'));
+  const opponents=proEl('div','vct-detail-agents');
+  if(m.other)proAgents(opponents,m.other.composicao,'');
+  else opponents.textContent='Não disponível';
+  details.appendChild(opponents);
+  const statsTable=proEl('table','pro-player-stats');
+  const hr=proEl('tr');['Jogador','Agente','K','D','A','ACS','KAST','Rating'].forEach(x=>hr.appendChild(proEl('th','',x)));
+  statsTable.appendChild(hr);
+  m.jogadores.forEach(p=>{
+   const st=p.stats?.overall||{},r=proEl('tr');
+   [p.nome,p.agente,st.kills??'—',st.deaths??'—',st.assists??'—',st.acs??'—',st.kast==null?'—':Math.round(st.kast*100)+'%',st.rating??'—'].forEach(v=>r.appendChild(proEl('td','',String(v))));
+   statsTable.appendChild(r);
+  });
+  const scroll=proEl('div','table-wrap');scroll.appendChild(statsTable);details.appendChild(scroll);
+  history.appendChild(details);
+ });
+ wrap.appendChild(history);
+ if(selectedRow){
+  const detailRow=proEl('tr','vct-inline-details');
+  const detailCell=proEl('td');detailCell.colSpan=1+roster.length;
+  detailCell.appendChild(wrap);detailRow.appendChild(detailCell);
+  selectedRow.after(detailRow);
+ }else panel.appendChild(wrap);
+}
+$('proBack').addEventListener('click',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
+CONFIG.mapas.forEach(m=>{const option=document.createElement('option');option.value=m.nome;option.textContent=m.nome[0].toUpperCase()+m.nome.slice(1);$('proMap').appendChild(option)});
+['proSearch','proYear','proEvent','proMap'].forEach(id=>$(id).addEventListener(id==='proSearch'?'input':'change',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()}));
+async function loadProData(){
+ PRO_DATA=[];PRO_ERROR='';PRO_TEAM_IDS.clear();
+ const sources=[
+  ['dados/vct_comps_geral.json','Champions','Valorant Champions 2026'],
+  ['dados/gc_championship_2026.json','GC Championship','Game Changers Championship 2026']
+ ];
+ const loaded=[];
+ for(const [path,event,eventLabel] of sources){
+  try{
+   const res=await fetch(path,{cache:'no-store'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   const data=await res.json(),teams=Object.values(data.equipes||{}),byGame=new Map();
+   teams.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);t.mapas.forEach(m=>byGame.set(m.game_id+'|'+t.team_id,m))});
+   teams.forEach(t=>{
+    const groups=new Map();
+    t.mapas.forEach(m=>{
+     const map=m.mapa.toLowerCase(),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
+     if(!groups.has(key))groups.set(key,{team:t.nome,map,agents,event,eventLabel,year:'2026',matches:[]});
+     const other=byGame.get(m.game_id+'|'+m.adversario_id)||null;
+     groups.get(key).matches.push({...m,other});
+    });
+    PRO_DATA.push(...groups.values());
+   });
+   loaded.push(eventLabel+' · '+teams.length+' equipes · '+Math.floor(byGame.size/2)+' mapas');
+  }catch(err){console.warn('Dados não disponíveis:',path,err)}
+ }
+ const notice=document.querySelector('#view-vct .notice');
+ if(notice)notice.textContent=(loaded.length?loaded.join(' | '):'Nenhum campeonato carregado')+' · Fonte: VLR.gg';
+ if(!loaded.length)PRO_ERROR='Nenhum JSON carregado. Confira a pasta dados e execute o servidor local.';
+ renderPro();
+}
+loadProData();
+renderTeamSelect();renderTeams();renderPro();
 renderAgents();renderPool();render();
 </script>
 </body>
