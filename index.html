@@ -1,457 +1,569 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valorant — Composições V2.4</title>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
-body {
-  background:#080B12;
-  color:white;
-  font-family:Calibri;
+:root {
+   color-scheme:dark;
+   --bg:#010612;
+   --panel:#1E293B;
+   --blue:#FAFBFF;
+   --text:#FAFBFF;
+   --muted:#94a3b8;
+   --agent-bg:#253449;
+   --duelista:#A83D4B;
+   --controlador:#452a66;
+   --iniciador:#4285B8;
+   --sentinela:#D5B34E
+ }
+
+
+*{box-sizing:border-box}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Calibri,Arial,sans-serif;
   margin:0;
-  display:flex;
-  justify-content:flex-start; 
-  padding-left:110px; 
-  overflow-x: hidden;
+  min-height:100vh;
+  zoom:1.15;
 }
 
+.workspace{
+   display:flex;
+   flex-direction:row;
+   flex-wrap:nowrap;
+   align-items:flex-start;
+   justify-content:flex-start;
+   gap:10px;padding:20px 16px;
+   width:max-content;
+   max-width:none;
+   margin:0 auto
+  }
 
-.maps-toggle {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
+.page{
+   padding:0;
+   flex:0 0 auto;
+   min-width:0
+  }
 
-  background:#1B6C8B;
-  color:white;
-  border:none;
-  padding:10px 16px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  z-index:999;
-}
-#mapsContainer {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  
-  background: #080B12;
-  padding: 15px;
-  border-radius: 12px;
-  
-  box-shadow: 0 0 20px rgba(0,0,0,0.6);
-  
-  display: none;
-  z-index: 999;
-}
-#mapsContainer {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
+.toolbar{
+   display:flex;
+   flex-wrap:wrap;
+   gap:9px;
+   margin-bottom:14px;
+   align-items:center
+  }
 
-#mapsContainer.active {
-  display: block;
-  opacity: 1;
-}
+button{
+   background:var(--blue);
+   color:var(--bg);
+   border:0;
+   padding:10px 16px;
+   border-radius:9px;
+   font-size:14px;
+   font-weight:600;
+   cursor:pointer
+  }
 
 
-#agentsContainer {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
+button:hover{
+   background:#dbe4f1
+  }
 
-  background: #080B12;
-  padding: 12px;
-  border-radius: 12px;
+button:focus-visible,input:focus-visible{
+   outline:2px solid #80cfff;
+   outline-offset:2px
+  }
 
-  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+#status{
+   color:var(--muted);
+   font-size:12px
+  }
 
-  z-index: 999;
-}
+.table-wrap{
+   max-width:100%;
+   overflow-x:auto
+  }
 
-/* CONTAINER PRINCIPAL */
-.container {
-  display:grid;
-  grid-template-columns: auto;
-  justify-content: center;
-  gap:10px; 
-  max-width:1400px;
-  width:100%;
-}
+#tabela{
+   border-collapse:separate;
+   border-spacing:0 9px;
+   table-layout:fixed;
+   width:max-content;
+   min-width:0;
+   border-bottom:2px solid white;
+   padding-bottom:9px
+  }
 
-th input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-family: Calibri;
-  font-size: 18px;
-  text-align: center;
-  width: 80px;
-  cursor: text;
-}
+#tabela thead th{
+   border-bottom:2px solid white;
+   padding:0 8px 12px;
+   color:var(--muted);
+   font-size:14px
+  }
 
-.btn-clean {
-  background:#1B6C8B;
-  color:white;
-  border:none;
-  padding:10px 18px;
-  border-radius:10px;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-  margin-bottom:10px;
-  transition:0.2s;
-}
+#tabela th:first-child{
+   width:260px;
+   min-width:260px
+  }
 
-.btn-clean:hover {
-  background:#155a73;
-}
+#tabela th:not(:first-child){
+   width:82px;
+   min-width:82px
+  }
 
-th input:focus {
-  border-bottom: 1px solid #94a3b8;
-}
-/* ===== TABELA ===== */
-table {
-  border-collapse:separate;
-  border-spacing:0 10px;
-}
+#tabela th input{
+   background:transparent;
+   border:0;
+   border-radius:0;
+   border-bottom:1px solid transparent;
+   color:white;
+   font:18px Calibri,Arial,sans-serif;
+   text-align:center;
+   width:100%;
+   min-width:70px;
+   max-width:145px;
+   padding:4px
+  }
 
-th {
-  font-size:14px;
-  color:#94a3b8;
-}
+#tabela th input:focus{
+   outline:none;
+   border-bottom-color:var(--muted)
+  }
 
-td {
-  padding: 0 8px;
-}
+#tabela td{
+   padding:0 3px;
+   text-align:center
+  }
 
-/* MAPAS ATIVOS */
-.map-img {
-  width:260px;
-  border-radius:8px;
-  cursor:grab;
-}
+#tabela td:first-child{
+   padding:0 4px 0 0
+  }
 
-/* SLOTS */
-.slot {
-  width:75px;
-  height:75px;
-  margin:auto;
-}
+#tabela td:not(:first-child){
+   width:82px
+  }
 
-/* AGENTES NA TABELA */
-.agent-img {
-  width:70px;
-  border-radius:6px;
-  cursor:grab;
-}
+.map-img{
+   display:block;width:260px;
+   max-width:100%;
+   height:75px;
+   object-fit:cover;
+   object-position:center;
+   border-radius:8px;
+   cursor:grab
+  }
 
-/* MAPAS EMBAIXO */
-.maps-pool {
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-}
+.slot{
+   width:75px;
+   height:75px;
+   margin:auto;
+   border-radius:8px;
+   display:flex;
+   align-items:center;
+   justify-content:center
+  }
 
-.map-item {
-  width:260px;
-  height:75px;
-  border-radius:8px;
-  object-fit:cover;
-  cursor:grab;
-}
+.slot.drag-over{
+   background:#1B6C8B77;
+   outline:2px dashed #62bce0;
+   outline-offset:0
+  }
 
-/* AGENTES LATERAL */
-.agents {
-  position: fixed; 
-  right: 430px;
-  top: 100px;
 
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:4px;
+.map-img.map-drop-target{
+   outline:3px solid #5cd5ff;
+   outline-offset:2px;
+   filter:brightness(1.35);
+   box-shadow:0 0 18px #27baffaa
+  }
 
-  background:#0f172a;
-  padding:10px;
-  border-radius:10px;
+.map-item.dragging-map,.map-img.dragging-map{
+   opacity:.5
+  }
 
-  z-index:999;
-}
-.agent {
-  width:70px;
-  height:70px;
-  border-radius:8px;
-  cursor:grab;
-}
+
+#captureArea{
+   width:max-content;
+   max-width:100%;
+   overflow-x:auto
+  }
+
+#exportBtn:disabled{
+   opacity:.6;
+   cursor:wait
+  }
+
+.agent-img{
+   width:70px;
+   height:70px;
+   object-fit:cover;
+   border-radius:7px;
+   cursor:grab;
+   background:var(--agent-bg);
+   border:2px solid transparent
+  }
+
+.agents-panel{
+   position:sticky;
+   top:16px;
+   flex:0 0 318px;
+   width:318px;
+   max-height:calc(100vh - 32px);
+   overflow:auto;
+   background:var(--panel);
+   padding:10px;
+   border-radius:12px;
+   box-shadow:0 0 20px #0009;
+   z-index:10
+  }
+
+.agents-title{
+   text-align:center;
+   font-size:13px;
+   color:var(--muted);
+   margin:0 0 8px
+  }
+
+.agents{
+   display:grid;
+   grid-template-columns:repeat(4,minmax(0,1fr));
+   gap:4px
+  }
+ 
+.agent-column{
+   display:flex;
+   flex-direction:column;
+   align-items:center;
+   gap:4px;min-width:0
+  }
+
+.class-label{
+   font-size:10px;
+   text-align:center;
+   color:#cbd5e1;
+   min-height:15px;
+   white-space:nowrap
+  }
+
+.agent{
+   display:block;
+   width:68px;
+   height:68px;
+   max-width:100%;
+   object-fit:cover;
+   border-radius:8px;
+   cursor:grab;
+   background:var(--agent-bg);
+   border:2px solid transparent
+  }
+
+.agent.role-duelista,.agent-img.role-duelista{
+   border-color:var(--duelista)
+  }
+
+.agent.role-controlador,.agent-img.role-controlador{
+   border-color:var(--controlador)
+  }
+
+.agent.role-iniciador,.agent-img.role-iniciador{
+   border-color:var(--iniciador)
+  }
+
+.agent.role-sentinela,.agent-img.role-sentinela{
+   border-color:var(--sentinela)
+  }
+
+.maps-toggle{
+   position:fixed;
+   left:20px;
+   bottom:20px;
+   z-index:30
+  }
+
+#mapsContainer{
+   position:fixed;
+   bottom:72px;
+   left:50%;
+   transform:translateX(-50%);
+   width:min(920px,calc(100vw - 30px));
+   max-height:min(65vh,520px);
+   overflow:auto;
+   background:var(--panel);
+   padding:14px;
+   border-radius:12px;
+   box-shadow:0 0 20px #000a;
+   display:none;
+   z-index:20
+  }
+
+#mapsContainer.active{
+   display:block
+  }
+
+.maps-pool{
+   display:grid;
+   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+   gap:10px
+  }
+
+.map-item{
+   width:100%;
+   height:75px;
+   object-fit:cover;
+   object-position:center;
+   background:#080B12;
+   border-radius:8px;
+   cursor:grab
+  }
+
+.pool-title{
+   font-size:13px;
+   color:var(--muted);
+   margin:0 0 10px
+  }
+
+.trash{
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   width:50px;
+   height:43px;
+   border:1px dashed #617083;
+   border-radius:8px
+  }
+
+.trash img{
+   width:35px;
+   height:35px;
+   object-fit:contain
+  }
+
+.trash.drag-over{
+   background:#7f1d1d
+  }
+
+@media(max-width:700px){
+   .workspace{
+      padding:12px 8px;
+      gap:10px;
+      margin:0
+     }
+   .agents-panel{
+      position:static;
+      max-height:none
+     }
+  }
+
+@media print{
+   .toolbar,.agents-panel,.maps-toggle,#mapsContainer{
+      display:none!important
+     }
+   .workspace{
+      padding:0
+     }
+   .page{
+      padding:0
+     }
+   body{
+      background:#080B12
+     }
+  }
+
 </style>
 </head>
 
 <body>
-<button onclick="toggleMaps()" class="maps-toggle">Mapas ▼</button>
 
-<div class="container">
-
-<div id="trash" class="trash">
-  <img src="img/trash.png" style="width:50px;">
-</div>
-
-<button onclick="clearAll()" class="btn-clean">
-  Limpar
-</button>
-
-  <!-- TABELA -->
-  <div>
-    <table id="tabela"></table>
-
-
-
-<div id="mapsContainer">
-  <div id="mapsPool" class="maps-pool"></div>
-</div>
-
-  <!-- AGENTES -->
-  <div id="agents" class="agents"></div>
-
+<div class="workspace"><main class="page">
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button id="clearBtn">Limpar agentes</button>
+    <button id="exportBtn">Copiar composição</button>
+    <div id="trash" class="trash" title="Arraste um agente selecionado aqui para removê-lo"><img src="img/trash.png" alt="Lixeira"></div>
+    <span id="status" aria-live="polite"></span>
+  </div>
+  <div id="captureArea" class="table-wrap"><table id="tabela"></table></div>
+</main>
+<aside class="agents-panel" data-html2canvas-ignore="true"><p class="agents-title">AGENTES POR CLASSE</p><div id="agents" class="agents"></div></aside></div>
+<button id="mapsToggle" class="maps-toggle" aria-expanded="false">Mapas ▲</button>
+<div id="mapsContainer" data-html2canvas-ignore="true"><p class="pool-title">MAPAS RESERVAS — arraste para substituir um mapa ativo</p><div id="mapsPool" class="maps-pool"></div></div>
 <script>
-const players = ["P1","P2","P3","P4","P5"];
-
-let mapasAtivos = [
-  {nome:"bind", img:"img/maps/bind.png"},
-  {nome:"corrode", img:"img/maps/corrode.png"},
-  {nome:"sunset", img:"img/maps/sunset.png"},
-  {nome:"haven", img:"img/maps/haven.png"},
-  {nome:"summit", img:"img/maps/summit3.png"},
-  {nome:"abyss", img:"img/maps/abyss.png"},
-  {nome:"lotus", img:"img/maps/lotus.png"}
-];
-
-let mapasPool = [
-  {nome:"ascent", img:"img/maps/ascent.png"},
-  {nome:"breeze", img:"img/maps/breeze.png"},
-  {nome:"fracture", img:"img/maps/fracture.png"},
-  {nome:"icebox", img:"img/maps/icebox.png"},
-  {nome:"pearl", img:"img/maps/pearl.png"},
-  {nome:"split", img:"img/maps/split.png"}
-];
-
-const agentes = [
-  {img:"img/agents/Iso.png"},
-  {img:"img/agents/astra.png"},
-  {img:"img/agents/Breach.png"},
-  {img:"img/agents/Chamber.png"},
-  {img:"img/agents/Jett.png"},
-  {img:"img/agents/Brimstone.png"},
-  {img:"img/agents/fade.png"},
-  {img:"img/agents/Cypher.png"},
-  {img:"img/agents/neon.png"},
-  {img:"img/agents/Clove.png"},
-  {img:"img/agents/Gekko.png"},
-  {img:"img/agents/Deadlock.png"},
-  {img:"img/agents/Phoenix.png"},
-  {img:"img/agents/Harbor.png"},
-  {img:"img/agents/Kayo.png"},
-  {img:"img/agents/Killjoy.png"},
-  {img:"img/agents/Raze.png"},
-  {img:"img/agents/Miks.png"},
-  {img:"img/agents/Skye.png"},
-  {img:"img/agents/Sage.png"},
-  {img:"img/agents/Reyna.png"},
-  {img:"img/agents/Omen.png"},
-  {img:"img/agents/Sova.png"},
-  {img:"img/agents/Veto.png"},
-  {img:"img/agents/Rush.png"},
-  {img:"img/agents/Viper.png"},
-  {img:"img/agents/Tejo.png"},
-  {img:"img/agents/Vyse.png"},
-  {img:"img/agents/Waylay.png"},
-  {img:null},
-  {img:null},
-  {img:null},
-  {img:"img/agents/Yoru.png"}
-];
-
-let mapsVisible = false;
-
-function toggleMaps(){
-  const el = document.getElementById("mapsContainer");
-  const btn = document.querySelector(".maps-toggle");
-
-  el.classList.toggle("active");
-
-  if(el.classList.contains("active")){
-    btn.innerText = "Mapas ▼";
-  } else {
-    btn.innerText = "Mapas ▲";
-  }
-}
-function clearAll(){
-  grid = Array(7).fill().map(()=>Array(5).fill(null));
-  render();
-}
-
-let grid = Array(7).fill().map(()=>Array(5).fill(null));
-let dragged = null;
-
-/* ===== RENDER ===== */
-function render() {
-  const tabela = document.getElementById("tabela");
-
-    let html = "<tr><th></th>";
-    players.forEach((p, index)=>{
-  html+=`<th>
-    <input value="${p}" onchange="players[${index}] = this.value">
-  </th>`;
-});
-    html+="</tr>";
-  mapasAtivos.forEach((m,i)=>{
-    html+=`<tr>
-      <td><img src="${m.img}" class="map-img" draggable="true" data-index="${i}"></td>`;
-
-    for(let j=0;j<5;j++){
-      let agent = grid[i][j];
-      html+=`<td><div class="slot" data-i="${i}" data-j="${j}">
-        ${agent ? `<img src="${agent}" class="agent-img" draggable="true">` : ""}
-      </div></td>`;
-    }
-
-    html+="</tr>";
-  });
-
-  tabela.innerHTML = html;
-  addEvents();
-}
-
-/* ===== EVENTS ===== */
-function addEvents() {
-
-  document.querySelectorAll(".map-img").forEach(el=>{
-    el.ondragstart = ()=> dragged = {type:"map", index:el.dataset.index};
-
-    el.ondragover = e=>e.preventDefault();
-
-    el.ondrop = ()=>{
-      if(dragged.type==="map"){
-        let temp = mapasAtivos[el.dataset.index];
-        mapasAtivos[el.dataset.index] = mapasAtivos[dragged.index];
-        mapasAtivos[dragged.index] = temp;
-
-        let tempGrid = grid[el.dataset.index];
-        grid[el.dataset.index] = grid[dragged.index];
-        grid[dragged.index] = tempGrid;
-
-        render();
-      }
-
-      if(dragged.type==="mapPool"){
-        let i = el.dataset.index;
-
-        let old = mapasAtivos[i];
-        mapasAtivos[i] = dragged.data;
-
-        mapasPool = mapasPool.filter(m=>m.nome!==dragged.data.nome);
-        mapasPool.push(old);
-
-        renderPool();
-        render();
-      }
-    };
-  });
-
-  document.querySelectorAll(".slot").forEach(slot=>{
-    slot.ondragover = e=>e.preventDefault();
-
-    slot.ondrop = ()=>{
-      if(dragged.type==="agent"){
-        let i = slot.dataset.i;
-        let j = slot.dataset.j;
-
-        let temp = grid[i][j];
-        grid[i][j] = dragged.src;
-
-        if(dragged.from){
-          grid[dragged.from.i][dragged.from.j] = temp;
-        }
-
-        render();
-      }
-    };
-  });
-
-  document.querySelectorAll(".agent-img").forEach(img=>{
-    img.ondragstart = ()=>{
-      let parent = img.parentElement;
-      dragged = {
-        type:"agent",
-        src:img.src,
-        from:{
-          i:parent.dataset.i,
-          j:parent.dataset.j
-        }
-      };
-    };
-  });
-}
-
-const trash = document.getElementById("trash");
-
-trash.ondragover = e => e.preventDefault();
-
-trash.ondrop = ()=>{
-  if(dragged.type === "agent" && dragged.from){
-    grid[dragged.from.i][dragged.from.j] = null;
-    render();
+'use strict';
+const CONFIG = {
+  jogadores: ['P1','P2','P3','P4','P5'],
+  mapas: [
+    {nome:'bind', imagem:'bind.png', ativo:true},
+    {nome:'corrode', imagem:'corrode.png', ativo:true},
+    {nome:'sunset', imagem:'sunset.png', ativo:true},
+    {nome:'haven', imagem:'haven.png', ativo:true},
+    {nome:'summit', imagem:'summit.png', ativo:true},
+    {nome:'abyss', imagem:'abyss.png', ativo:true},
+    {nome:'lotus', imagem:'lotus.png', ativo:true},
+    {nome:'ascent', imagem:'ascent.png', ativo:false},
+    {nome:'breeze', imagem:'breeze.png', ativo:false},
+    {nome:'fracture', imagem:'fracture.png', ativo:false},
+    {nome:'icebox', imagem:'icebox.png', ativo:false},
+    {nome:'pearl', imagem:'pearl.png', ativo:false},
+    {nome:'split', imagem:'split.png', ativo:false}
+  ],
+  // Nomes = nomes exatos dos arquivos .png em img/agents.
+  agentes: {
+    Duelista: ['Hush','Iso','Jett','neon','Phoenix','Raze','Reyna','Waylay','Yoru'],
+    Controlador: ['astra','Brimstone','Clove','Harbor','Miks','Omen','Viper'],
+    Iniciador: ['Breach','fade','Gekko','Kayo','Skye','Sova','Tejo'],
+    Sentinela: ['Chamber','Cypher','Deadlock','Killjoy','Sage','Veto','Vyse']
   }
 };
-
-/* ===== AGENTES ===== */
-const agentsDiv = document.getElementById("agents");
-
-agentes.forEach(a=>{
-
-  if(a.img === null){
-    const vazio = document.createElement("div");
-    vazio.className = "agent";
-    vazio.style.visibility = "hidden";
-
-    agentsDiv.appendChild(vazio);
-    return;
-  }
-
-  const el = document.createElement("img");
-  el.src = a.img;
-  el.className = "agent";
-  el.draggable = true;
-
-  el.ondragstart = ()=> dragged = {type:"agent", src:a.img};
-
-  agentsDiv.appendChild(el);
+// ============================================================
+const STORAGE_KEY='valorant-comps-v2';
+const $=id=>document.getElementById(id);
+const mapSrc=map=>'img/maps2/'+map.imagem;
+const agentSrc=name=>'img/agents2/'+name+'.png';
+const roleForAgentSrc=src=>{const name=decodeURIComponent(String(src).split('/').pop().split('?')[0]).replace(/\.png$/i,'');return Object.keys(CONFIG.agentes).find(role=>CONFIG.agentes[role].some(agent=>agent.toLowerCase()===name.toLowerCase()))||null};
+const decorateAgent=(img,src)=>{const role=roleForAgentSrc(src);if(role)img.classList.add('role-'+role.toLowerCase());return img};
+const defaultState=()=>({
+  players:[...CONFIG.jogadores],
+  activeMaps:CONFIG.mapas.filter(m=>m.ativo).map(m=>m.nome),
+  // As composições são associadas ao nome do mapa, não à posição na tabela.
+  comps:Object.fromEntries(CONFIG.mapas.map(m=>[m.nome,Array(CONFIG.jogadores.length).fill(null)]))
 });
-
-/* ===== MAP POOL ===== */
-function renderPool(){
-  const pool = document.getElementById("mapsPool");
-  pool.innerHTML="";
-
-  mapasPool.forEach(m=>{
-    const el = document.createElement("img");
-    el.src = m.img;
-    el.className="map-item";
-    el.draggable=true;
-
-    el.ondragstart = ()=> dragged = {type:"mapPool", data:m};
-
-    pool.appendChild(el);
+function loadState(){
+  const base=defaultState();
+  try{
+    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if(!saved||typeof saved!=='object')return base;
+    if(Array.isArray(saved.players))base.players=base.players.map((p,i)=>typeof saved.players[i]==='string'?saved.players[i]:p);
+    const known=new Set(CONFIG.mapas.map(m=>m.nome));
+    if(Array.isArray(saved.activeMaps)){
+      const active=[...new Set(saved.activeMaps.filter(n=>known.has(n)))];
+      if(active.length)base.activeMaps=active;
+    }
+    if(saved.comps&&typeof saved.comps==='object'){
+      for(const name of known){
+        if(Array.isArray(saved.comps[name])){
+          base.comps[name]=base.players.map((_,i)=>typeof saved.comps[name][i]==='string'?saved.comps[name][i]:null);
+        }
+      }
+    }
+  }catch(err){console.warn('Não foi possível carregar o salvamento:',err)}
+  return base;
+}
+let state=loadState();
+let dragged=null;
+let statusTimer;
+function notify(message){$('status').textContent=message;clearTimeout(statusTimer);statusTimer=setTimeout(()=>$('status').textContent='',2500)}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));notify('Salvo automaticamente')}catch(err){notify('Não foi possível salvar neste navegador');console.warn(err)}}
+function makeImage(src,className,alt){const img=document.createElement('img');img.src=src;img.className=className;img.alt=alt;img.draggable=true;return img}
+function render(){
+  const table=$('tabela');table.replaceChildren();
+  const thead=document.createElement('thead');const header=document.createElement('tr');header.appendChild(document.createElement('th'));
+  state.players.forEach((p,i)=>{const th=document.createElement('th');const input=document.createElement('input');input.value=p;input.setAttribute('aria-label','Jogador '+(i+1));input.addEventListener('input',()=>{state.players[i]=input.value;save()});th.appendChild(input);header.appendChild(th)});
+  thead.appendChild(header);table.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  state.activeMaps.forEach((name,i)=>{
+    const map=CONFIG.mapas.find(m=>m.nome===name);if(!map)return;
+    const tr=document.createElement('tr');const mapCell=document.createElement('td');const mapImg=makeImage(mapSrc(map),'map-img',name);
+    mapImg.addEventListener('dragstart',e=>{dragged={type:'map',name};e.dataTransfer.effectAllowed='move';mapImg.classList.add('dragging-map')});
+    mapImg.addEventListener('dragover',e=>{if(dragged?.type==='map'||dragged?.type==='mapPool'){e.preventDefault();e.dataTransfer.dropEffect='move';mapImg.classList.add('map-drop-target')}});
+    mapImg.addEventListener('dragleave',e=>{if(!mapImg.contains(e.relatedTarget))mapImg.classList.remove('map-drop-target')});
+    mapImg.addEventListener('drop',e=>{e.preventDefault();mapImg.classList.remove('map-drop-target');if(!dragged)return;
+      let changeMessage='';
+      if(dragged.type==='map'){const other=state.activeMaps.indexOf(dragged.name);if(other<0)return;[state.activeMaps[i],state.activeMaps[other]]=[state.activeMaps[other],state.activeMaps[i]];changeMessage='Mapas reordenados: '+dragged.name+' ↔ '+name}
+      else if(dragged.type==='mapPool'){const newName=dragged.name;if(state.activeMaps.includes(newName))return;state.activeMaps[i]=newName;changeMessage=newName.toUpperCase()+' entrou no lugar de '+name.toUpperCase()}
+      else return;
+      save();render();renderPool();dragged=null;notify(changeMessage);
+    });
+    mapCell.appendChild(mapImg);tr.appendChild(mapCell);
+    const row=state.comps[name]||(state.comps[name]=Array(state.players.length).fill(null));
+    state.players.forEach((_,j)=>{
+      const td=document.createElement('td');const slot=document.createElement('div');slot.className='slot';slot.setAttribute('aria-label',`${name}, jogador ${j+1}`);
+      slot.addEventListener('dragover',e=>{if(dragged?.type==='agent'){e.preventDefault();slot.classList.add('drag-over')}});
+      slot.addEventListener('dragleave',()=>slot.classList.remove('drag-over'));
+      slot.addEventListener('drop',e=>{e.preventDefault();slot.classList.remove('drag-over');if(dragged?.type!=='agent')return;
+        const old=row[j];row[j]=dragged.src;
+        if(dragged.from){const source=state.comps[dragged.from.map];if(source)source[dragged.from.player]=old}
+        dragged=null;save();render();
+      });
+      if(row[j]){const img=decorateAgent(makeImage(row[j],'agent-img','Agente selecionado'),row[j]);img.addEventListener('dragstart',e=>{dragged={type:'agent',src:row[j],from:{map:name,player:j}};e.dataTransfer.effectAllowed='move'});slot.appendChild(img)}
+      td.appendChild(slot);tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });table.appendChild(tbody);
+}
+function renderAgents(){
+  const container=$('agents');container.replaceChildren();
+  Object.entries(CONFIG.agentes).forEach(([classe,nomes])=>{
+    const col=document.createElement('div');col.className='agent-column';const title=document.createElement('div');title.className='class-label';title.textContent=classe;col.appendChild(title);
+    nomes.forEach(name=>{const img=decorateAgent(makeImage(agentSrc(name),'agent',name),agentSrc(name));img.title=name;img.addEventListener('dragstart',e=>{dragged={type:'agent',src:agentSrc(name)};e.dataTransfer.effectAllowed='copy'});col.appendChild(img)});
+    container.appendChild(col);
   });
 }
-
-renderPool();
-render();
+function renderPool(){
+  const pool=$('mapsPool');pool.replaceChildren();
+  CONFIG.mapas.filter(m=>!state.activeMaps.includes(m.nome)).forEach(map=>{
+    const img=makeImage(mapSrc(map),'map-item',map.nome);img.title=map.nome;
+    img.addEventListener('dragstart',e=>{dragged={type:'mapPool',name:map.nome};e.dataTransfer.effectAllowed='move'});
+    pool.appendChild(img);
+  });
+}
+$('clearBtn').addEventListener('click',()=>{if(!confirm('Limpar todos os agentes das composições?'))return;for(const name of Object.keys(state.comps))state.comps[name]=Array(state.players.length).fill(null);save();render()});
+$('mapsToggle').addEventListener('click',()=>{const active=$('mapsContainer').classList.toggle('active');$('mapsToggle').textContent=active?'Mapas ▼':'Mapas ▲';$('mapsToggle').setAttribute('aria-expanded',String(active))});
+$('trash').addEventListener('dragover',e=>{if(dragged?.type==='agent'&&dragged.from){e.preventDefault();$('trash').classList.add('drag-over')}});
+$('trash').addEventListener('dragleave',()=>$('trash').classList.remove('drag-over'));
+$('trash').addEventListener('drop',e=>{e.preventDefault();$('trash').classList.remove('drag-over');if(dragged?.type==='agent'&&dragged.from){state.comps[dragged.from.map][dragged.from.player]=null;dragged=null;save();render()}});
+document.addEventListener('dragend',()=>{dragged=null;document.querySelectorAll('.drag-over,.map-drop-target,.dragging-map').forEach(el=>el.classList.remove('drag-over','map-drop-target','dragging-map'))});
+// Cria a imagem com dimensões reais da tabela, sem capturar os painéis laterais.
+async function captureComposition(){
+  if(location.protocol==='file:')throw new Error('Abra o site via http://localhost (não file://) para copiar imagens. Veja as instruções abaixo.');
+  if(typeof html2canvas!=='function')throw new Error('A biblioteca html2canvas não carregou. Verifique a conexão com a internet.');
+  const target=$('tabela');
+  // Substitui inputs por texto na cópia, evitando problemas com campos de formulário.
+  const canvas=await html2canvas(target,{
+    backgroundColor:'#080B12',scale:2,useCORS:true,allowTaint:false,logging:false,
+    scrollX:0,scrollY:0,
+    onclone:doc=>{
+      doc.querySelectorAll('#tabela th input').forEach(input=>{
+        const label=doc.createElement('span');
+        label.textContent=input.value;
+        label.style.cssText='display:block;color:white;text-align:center;font:18px Calibri,Arial,sans-serif;padding:4px;';
+        input.replaceWith(label);
+      });
+    }
+  });
+  // O navegador bloqueia a exportação se qualquer imagem tiver origem não autorizada.
+  try{canvas.toDataURL('image/png')}catch(err){throw new Error('Imagens sem permissão de exportação. Use http://localhost e imagens locais da mesma pasta.')}
+  return canvas;
+}
+function downloadCanvas(canvas){
+  const a=document.createElement('a');a.download='valorant-composicoes.png';a.href=canvas.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+}
+$('exportBtn').addEventListener('click',async()=>{
+  const btn=$('exportBtn');btn.disabled=true;btn.textContent='Preparando imagem...';
+  try{
+    const canvas=await captureComposition();
+    const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Falha ao gerar PNG')),'image/png'));
+    if(navigator.clipboard?.write && typeof ClipboardItem!=='undefined'){
+      try{
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        notify('Composição copiada! Use Ctrl + V para colar.');
+      }catch(err){
+        console.warn('Cópia bloqueada pelo navegador:',err);
+        downloadCanvas(canvas);
+        notify('Cópia não permitida: PNG salvo como alternativa.');
+      }
+    }else{
+      downloadCanvas(canvas);
+      notify('Área de transferência indisponível: PNG salvo.');
+    }
+  }catch(err){console.error(err);notify('Erro na imagem: '+err.message)}
+  finally{btn.disabled=false;btn.textContent='Copiar composição'}
+});
+renderAgents();renderPool();render();
 </script>
-
 </body>
 </html>
