@@ -768,11 +768,11 @@ function renderPro(){
   const choices=comps.filter(c=>c.map===mapName).sort((a,b)=>b.matches.length-a.matches.length);
   choices.forEach((c,idx)=>{
    const row=proEl('tr'),cell=proEl('td'),btn=proEl('button','vct-map'+(proSelectedMap===c?' selected':''));
-   btn.type='button';btn.title='Abrir '+mapName+' · '+c.matches.length+' partidas';
+   btn.type='button';btn.title=(proSelectedMap===c?'Fechar':'Abrir')+' '+mapName+' · '+c.matches.length+' partidas';
    const map=CONFIG.mapas.find(m=>m.nome===mapName);
    if(map){const img=makeImage(mapSrc(map),'',mapName);img.draggable=false;btn.appendChild(img)}
    btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'+(choices.length>1?' · #'+(idx+1):'')));
-   btn.onclick=()=>{proSelectedMap=c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
+   btn.onclick=()=>{proSelectedMap=proSelectedMap===c?null:c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
    const players=c.matches[c.matches.length-1].jogadores;
    roster.forEach(name=>{
     const td=proEl('td'),player=players.find(p=>p.nome===name);
