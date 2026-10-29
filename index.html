@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.0 (teste)</title>
+<title>Vava Comps — V3.0.1 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -439,6 +439,14 @@ button:focus-visible,input:focus-visible{
 .pro-team-logo{width:56px;height:56px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 2px 6px #0005)}
 .pro-team-button>span{flex:1;min-width:0}.pro-team-button>.pro-team-logo{margin-right:2px}
 .pro-heading-row{display:flex;align-items:center;gap:14px}.pro-heading-row .pro-team-logo{width:76px;height:76px}.pro-heading-row h2{margin:0}
+
+#proLoading{position:fixed;inset:0;z-index:9999;background:rgba(1,6,18,.88);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(5px)}
+#proLoading[hidden]{display:none}
+.pro-loading-card{width:min(440px,100%);background:#1E293B;border:1px solid #475569;border-radius:18px;padding:34px 28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+.pro-loading-spinner{width:54px;height:54px;margin:0 auto 20px;border:5px solid #475569;border-top-color:#FAFBFF;border-radius:50%;animation:proSpin .85s linear infinite}
+@keyframes proSpin{to{transform:rotate(360deg)}}
+.pro-loading-card h2{margin:0 0 10px;font-size:23px}
+.pro-loading-card p{color:#cbd5e1;margin:0;line-height:1.5}
 </style>
 </head>
 
@@ -476,8 +484,7 @@ button:focus-visible,input:focus-visible{
   <div class="vct-filters">
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
-    <label>Campeonato<select class="select-field" id="proEvent"><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option><option value="custom">Outro campeonato (ID)</option></select></label>
-    <label>ID do evento VLR<input class="field" id="proEventId" type="number" min="1" step="1" value="2766" placeholder="Ex.: 2766"></label>
+    <label>Campeonato<select class="select-field" id="proEvent"><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option></select></label>
     <button type="button" id="proLoadEvent">Buscar campeonato</button>
     <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
   </div>
@@ -519,8 +526,9 @@ const CONFIG = {
 // ============================================================
 const STORAGE_KEY='valorant-comps-v2';
 const $=id=>document.getElementById(id);
-const mapSrc=map=>'img/maps2/'+map.imagem;
-const agentSrc=name=>'img/agents2/'+name+'.png';
+const properPngName=name=>{const value=String(name||'').trim();return value?value[0].toUpperCase()+value.slice(1):value};
+const mapSrc=map=>'img/maps2/'+properPngName(map.imagem);
+const agentSrc=name=>'img/agents2/'+properPngName(name)+'.png';
 const roleForAgentSrc=src=>{const name=decodeURIComponent(String(src).split('/').pop().split('?')[0]).replace(/\.png$/i,'');return Object.keys(CONFIG.agentes).find(role=>CONFIG.agentes[role].some(agent=>agent.toLowerCase()===name.toLowerCase()))||null};
 const decorateAgent=(img,src)=>{const role=roleForAgentSrc(src);if(role)img.classList.add('role-'+role.toLowerCase());return img};
 const defaultState=()=>({
@@ -557,7 +565,7 @@ function loadTeams(){
     const saved=JSON.parse(localStorage.getItem(TEAMS_KEY));
     if(saved&&Array.isArray(saved.teams)&&saved.teams.length&&saved.teams.every(t=>t&&t.id&&t.data))return saved;
   }catch(err){console.warn('Falha ao carregar equipes:',err)}
-  return {activeId:'initial',teams:[{id:'initial',name:'Minha equipe',data:loadState()}]};
+  return {activeId:'initial',teams:[{id:'initial',name:'Padrão',data:loadState()}]};
 }
 let teamStore=loadTeams();
 let state;
@@ -718,7 +726,7 @@ function proAgents(parent,names,cls='vct-agent'){
 }
 function proFiltered(){
  const q=$('proSearch').value.trim().toLowerCase(),y=$('proYear').value,e=$('proEvent').value,m=$('proMap').value;
- return PRO_DATA.filter(c=>c.team.toLowerCase().includes(q)&&c.year===y&&(e==='all'||c.event===e)&&(m==='all'||c.map===m));
+ return PRO_DATA.filter(c=>c.team.toLowerCase().includes(q)&&c.year===y&&(e==='all'||c.event===e)&&(m==='all'||c.map.toLowerCase()===m.toLowerCase()));
 }
 function proSide(match,side){
  const w=Number(match['rounds_'+side]||0),other=match.other;
@@ -825,7 +833,7 @@ function proIngestEvent(data,event,eventLabel,year){
  teams.forEach(t=>{
   const groups=new Map();
   (t.mapas||[]).forEach(m=>{
-   const map=m.mapa.toLowerCase(),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
+   const map=properPngName(m.mapa),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
    if(!groups.has(key))groups.set(key,{team:t.nome,map,agents,event,eventLabel,year,matches:[]});
    const other=byGame.get(m.game_id+'|'+m.adversario_id)||null;
    groups.get(key).matches.push({...m,other});
@@ -834,13 +842,17 @@ function proIngestEvent(data,event,eventLabel,year){
  });
  return {teams:teams.length,maps:Math.floor(byGame.size/2)};
 }
+function showProLoading(visible,eventLabel=''){
+ const overlay=$('proLoading');
+ overlay.hidden=!visible;
+ if(visible)$('proLoadingText').textContent='Consultando '+eventLabel+' no VLR. O primeiro carregamento pode levar até alguns minutos.';
+}
 async function loadProData(){
- const eventId=Number($('proEventId').value);
- if(!Number.isSafeInteger(eventId)||eventId<1){PRO_ERROR='Informe um ID de campeonato válido.';renderPro();return}
- const requestId=++proRequestId,select=$('proEvent'),event=select.value==='custom'?'Evento '+eventId:select.value;
- const eventLabel=select.options[select.selectedIndex].textContent.replace('Outro campeonato (ID)','Evento VLR '+eventId);
+ const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766;
+ const requestId=++proRequestId,event=select.value;
+ const eventLabel=select.options[select.selectedIndex].textContent;
  const notice=document.querySelector('#view-vct .notice'),button=$('proLoadEvent');
- button.disabled=true;PRO_ERROR='';if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
+ button.disabled=true;PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
  try{
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),120000);
   let response;
@@ -857,19 +869,15 @@ async function loadProData(){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Falha ao consultar a API: '+err.message+'. Confirme que o backend está rodando na porta 8001.';
   if(notice)notice.textContent=PRO_ERROR;
- }finally{if(requestId===proRequestId){button.disabled=false;renderPro()}}
+ }finally{if(requestId===proRequestId){button.disabled=false;showProLoading(false);renderPro()}}
 }
-$('proEvent').addEventListener('change',()=>{
- const v=$('proEvent').value;
- if(v==='Champions')$('proEventId').value='2766';
- if(v==='GC Championship')$('proEventId').value='3134';
-});
+$('proEvent').addEventListener('change',loadProData);
 $('proLoadEvent').addEventListener('click',loadProData);
-$('proEventId').addEventListener('keydown',e=>{if(e.key==='Enter')loadProData()});
 
 loadProData();
 renderTeamSelect();renderTeams();renderPro();
 renderAgents();renderPool();render();
 </script>
+<div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato" hidden><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
 </body>
 </html>
