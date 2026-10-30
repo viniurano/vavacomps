@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.0.5 (teste)</title>
+<title>Vava Comps — V3.1.0 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -713,7 +713,7 @@ $('createTeam').addEventListener('click',()=>{
 $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam').click()});
 
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
-let proSelectedTeam=null,proSelectedMap=null,PRO_DATA=[],PRO_ERROR='';
+let proSelectedTeam=null,proSelectedMap=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
 const PRO_TEAM_IDS=new Map();
 function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=()=>{img.style.display='none'};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
@@ -740,22 +740,22 @@ function proStatsRow(parent,items){
  parent.appendChild(row);
 }
 function renderPro(){
- const entries=proFiltered(),names=[...new Set(entries.map(c=>c.team))].sort((a,b)=>a.localeCompare(b));
+ const entries=proFiltered(),q=$('proSearch').value.trim().toLowerCase(),names=PRO_TEAMS.filter(t=>t.nome.toLowerCase().includes(q)).map(t=>t.nome);
  const grid=$('proTeams'),detail=$('proDetail');grid.replaceChildren();
  if(proSelectedTeam&&!names.includes(proSelectedTeam)){proSelectedTeam=null;proSelectedMap=null}
  grid.hidden=!!proSelectedTeam;detail.hidden=!proSelectedTeam;
  if(!proSelectedTeam){
   if(PRO_ERROR)grid.appendChild(proEl('p','muted',PRO_ERROR));
-  else if(!names.length)grid.appendChild(proEl('p','muted',$('proEvent').value==='GC Championship'&&!PRO_DATA.some(c=>c.event==='GC Championship')?'GC ainda não coletado: execute python scripts/coletar_gc.py':'Nenhuma equipe encontrada com esses filtros.'));
+  else if(!names.length)grid.appendChild(proEl('p','muted','Nenhuma equipe encontrada com esses filtros.'));
   names.forEach(name=>{
    const comps=entries.filter(c=>c.team===name),b=proEl('button','pro-team-button');
    b.type='button';const left=proEl('span');
    b.appendChild(proLogo(name));
-   left.append(proEl('strong','',name),proEl('small','',comps.reduce((n,c)=>n+c.matches.length,0)+' mapas jogados · '+comps.length+' composições'));
-   b.append(left,proEl('span','','›'));b.onclick=()=>{proSelectedTeam=name;proSelectedMap=null;renderPro()};grid.appendChild(b);
+   left.append(proEl('strong','',name),proEl('small','','Consultar composições'));
+   b.append(left,proEl('span','','›'));b.onclick=()=>loadProTeam(name);grid.appendChild(b);
   });return;
  }
- const allComps=entries.filter(c=>c.team===proSelectedTeam);
+ const allComps=PRO_DATA.filter(c=>c.team===proSelectedTeam);
  // Apenas a composicao mais recente de cada mapa efetivamente jogado no campeonato.
  const latestByMap=new Map();
  allComps.forEach(c=>{
@@ -768,17 +768,18 @@ function renderPro(){
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
  const latest=allComps.flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data)||Number(b.m.game_id)-Number(a.m.game_id))[0];
  if(latest)heading.append(proEl('p','muted','Última composição utilizada · '+latest.c.map.toUpperCase()+' · '+latest.c.agents.join(' · ')+' · '+proDate(latest.m.data)));
- heading.append(proEl('p','muted','Clique em uma composição para consultar partidas, jogadores e estatísticas reais.'));
+ heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Mapas encontrados nas partidas consultadas (map pool oficial ainda não cadastrada para este torneio).'));
  const table=$('proTable');table.replaceChildren();
  const head=proEl('thead'),trh=proEl('tr');trh.appendChild(proEl('th','','Mapa / partidas'));
  // Jogadores são apresentados conforme a partida mais recente da equipe.
- const recent=comps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data))[0];
+ const recent=allComps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
  const roster=recent?recent.jogadores.map(p=>p.nome):CONFIG.jogadores;
  roster.forEach(n=>trh.appendChild(proEl('th','',n)));head.appendChild(trh);table.appendChild(head);
  const body=proEl('tbody');let selectedRow=null;
- const maps=[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
+ const maps=PRO_MAP_POOL.length?PRO_MAP_POOL.filter(m=>$('proMap').value==='all'||m.toLowerCase()===$('proMap').value.toLowerCase()):[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
  maps.forEach(mapName=>{
   const choices=comps.filter(c=>c.map===mapName);
+  if(!choices.length){const row=proEl('tr'),cell=proEl('td'),map=CONFIG.mapas.find(m=>m.nome.toLowerCase()===mapName.toLowerCase());const btn=proEl('button','vct-map');btn.type='button';btn.disabled=true;if(map)btn.appendChild(makeImage(mapSrc(map),'',mapName));btn.appendChild(proEl('span','',mapName.toUpperCase()+' · Sem partidas'));cell.appendChild(btn);row.appendChild(cell);for(let i=0;i<roster.length;i++)row.appendChild(proEl('td','vct-empty','—'));body.appendChild(row)}
   choices.forEach(c=>{
    const row=proEl('tr'),cell=proEl('td'),btn=proEl('button','vct-map'+(proSelectedMap===c?' selected':''));
    btn.type='button';btn.title=(proSelectedMap===c?'Fechar':'Abrir')+' '+mapName+' · '+c.matches.length+' partidas';
@@ -836,7 +837,7 @@ function renderPro(){
 }
 $('proBack').addEventListener('click',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
 CONFIG.mapas.forEach(m=>{const option=document.createElement('option');option.value=m.nome;option.textContent=m.nome[0].toUpperCase()+m.nome.slice(1);$('proMap').appendChild(option)});
-['proSearch','proYear','proEvent','proMap'].forEach(id=>$(id).addEventListener(id==='proSearch'?'input':'change',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()}));
+['proSearch','proMap'].forEach(id=>$(id).addEventListener(id==='proSearch'?'input':'change',()=>{if(id==='proSearch'){proSelectedTeam=null;proSelectedMap=null}renderPro()}));
 // V3.0: consulta sob demanda na API Python, sem arquivos JSON por campeonato.
 const PRO_API_BASE = 'http://127.0.0.1:8001';
 let proRequestId=0;
@@ -860,34 +861,55 @@ function showProLoading(visible,eventLabel=''){
  overlay.hidden=!visible;
  if(visible)$('proLoadingText').textContent='Consultando '+eventLabel+' no VLR. O primeiro carregamento pode levar até alguns minutos.';
 }
-async function loadProData(){
- const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766;
- const requestId=++proRequestId,event=select.value;
- const eventLabel=select.options[select.selectedIndex].textContent;
- const notice=document.querySelector('#view-vct .notice');
- PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.hidden=true;
+async function proFetch(path){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),120000);
  try{
-  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),120000);
-  let response;
-  try{response=await fetch(PRO_API_BASE+'/api/eventos/'+eventId,{signal:controller.signal})}finally{clearTimeout(timeout)}
+  const response=await fetch(PRO_API_BASE+path,{signal:controller.signal});
   if(!response.ok){let err;try{err=await response.json()}catch{}throw new Error(err?.detail||'HTTP '+response.status)}
-  const data=await response.json();
+  return await response.json();
+ }finally{clearTimeout(timer)}
+}
+async function loadProData(){
+ const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766,requestId=++proRequestId;
+ const label=select.options[select.selectedIndex].textContent,notice=document.querySelector('#view-vct .notice');
+ PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
+ if(notice)notice.hidden=true;
+ showProLoading(true,'equipes de '+label);renderPro();
+ try{
+  const data=await proFetch('/api/eventos/'+eventId+'/equipes');
   if(requestId!==proRequestId)return;
-  PRO_DATA=[];PRO_TEAM_IDS.clear();proSelectedTeam=null;proSelectedMap=null;
-  const year=$('proYear').value;
-  const counts=proIngestEvent(data,event,eventLabel,year);
-  if(notice){notice.hidden=false;notice.textContent=eventLabel+' · '+counts.teams+' equipes · '+counts.maps+' mapas · Fonte: VLR.gg'}
-  if(data.meta?.erros?.length)notice.textContent+=' · '+data.meta.erros.length+' séries com erro';
+  PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
+  PRO_TEAMS.forEach(t=>PRO_TEAM_IDS.set(t.nome,t.team_id));
+  if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'}
  }catch(err){
   if(requestId!==proRequestId)return;
-  PRO_ERROR='Falha ao consultar a API: '+err.message+'. Confirme que o backend está rodando na porta 8001.';
+  PRO_ERROR='Falha ao listar equipes: '+err.message;
+  if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
+ }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
+}
+async function loadProTeam(name){
+ const id=PRO_TEAM_IDS.get(name),eventId=$('proEvent').value==='GC Championship'?3134:2766;
+ if(!id)return;
+ const requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
+ proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
+ showProLoading(true,'partidas de '+name);renderPro();
+ try{
+  const data=await proFetch('/api/eventos/'+eventId+'/equipes/'+id);
+  if(requestId!==proRequestId)return;
+  PRO_DATA=[];PRO_MAP_POOL=data.map_pool||PRO_MAP_POOL;PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
+  proIngestEvent(data,$('proEvent').value,$('proEvent').selectedOptions[0].textContent,$('proYear').value);
+  if(data.meta?.erros?.length&&notice){notice.hidden=false;notice.textContent='Algumas partidas não puderam ser consultadas ('+data.meta.erros.length+').'}
+ }catch(err){
+  if(requestId!==proRequestId)return;
+  PRO_ERROR='Erro ao consultar '+name+': '+err.message;
+  proSelectedTeam=null;
   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 $('proEvent').addEventListener('change',loadProData);
 
 loadProData();
-renderTeamSelect();renderTeams();renderPro();
+renderTeamSelect();renderTeams();
 renderAgents();renderPool();render();
 </script>
 </body>
