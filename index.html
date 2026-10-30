@@ -928,7 +928,7 @@ $('proSearch').addEventListener('input',()=>{
  },350);
 });
 // V3.0: consulta sob demanda na API Python, sem arquivos JSON por campeonato.
-const PRO_API_BASE = 'http://127.0.0.1:8001';
+const PRO_API_BASE = ''; // Netlify: arquivos locais; API Python opcional em outro host.
 let proRequestId=0;
 function proIngestEvent(data,event,eventLabel,year){
  const teams=Object.values(data.equipes||{}),byGame=new Map();
@@ -948,16 +948,74 @@ function proIngestEvent(data,event,eventLabel,year){
 function showProLoading(visible,eventLabel=''){
  const overlay=$('proLoading');
  overlay.hidden=!visible;
- if(visible)$('proLoadingText').textContent='Consultando '+eventLabel+' no VLR. O primeiro carregamento pode levar até alguns minutos.';
+ if(visible)$('proLoadingText').textContent='Carregando dados salvos de '+eventLabel+'...';
 }
-async function proFetch(path){
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),120000);
- try{
-  const response=await fetch(PRO_API_BASE+path,{signal:controller.signal});
-  if(!response.ok){let err;try{err=await response.json()}catch{}throw new Error(err?.detail||'HTTP '+response.status)}
-  return await response.json();
- }finally{clearTimeout(timer)}
+// Adaptador de leitura estatico. Nenhum GET do site acessa VLR.
+const V4_EVENTS = [
+ {id:2682,regiao:'americas',nome:'Americas Kickoff'}, {id:2860,regiao:'americas',nome:'Americas Stage 1'}, {id:2977,regiao:'americas',nome:'Americas Stage 2'},
+ {id:2683,regiao:'pacific',nome:'Pacific Kickoff'}, {id:2775,regiao:'pacific',nome:'Pacific Stage 1'}, {id:2776,regiao:'pacific',nome:'Pacific Stage 2'},
+ {id:2684,regiao:'emea',nome:'EMEA Kickoff'}, {id:2863,regiao:'emea',nome:'EMEA Stage 1'}, {id:2976,regiao:'emea',nome:'EMEA Stage 2'},
+ {id:2685,regiao:'china',nome:'China Kickoff'}, {id:2864,regiao:'china',nome:'China Stage 1'}, {id:2978,regiao:'china',nome:'China Stage 2'},
+ {id:2760,regiao:'international',nome:'Masters Santiago'}, {id:2765,regiao:'international',nome:'Masters London'},
+ {id:2766,regiao:'international',nome:'Champions 2026'}, {id:3134,regiao:'game_changers',nome:'GC Championship 2026'}
+];
+const V4_LOCAL_CACHE = new Map();
+async function v4LocalEvent(id){
+ id=Number(id);
+ if(!V4_EVENTS.some(e=>e.id===id))throw Error('Campeonato desconhecido');
+ if(!V4_LOCAL_CACHE.has(id)){
+  const promise=fetch('dados/v4/eventos/'+id+'.json').then(r=>{if(!r.ok)throw Error('JSON do campeonato indisponível: HTTP '+r.status);return r.json()});
+  V4_LOCAL_CACHE.set(id,promise);
+ }
+ return V4_LOCAL_CACHE.get(id);
 }
+function v4TeamList(data){
+ return Object.values(data.equipes||{}).map(t=>({team_id:Number(t.team_id),nome:t.nome||String(t.team_id)})).sort((a,b)=>a.nome.localeCompare(b.nome));
+}
+async function v4StaticFetch(path){
+ let m;
+ if((m=path.match(/^\/api\/eventos\/(\d+)\/participantes$/))){
+  const id=Number(m[1]),data=await v4LocalEvent(id);
+  return {equipes:v4TeamList(data),map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+ }
+ if((m=path.match(/^\/api\/temporadas\/2026\/regioes\/([^/]+)\/equipes$/))){
+  const region=m[1],events=V4_EVENTS.filter(e=>e.regiao===region);
+  const results=await Promise.all(events.map(e=>v4LocalEvent(e.id)));
+  const teams=new Map();
+  results.forEach((data,i)=>v4TeamList(data).forEach(t=>{
+   const old=teams.get(t.team_id)||{...t,eventos:[]};
+   old.eventos.push(events[i]);teams.set(t.team_id,old);
+  }));
+  return {equipes:[...teams.values()].sort((a,b)=>a.nome.localeCompare(b.nome)),map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+ }
+ if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/(\d+)\/eventos(?:\?.*)?$/))){
+  const id=Number(m[1]),region=new URLSearchParams(path.split('?')[1]||'').get('region');
+  const events=V4_EVENTS.filter(e=>e.regiao==='international'||e.regiao===region);
+  return {eventos:events,regioes:region?[region]:[]};
+ }
+ if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/(\d+)\/eventos\/(\d+)$/))||
+    (m=path.match(/^\/api\/eventos\/(\d+)\/equipes\/(\d+)$/))){
+  const gc=path.startsWith('/api/eventos/');
+  const id=Number(gc?m[2]:m[1]),eid=Number(gc?m[1]:m[2]);
+  const data=await v4LocalEvent(eid);
+  const team=data.equipes?.[String(id)];
+  if(!team) return {event_id:eid,equipes:{[id]:{team_id:id,nome:[...PRO_TEAM_IDS].find(x=>x[1]===id)?.[0]||String(id),mapas:[]}},map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+  return {event_id:eid,equipes:{[id]:team},map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+ }
+ if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/busca\?q=(.*)$/))){
+  const q=decodeURIComponent(m[1]).toLowerCase();
+  const results=await Promise.all([2766,3134].map(id=>v4LocalEvent(id)));
+  const teams=new Map();
+  results.forEach((data,i)=>v4TeamList(data).forEach(t=>{
+   if(t.nome.toLowerCase().includes(q))teams.set(t.team_id,{...t,circuitos:[i===0?'vct':'gc'],regioes:[]});
+  }));
+  return {equipes:[...teams.values()],meta:{indices_consultados:2,indices_total:2}};
+ }
+ if(path.includes('/atualizacao'))return {ultima_atualizacao:null};
+ throw Error('Esta função exige o backend de atualização, ainda não publicado.');
+}
+async function proFetch(path){return v4StaticFetch(path)}
+
 async function loadProData(){
  const region=$('proRegion').value,circuit=$('proEvent').value,requestId=++proRequestId;
  const scope=$('proScope'),notice=document.querySelector('#view-vct .notice');
@@ -1060,6 +1118,7 @@ async function proUpdateRefreshInfo(){
 $('proRefreshBtn').addEventListener('click',async()=>{
  const name=proSelectedTeam,id=PRO_TEAM_IDS.get(name),eid=PRO_SELECTED_EVENT||($('proEvent').value==='GC Championship'?3134:null);
  if(!id||!eid)return;
+ if(!PRO_API_BASE){$('proRefreshInfo').textContent='Atualização manual indisponível no teste estático; dados salvos continuam disponíveis.';return;}
  const button=$('proRefreshBtn');button.disabled=true;
  $('proRefreshInfo').textContent='Atualizando partidas do time...';
  try{
