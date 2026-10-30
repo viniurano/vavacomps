@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.0.1 (teste)</title>
+<title>Vava Comps — V3.0.2 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -442,10 +442,10 @@ button:focus-visible,input:focus-visible{
 
 #proLoading{position:fixed;inset:0;z-index:9999;background:rgba(1,6,18,.88);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(5px)}
 #proLoading[hidden]{display:none}
-.pro-loading-card{width:min(440px,100%);background:#1E293B;border:1px solid #475569;border-radius:18px;padding:34px 28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
-.pro-loading-spinner{width:54px;height:54px;margin:0 auto 20px;border:5px solid #475569;border-top-color:#FAFBFF;border-radius:50%;animation:proSpin .85s linear infinite}
+.pro-loading-card{width:min(620px,100%);background:#1E293B;border:1px solid #475569;border-radius:18px;padding:54px 40px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+.pro-loading-spinner{width:100px;height:100px;margin:0 auto 28px;border:8px solid #475569;border-top-color:#FAFBFF;border-radius:50%;animation:proSpin .85s linear infinite}
 @keyframes proSpin{to{transform:rotate(360deg)}}
-.pro-loading-card h2{margin:0 0 10px;font-size:23px}
+.pro-loading-card h2{margin:0 0 10px;font-size:30px}
 .pro-loading-card p{color:#cbd5e1;margin:0;line-height:1.5}
 </style>
 </head>
@@ -485,7 +485,6 @@ button:focus-visible,input:focus-visible{
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
     <label>Campeonato<select class="select-field" id="proEvent"><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option></select></label>
-    <button type="button" id="proLoadEvent">Buscar campeonato</button>
     <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
   </div>
   <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
@@ -851,8 +850,8 @@ async function loadProData(){
  const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766;
  const requestId=++proRequestId,event=select.value;
  const eventLabel=select.options[select.selectedIndex].textContent;
- const notice=document.querySelector('#view-vct .notice'),button=$('proLoadEvent');
- button.disabled=true;PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
+ const notice=document.querySelector('#view-vct .notice');
+ PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
  try{
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),120000);
   let response;
@@ -869,10 +868,9 @@ async function loadProData(){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Falha ao consultar a API: '+err.message+'. Confirme que o backend está rodando na porta 8001.';
   if(notice)notice.textContent=PRO_ERROR;
- }finally{if(requestId===proRequestId){button.disabled=false;showProLoading(false);renderPro()}}
+ }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 $('proEvent').addEventListener('change',loadProData);
-$('proLoadEvent').addEventListener('click',loadProData);
 
 loadProData();
 renderTeamSelect();renderTeams();renderPro();
