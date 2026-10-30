@@ -26,6 +26,20 @@ EVENT_POOLS = {2766: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "
                2977: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"]}
 # Torneios anteriores com a mesma map pool; ampliar somente apos validacao.
 FALLBACK_EVENTS = {2766: [2977]}
+# GC Championship 2026 foi disputado na rotacao anterior; cadastro
+# provisório ate conferirmos o regulamento oficial. Preserva mapas extras
+# efetivamente jogados caso o patch tenha mudado durante o evento.
+EVENT_POOLS[3134] = ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"]
+PROVISIONAL_POOLS = {3134}
+CURRENT_POOL = ["Bind", "Corrode", "Sunset", "Haven", "Summit", "Abyss", "Lotus"]
+
+def event_map_pool(event_id, maps=()):
+    base = EVENT_POOLS.get(event_id, CURRENT_POOL)
+    return list(dict.fromkeys([*base, *[m for m in maps if m]]))
+
+def event_pool_confirmed(event_id):
+    return event_id in EVENT_POOLS and event_id not in PROVISIONAL_POOLS
+
 series_cache = {}
 event_index_cache = {}
 
@@ -50,8 +64,8 @@ def snapshot_index(event_id):
     teams = [{"team_id": int(t["team_id"]), "nome": name}
              for name, t in data.get("equipes", {}).items()]
     return {"event_id": event_id, "equipes": sorted(teams, key=lambda t: t["nome"].lower()),
-            "partidas": [], "map_pool": EVENT_POOLS.get(event_id, []),
-            "map_pool_confirmada": event_id in EVENT_POOLS,
+            "partidas": [], "map_pool": event_map_pool(event_id),
+            "map_pool_confirmada": event_pool_confirmed(event_id),
             "meta": {"fonte": "snapshot_local"}}
 
 def snapshot_team(event_id, team_id):
@@ -65,8 +79,8 @@ def snapshot_team(event_id, team_id):
     name, team = matches[0]
     return {"event_id": event_id, "equipes": {str(team_id): {
                 "team_id": team_id, "nome": name, "mapas": team.get("mapas", [])}},
-            "map_pool": EVENT_POOLS.get(event_id, []),
-            "map_pool_confirmada": event_id in EVENT_POOLS,
+            "map_pool": event_map_pool(event_id),
+            "map_pool_confirmada": event_pool_confirmed(event_id),
             "meta": {"erros": [], "fonte": "snapshot_local"}}
 
 # Indice leve de participantes: uma pagina HTML por evento, sem abrir partidas.
@@ -259,8 +273,8 @@ def event_index(event_id):
             teams[str(t["team_id"])] = t
         indexed.append({"id": int(m.match_id), "data": m.match_date.isoformat(), "equipes": pair})
     result = {"event_id": event_id, "equipes": sorted(teams.values(), key=lambda x: x["nome"].lower()),
-              "partidas": indexed, "map_pool": EVENT_POOLS.get(event_id, []),
-              "map_pool_confirmada": event_id in EVENT_POOLS}
+              "partidas": indexed, "map_pool": event_map_pool(event_id),
+              "map_pool_confirmada": event_pool_confirmed(event_id)}
     with lock:
         event_index_cache[event_id] = (time.monotonic(), result)
     return result
@@ -329,8 +343,8 @@ def event_team(event_id: int, team_id: int):
     if saved is not None:
         stored = v4_store.event_data(event_id)
         return {"event_id": event_id, "equipes": {str(team_id): saved},
-                "map_pool": EVENT_POOLS.get(event_id, sorted({m["mapa"] for m in saved["mapas"]})),
-                "map_pool_confirmada": event_id in EVENT_POOLS,
+                "map_pool": event_map_pool(event_id, (m.get("mapa") for t in stored.get("equipes", {}).values() for m in t.get("mapas", []))),
+                "map_pool_confirmada": event_pool_confirmed(event_id),
                 "meta": {**stored.get("meta", {}), "fonte": "json_v4"}}
     index = event_index(event_id)
     matches = [m for m in index["partidas"] if any(t["team_id"] == team_id for t in m["equipes"])]
