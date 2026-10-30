@@ -2,6 +2,9 @@
 import os
 import time
 import threading
+import re
+from urllib.request import Request, urlopen
+from urllib.parse import urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -375,6 +378,31 @@ def season_event_team(team_id: int, event_id: int):
         response["map_pool"] = sorted({m["mapa"] for t in response["equipes"].values()
                                        for m in t["mapas"]})
     return response
+
+logo_cache = {}
+
+@app.get("/api/equipes/{team_id}/logo")
+def team_logo(team_id: int):
+    if not 1 <= team_id <= 9999999:
+        raise HTTPException(400, "Equipe invalida")
+    with lock:
+        if team_id in logo_cache:
+            return {"url": logo_cache[team_id]}
+    try:
+        req = Request(f"https://www.vlr.gg/team/{team_id}/",
+                      headers={"User-Agent": "Mozilla/5.0 (compatible; VavaComps/1.0)"})
+        with urlopen(req, timeout=8) as response:
+            html = response.read(300000).decode("utf-8", errors="replace")
+        # A imagem principal da equipe aparece dentro de team-header-logo.
+        match = re.search(r'team-header-logo[^>]*>\\s*<img[^>]*src=["\\\']([^"\\\']+)', html, re.I)
+        url = urljoin("https://www.vlr.gg/", match.group(1)) if match else None
+        if url and not url.startswith(("https://owcdn.net/", "https://www.vlr.gg/")):
+            url = None
+    except Exception:
+        url = None
+    with lock:
+        logo_cache[team_id] = url
+    return {"url": url}
 
 @app.get("/api/health")
 def health():
