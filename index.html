@@ -503,7 +503,7 @@ button:focus-visible,input:focus-visible{
   </div>
   <p id="proScope" class="muted" aria-live="polite"></p>
   <div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato"><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
-  <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div class="pro-event-picker" id="proEventPicker" hidden><label>Campeonato da equipe <select class="select-field" id="proTeamEvent"></select></label></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
+  <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div class="form-row" id="proRefreshRow"><button type="button" class="secondary-btn" id="proRefreshBtn">↻ Atualizar dados do time</button><span class="muted" id="proRefreshInfo" aria-live="polite"></span></div><div class="pro-event-picker" id="proEventPicker" hidden><label>Campeonato da equipe <select class="select-field" id="proTeamEvent"></select></label></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
 </section>
 <section class="view" id="view-teams">
   <h1 class="view-heading">Minhas equipes</h1><p class="view-subtitle">Crie equipes personalizadas. Cada uma tem jogadores, mapas e composições independentes.</p>
@@ -1041,6 +1041,33 @@ async function loadProTeam(name,eventOverride=null){
   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
+async function proUpdateRefreshInfo(){
+ const name=proSelectedTeam,id=PRO_TEAM_IDS.get(name),eid=PRO_SELECTED_EVENT||($('proEvent').value==='GC Championship'?3134:null);
+ if(!id||!eid)return;
+ try{
+  const data=await proFetch('/api/v4/eventos/'+eid+'/equipes/'+id+'/atualizacao');
+  if(name!==proSelectedTeam)return;
+  $('proRefreshInfo').textContent=data.ultima_atualizacao?'Última coleta: '+new Date(data.ultima_atualizacao).toLocaleString('pt-BR'):'Nenhuma coleta v4 registrada';
+ }catch(err){$('proRefreshInfo').textContent='Última atualização indisponível';}
+}
+$('proRefreshBtn').addEventListener('click',async()=>{
+ const name=proSelectedTeam,id=PRO_TEAM_IDS.get(name),eid=PRO_SELECTED_EVENT||($('proEvent').value==='GC Championship'?3134:null);
+ if(!id||!eid)return;
+ const button=$('proRefreshBtn');button.disabled=true;
+ $('proRefreshInfo').textContent='Atualizando partidas do time...';
+ try{
+  const response=await fetch(PRO_API_BASE+'/api/v4/eventos/'+eid+'/equipes/'+id+'/atualizar',{method:'POST'});
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.detail||'HTTP '+response.status);
+  if(data.status==='intervalo'){
+   $('proRefreshInfo').textContent='Atualização recente. Aguarde '+Math.ceil((data.aguarde_segundos||900)/60)+' min.';
+  }else{
+   await loadProTeam(name,eid);
+   await proUpdateRefreshInfo();
+  }
+ }catch(err){$('proRefreshInfo').textContent='Não foi possível atualizar: '+err.message}
+ finally{button.disabled=false}
+});
 $('proTeamEvent').addEventListener('change',e=>{if(proSelectedTeam)loadProTeam(proSelectedTeam,Number(e.target.value))});
 $('proEvent').addEventListener('change',loadProData);
 $('proRegion').addEventListener('change',loadProData);
