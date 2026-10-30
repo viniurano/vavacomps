@@ -126,7 +126,8 @@ class CalendarParser(HTMLParser):
             event_link = re.search(r"/event/(\d+)", a.get("href", ""))
             if event_link:
                 self.card["evento_id"] = int(event_link.group(1))
-            self.depth += 1
+            if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
+                self.depth += 1
             for attr in ("data-utc-ts", "data-ts"):
                 raw = a.get(attr)
                 if raw and raw.isdigit():
@@ -146,7 +147,8 @@ class CalendarParser(HTMLParser):
                 self._event = False
     def handle_endtag(self, tag):
         if self.card is not None:
-            self.depth -= 1
+            if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
+                self.depth -= 1
             if self.depth <= 0:
                 if self.card["timestamp"]:
                     self.cards[self.card["serie_id"]] = self.card
