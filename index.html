@@ -885,7 +885,7 @@ async function loadProData(){
  }
  scope.textContent=circuit==='Champions'?'Destaque: Champions 2026 · exibindo apenas equipes participantes deste internacional.':'Destaque: Game Changers Championship 2026 · exibindo apenas equipes participantes deste internacional.';
  const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766,requestId=++proRequestId;
- const label=select.options[select.selectedIndex].textContent,notice=document.querySelector('#view-vct .notice');
+ const label=select.options[select.selectedIndex].textContent;
  PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
  showProLoading(true,'equipes de '+label);renderPro();
