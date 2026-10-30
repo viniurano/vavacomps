@@ -486,29 +486,36 @@ def search_season_teams(q: str = Query(..., min_length=2, max_length=80)):
             "meta": {"erros": errors, "indices_consultados": len(available), "indices_total": len(events)}}
 
 @app.get("/api/temporadas/2026/equipes/{team_id}/eventos")
-def team_season_events(team_id: int):
+def team_season_events(team_id: int, region: str = Query("", max_length=20)):
     if team_id <= 0:
         raise HTTPException(400, "Equipe invalida")
-    events = [(eid, label, region) for region, stages in REGIONAL_EVENTS.items()
-              for eid, label in stages]
+    # Descobrir a regiao somente em indices locais/cache, sem consultas ao VLR.
+    known_regions = set()
+    for reg, stages in REGIONAL_EVENTS.items():
+        for eid, _ in stages:
+            saved = v4_store.event_data(eid).get("equipes", {})
+            with lock:
+                cached = event_index_cache.get(eid)
+                index = cached[1] if cached else None
+            if str(team_id) in saved or (index and any(t["team_id"] == team_id for t in index["equipes"])):
+                known_regions.add(reg)
+                break
+    if region in REGIONAL_EVENTS:
+        known_regions.add(region)
+    # Sem regiao identificada, mostrar somente os internacionais, nunca
+    # os quatro circuitos regionais indiscriminadamente.
+    events = [(eid, label, reg) for reg in REGIONAL_EVENTS if reg in known_regions
+              for eid, label in REGIONAL_EVENTS[reg]]
     events += [(eid, label, "international") for eid, label in MASTERS_2026]
-    events += [(CHAMPIONS_2026[0], CHAMPIONS_2026[1], "international")]
-    # Nenhuma consulta remota aqui. O seletor apresenta as etapas possiveis;
-    # a participacao e verificada somente quando a etapa for escolhida.
-    with lock:
-        known = {eid: value[1] for eid, value in event_index_cache.items()
-                 if time.monotonic() - value[0] < CACHE_TTL}
-    found = []
-    for eid, label, region in events:
-        index = known.get(eid)
-        if index is not None and not any(t["team_id"] == team_id for t in index["equipes"]):
-            continue
-        found.append({"id": eid, "nome": (REGION_LABELS[region] + " " + label)
-                      if region in REGION_LABELS else label, "regiao": region})
+    events.append((CHAMPIONS_2026[0], CHAMPIONS_2026[1], "international"))
     order = {eid: n for n, eid in enumerate(
         [2682, 2683, 2684, 2685, 2760, 2860, 2775, 2863, 2864,
          2765, 2977, 2776, 2976, 2978, 2766])}
-    return {"eventos": sorted(found, key=lambda e: order.get(e["id"], 99))}
+    return {"eventos": sorted([
+        {"id": eid, "nome": (REGION_LABELS[reg] + " " + label)
+         if reg in REGION_LABELS else label, "regiao": reg}
+        for eid, label, reg in events], key=lambda e: order.get(e["id"], 99)),
+        "regioes": sorted(known_regions)}
 
 @app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}")
 def regional_team(region: str, team_id: int):
