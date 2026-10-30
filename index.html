@@ -817,6 +817,22 @@ function renderPro(){
  const wins=c.matches.filter(m=>m.vitoria).length,played=c.matches.length;
  const tr=c.matches.reduce((s,m)=>{const r=proSide(m,'ataque');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  const ct=c.matches.reduce((s,m)=>{const r=proSide(m,'defesa');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
+ const equip=proEl('button','secondary-btn','Equipar na equipe ativa');equip.type='button';
+ equip.onclick=()=>{
+  const source=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
+  if(!source||source.jogadores.length!==5){notify('Composição incompleta');return}
+  const map=CONFIG.mapas.find(x=>x.nome.toLowerCase()===c.map.toLowerCase());
+  if(!map){notify('Mapa não encontrado no editor');return}
+  const agents=source.jogadores.map(p=>proAgentName(p.agente));
+  if(agents.some(a=>!Object.values(CONFIG.agentes).flat().includes(a))){notify('Há agentes não reconhecidos nesta composição');return}
+  const old=state.comps[map.nome]||[];
+  if(old.some(Boolean)&&!confirm('Substituir os agentes de '+map.nome+' na equipe ativa? Os nomes dos jogadores serão preservados.'))return;
+  state.comps[map.nome]=agents.map(a=>agentSrc(a));
+  if(!state.activeMaps.includes(map.nome))state.activeMaps.push(map.nome);
+  save();render();renderPool();showView('editor');
+  notify('Composição de '+c.map+' equipada na equipe ativa');
+ };
+ wrap.appendChild(equip);
  wrap.append(proEl('p','muted','Estatísticas gerais: todas as partidas encontradas com esta composição e o mesmo quinteto, incluindo torneios anteriores compatíveis. Histórico individual limitado a 5.'));
  proStatsRow(wrap,[['Partidas',String(played)],['Vitórias / derrotas',wins+'V / '+(played-wins)+'D'],['WR mapas',proPct(wins,played)],['WR TR',proPct(tr.w,tr.total)],['WR CT',proPct(ct.w,ct.total)]]);
  const history=proEl('div','vct-history');history.appendChild(proEl('h3','','Últimas 5 partidas desta composição'));
