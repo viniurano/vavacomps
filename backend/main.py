@@ -254,24 +254,42 @@ def _region_events(region):
         raise HTTPException(404, "Regiao nao cadastrada")
     return events
 
+MASTERS_2026 = [(2760, "Masters Santiago"), (2765, "Masters London")]
+CHAMPIONS_2026 = (2766, "Champions")
+
 @app.get("/api/temporadas/2026/regioes/{region}/equipes")
 def regional_teams(region: str):
-    events = _region_events(region)
-    teams, errors = {}, []
-    for event_id, label in events:
+    region_events = _region_events(region)
+    calendar = [region_events[0], MASTERS_2026[0], region_events[1],
+                MASTERS_2026[1], region_events[2], CHAMPIONS_2026]
+    # Consulta os indices em paralelo. Nao consulta estatisticas de partidas
+    # antes de o usuario escolher equipe e campeonato.
+    futures = {pool.submit(event_index, eid): (eid, label) for eid, label in calendar}
+    indexes, errors = {}, []
+    for future in as_completed(futures):
+        eid, label = futures[future]
         try:
-            index = event_index(event_id)
-            for team in index["equipes"]:
-                key = str(team["team_id"])
-                entry = teams.setdefault(key, {**team, "eventos": []})
-                entry["eventos"].append({"id": event_id, "nome": label})
+            indexes[eid] = future.result()
         except Exception as exc:
-            errors.append({"evento": event_id, "erro": str(exc)[:150]})
+            errors.append({"evento": eid, "erro": str(exc)[:150]})
+    teams = {}
+    region_ids = {eid for eid, _ in region_events}
+    # A listagem de equipes vem somente das ligas regionais, nunca dos
+    # internacionais, para nao adicionar equipes de outras regioes.
+    for eid, label in region_events:
+        for team in indexes.get(eid, {}).get("equipes", []):
+            key = str(team["team_id"])
+            entry = teams.setdefault(key, {**team, "eventos": []})
+    for eid, label in calendar:
+        for team in indexes.get(eid, {}).get("equipes", []):
+            entry = teams.get(str(team["team_id"]))
+            if entry is not None:
+                entry["eventos"].append({"id": eid, "nome": label})
     if not teams and errors:
         raise HTTPException(502, "Nao foi possivel consultar os eventos da regiao")
     return {"regiao": region, "temporada": 2026,
             "equipes": sorted(teams.values(), key=lambda t: t["nome"].lower()),
-            "eventos": [{"id": eid, "nome": label} for eid, label in events],
+            "eventos": [{"id": eid, "nome": label} for eid, label in calendar],
             "meta": {"erros": errors}}
 
 @app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}")
@@ -321,6 +339,42 @@ def regional_team(region: str, team_id: int):
     result["map_pool"] = sorted({m["mapa"] for t in result["equipes"].values()
                                  for m in t["mapas"]})
     return result
+
+@app.get("/api/temporadas/2026/equipes/{team_id}/eventos/{event_id}")
+def season_event_team(team_id: int, event_id: int):
+    allowed = {eid for events in REGIONAL_EVENTS.values() for eid, _ in events}
+    allowed.update(eid for eid, _ in MASTERS_2026)
+    allowed.add(CHAMPIONS_2026[0])
+    if event_id not in allowed:
+        raise HTTPException(404, "Campeonato nao cadastrado na temporada")
+    # Consulta isolada: nao inclui fallback de outro torneio.
+    index = event_index(event_id)
+    matches = [m for m in index["partidas"]
+               if any(t["team_id"] == team_id for t in m["equipes"])]
+    if not matches:
+        raise HTTPException(404, "Equipe sem partidas neste campeonato")
+    results, errors = [], []
+    futures = {pool.submit(_one_series, m, team_id): m["id"] for m in matches}
+    for future in as_completed(futures):
+        try:
+            value = future.result()
+            if value:
+                results.append(value)
+        except Exception as exc:
+            errors.append({"serie": futures[future], "erro": str(exc)[:150]})
+    response = {"event_id": event_id, "equipes": {},
+                "map_pool": index["map_pool"],
+                "map_pool_confirmada": index["map_pool_confirmada"],
+                "meta": {"erros": errors}}
+    for item in results:
+        for tid, team in item.items():
+            target = response["equipes"].setdefault(tid, {
+                "team_id": team["team_id"], "nome": team["nome"], "mapas": []})
+            target["mapas"].extend(team["mapas"])
+    if not response["map_pool"]:
+        response["map_pool"] = sorted({m["mapa"] for t in response["equipes"].values()
+                                       for m in t["mapas"]})
+    return response
 
 @app.get("/api/health")
 def health():
