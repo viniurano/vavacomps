@@ -68,6 +68,84 @@ def snapshot_team(event_id, team_id):
             "map_pool_confirmada": event_id in EVENT_POOLS,
             "meta": {"erros": [], "fonte": "snapshot_local"}}
 
+# Indice leve de participantes: uma pagina HTML por evento, sem abrir partidas.
+# Cache de 24h; erros de rede nunca apagam a ultima lista obtida.
+from html import unescape
+from html.parser import HTMLParser
+
+TEAM_INDEX_TTL = 86400
+participant_cache = {}
+
+class ParticipantParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.depth = 0
+        self.team = None
+        self.teams = {}
+        self.in_participants = False
+        self.participant_depth = 0
+        self.team_text = []
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        classes = attrs.get("class", "")
+        if not self.in_participants and any(x in classes for x in ("event-teams-container", "event-teams", "event-participants")):
+            self.in_participants = True
+            self.participant_depth = 1
+        elif self.in_participants:
+            self.participant_depth += 1
+        if tag == "a" and self.in_participants:
+            m = re.search(r"/team/(\d+)(?:/|[?\"'])", attrs.get("href", "") + "/")
+            if m:
+                self.team = {"team_id": int(m.group(1)), "nome": "", "logo": None}
+                self.team_text = []
+        if tag == "img" and self.team is not None:
+            src = attrs.get("src") or attrs.get("data-src") or ""
+            if src:
+                self.team["logo"] = urljoin("https://www.vlr.gg", src)
+    def handle_data(self, data):
+        if self.team is not None:
+            self.team_text.append(data)
+    def handle_endtag(self, tag):
+        if tag == "a" and self.team is not None:
+            name = " ".join(" ".join(self.team_text).split())
+            if name:
+                self.team["nome"] = name
+                self.teams[self.team["team_id"]] = self.team
+            self.team = None
+        if self.in_participants:
+            self.participant_depth -= 1
+            if self.participant_depth <= 0:
+                self.in_participants = False
+
+def participant_index(event_id):
+    with lock:
+        old = participant_cache.get(event_id)
+        if old and time.monotonic() - old[0] < TEAM_INDEX_TTL:
+            return old[1]
+    url = f"https://www.vlr.gg/event/{event_id}"
+    try:
+        req = Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; VavaComps/1.0)"})
+        with urlopen(req, timeout=12) as resp:
+            html = resp.read(1200000).decode("utf-8", "replace")
+        parser = ParticipantParser()
+        parser.feed(html)
+        teams = list(parser.teams.values())
+        if not teams:
+            # A estrutura da pagina pode variar. Nunca tratar HTML desconhecido
+            # como lista vazia valida nem baixar todas as series por isso.
+            raise ValueError("Secao de participantes nao reconhecida")
+        result = {"event_id": event_id, "equipes": sorted(teams, key=lambda t: t["nome"].lower()),
+                  "partidas": [], "map_pool": EVENT_POOLS.get(event_id, []),
+                  "map_pool_confirmada": event_id in EVENT_POOLS,
+                  "meta": {"fonte": "participantes_vlr", "atualizacao": "24h"}}
+        with lock:
+            participant_cache[event_id] = (time.monotonic(), result)
+        return result
+    except Exception:
+        if old:
+            return old[1]
+        raise
+
 def salvar_equipe(result, team, opponent, game, info, date, first):
     players = [{"nome": p.name, "id": p.player_id, "agente": p.agents[0],
                 "stats": p.stats.model_dump(mode="json")}
@@ -149,9 +227,6 @@ def _match_teams(match):
     return teams if all(teams) else []
 
 def event_index(event_id):
-    snapshot = snapshot_index(event_id)
-    if snapshot is not None:
-        return snapshot
     with lock:
         item = event_index_cache.get(event_id)
         if item and time.monotonic() - item[0] < CACHE_TTL:
@@ -208,6 +283,15 @@ def _one_series(item, team_id):
         salvar_equipe(result, second, first, game, info, item["data"], False)
     return result["equipes"]
 
+@app.get("/api/eventos/{event_id}/participantes")
+def list_event_participants(event_id: int):
+    if not 1 <= event_id <= 9999999:
+        raise HTTPException(400, "ID invalido")
+    try:
+        return participant_index(event_id)
+    except Exception as exc:
+        raise HTTPException(502, f"Falha ao listar participantes: {str(exc)[:120]}") from exc
+
 @app.get("/api/eventos/{event_id}/equipes")
 def list_event_teams(event_id: int):
     if not 1 <= event_id <= 9999999:
@@ -221,9 +305,6 @@ def list_event_teams(event_id: int):
 def event_team(event_id: int, team_id: int):
     if not 1 <= event_id <= 9999999 or team_id <= 0:
         raise HTTPException(400, "ID invalido")
-    snapshot = snapshot_team(event_id, team_id)
-    if snapshot is not None:
-        return snapshot
     key = (event_id, team_id)
     with lock:
         item = cache.get(key)
@@ -315,7 +396,7 @@ def regional_teams(region: str):
                 MASTERS_2026[1], region_events[2], CHAMPIONS_2026]
     # Apenas tres indices regionais para montar a lista rapidamente.
     # Masters e Champions sao verificados somente apos selecionar a equipe.
-    futures = {pool.submit(event_index, eid): (eid, label) for eid, label in region_events}
+    futures = {pool.submit(participant_index, eid): (eid, label) for eid, label in region_events}
     indexes, errors = {}, []
     for future in as_completed(futures):
         eid, label = futures[future]
