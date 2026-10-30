@@ -877,8 +877,28 @@ function renderPro(){
     tbody.appendChild(row);
    });
   };
-  renderSide(proSelectedTeam,m.jogadores,m.placar[0]);
-  renderSide(m.adversario,m.other?.jogadores||[],m.placar[1],true);
+  const updateScoreboard=()=>{
+   tbody.replaceChildren();
+   renderSide(proSelectedTeam,m.jogadores,m.placar[0]);
+   renderSide(m.adversario,m.other?.jogadores||[],m.placar[1],true);
+  };
+  if(m.jogadores?.some(p=>p.stats))updateScoreboard();
+  else{
+   const waiting=proEl('tr'),cell=proEl('td','muted','Abra esta partida para consultar os stats.');
+   cell.colSpan=scoreHeaders.length;waiting.appendChild(cell);tbody.appendChild(waiting);
+   details.addEventListener('toggle',async()=>{
+    if(!details.open||details.dataset.loaded)return;
+    details.dataset.loaded='loading';
+    cell.textContent='Buscando estatísticas desta partida...';
+    try{
+     const id=PRO_TEAM_IDS.get(proSelectedTeam);
+     const result=await proFetch('/api/temporadas/2026/equipes/'+id+'/series/'+m.serie_id+'/mapas/'+m.game_id+'/stats');
+     m.jogadores=result.jogadores;
+     m.other=m.other||{};m.other.jogadores=result.adversarios;
+     updateScoreboard();details.dataset.loaded='yes';
+    }catch(err){cell.textContent='Não foi possível carregar os stats: '+err.message;delete details.dataset.loaded}
+   });
+  }
   table.appendChild(tbody);
   const scroll=proEl('div','table-wrap');scroll.style.width='100%';scroll.appendChild(table);details.appendChild(scroll);
   history.appendChild(details);
@@ -980,11 +1000,18 @@ async function loadProTeam(name,eventOverride=null){
    try{
     const catalog=await proFetch('/api/temporadas/2026/equipes/'+id+'/eventos');
     if(requestId!==proRequestId)return;
-    if(catalog.eventos?.length){events=catalog.eventos;PRO_TEAM_EVENTS.set(name,events)}
+    if(catalog.eventos?.length){
+    const current=PRO_TEAM_EVENTS.get(name)||[];
+    events=catalog.eventos.filter(e=>e.regiao==='international'||current.some(c=>c.id===e.id)||$('proRegion').value==='international');
+    if(!events.length)events=catalog.eventos;
+    PRO_TEAM_EVENTS.set(name,events);
+   }
    }catch(err){console.warn('Calendário incompleto',err)}
   }
  }
- const selected=gc?3134:(eventOverride||events[events.length-1]?.id);
+ const region=$('proRegion').value;
+ const regionalDefault=(PRO_TEAM_EVENTS.get(name)||[]).filter(e=>[2682,2860,2977,2683,2775,2776,2684,2863,2976,2685,2864,2978].includes(e.id)).slice(-1)[0]?.id;
+ const selected=gc?3134:(eventOverride||(region==='international'?2766:regionalDefault||events.filter(e=>e.regiao===region).slice(-1)[0]?.id||events[events.length-1]?.id));
  if(!selected){
   PRO_ERROR='Não foi possível identificar campeonatos desta equipe.';
   PRO_SELECTED_EVENT=null;showProLoading(false);renderPro();return;
