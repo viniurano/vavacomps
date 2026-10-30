@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.0.2 (teste)</title>
+<title>Vava Comps — V3.0.3 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -440,9 +440,10 @@ button:focus-visible,input:focus-visible{
 .pro-team-button>span{flex:1;min-width:0}.pro-team-button>.pro-team-logo{margin-right:2px}
 .pro-heading-row{display:flex;align-items:center;gap:14px}.pro-heading-row .pro-team-logo{width:76px;height:76px}.pro-heading-row h2{margin:0}
 
-#proLoading{position:fixed;inset:0;z-index:9999;background:rgba(1,6,18,.88);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(5px)}
-#proLoading[hidden]{display:none}
-.pro-loading-card{width:min(620px,100%);background:#1E293B;border:1px solid #475569;border-radius:18px;padding:54px 40px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+#proLoading{width:100%;min-height:420px;display:flex;align-items:center;justify-content:center;padding:36px 18px;margin:24px 0}
+#proLoading[hidden],#view-vct .notice[hidden]{display:none}
+#view-vct:has(#proLoading:not([hidden])) #proTeams,#view-vct:has(#proLoading:not([hidden])) #proDetail{display:none}
+.pro-loading-card{width:min(680px,100%);background:#1E293B;border:1px solid #475569;border-radius:18px;padding:54px 40px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
 .pro-loading-spinner{width:100px;height:100px;margin:0 auto 28px;border:8px solid #475569;border-top-color:#FAFBFF;border-radius:50%;animation:proSpin .85s linear infinite}
 @keyframes proSpin{to{transform:rotate(360deg)}}
 .pro-loading-card h2{margin:0 0 10px;font-size:30px}
@@ -480,7 +481,8 @@ button:focus-visible,input:focus-visible{
 </section>
 <section class="view" id="view-vct">
   <h1 class="view-heading">VCT Comps</h1><p class="view-subtitle">Pesquise equipes profissionais e explore composições por mapa.</p>
-  <div class="notice">Carregando dados profissionais...</div>
+  <div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato"><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
+  <div class="notice" hidden></div>
   <div class="vct-filters">
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
@@ -851,7 +853,7 @@ async function loadProData(){
  const requestId=++proRequestId,event=select.value;
  const eventLabel=select.options[select.selectedIndex].textContent;
  const notice=document.querySelector('#view-vct .notice');
- PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.textContent='Consultando o VLR... O primeiro carregamento pode demorar.';
+ PRO_ERROR='';showProLoading(true,eventLabel);if(notice)notice.hidden=true;
  try{
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),120000);
   let response;
@@ -862,12 +864,12 @@ async function loadProData(){
   PRO_DATA=[];PRO_TEAM_IDS.clear();proSelectedTeam=null;proSelectedMap=null;
   const year=$('proYear').value;
   const counts=proIngestEvent(data,event,eventLabel,year);
-  if(notice)notice.textContent=eventLabel+' · '+counts.teams+' equipes · '+counts.maps+' mapas · Fonte: VLR.gg';
+  if(notice){notice.hidden=false;notice.textContent=eventLabel+' · '+counts.teams+' equipes · '+counts.maps+' mapas · Fonte: VLR.gg'}
   if(data.meta?.erros?.length)notice.textContent+=' · '+data.meta.erros.length+' séries com erro';
  }catch(err){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Falha ao consultar a API: '+err.message+'. Confirme que o backend está rodando na porta 8001.';
-  if(notice)notice.textContent=PRO_ERROR;
+  if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 $('proEvent').addEventListener('change',loadProData);
@@ -876,6 +878,5 @@ loadProData();
 renderTeamSelect();renderTeams();renderPro();
 renderAgents();renderPool();render();
 </script>
-<div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato" hidden><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
 </body>
 </html>
