@@ -1,0 +1,48 @@
+name: Vava v4 - importar amostra KRU Stage 2
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v4-kru-stage2-amostra
+  cancel-in-progress: false
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/backend-dinamico-v3
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - run: pip install -r backend/requirements.txt
+      - name: Importar somente KRU x Sentinels (2 mapas) do Americas Stage 2
+        run: |
+          python - <<'PY'
+          from backend.v4_store import collect_series, event_data
+          event_id, series_id = 2977, 729757
+          if str(series_id) in event_data(event_id).get("series", {}):
+              print("Serie ja importada; sem requisicoes ao VLR")
+          else:
+              result = collect_series(event_id, series_id, match_date="2026-08-22")
+              print(result)
+              if result.get("status") != "atualizado":
+                  raise SystemExit("Coleta nao concluida: " + str(result))
+              team = event_data(event_id).get("equipes", {}).get("2355", {})
+              if not team.get("mapas"):
+                  raise SystemExit("KRÜ ausente no resultado; nao persistir")
+          PY
+      - name: Persistir JSON no GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/v4/eventos/2977.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data(v4): KRÜ vs Sentinels Stage 2, 2 mapas"
+            git push origin HEAD:feature/backend-dinamico-v3
+          fi
