@@ -88,10 +88,10 @@ class ParticipantParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         classes = attrs.get("class", "")
-        if not self.in_participants and any(x in classes for x in ("event-teams-container", "event-teams", "event-participants")):
+        if not self.in_participants and any(x in classes for x in ("event-teams-container", "event-teams", "event-participants", "event-team-list", "event-team")):
             self.in_participants = True
             self.participant_depth = 1
-        elif self.in_participants:
+        elif self.in_participants and tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
             self.participant_depth += 1
         if tag == "a" and self.in_participants:
             m = re.search(r"/team/(\d+)(?:/|[?\"'])", attrs.get("href", "") + "/")
@@ -347,18 +347,15 @@ def event_team(event_id: int, team_id: int):
             seen = {str(m["game_id"]) for m in current_maps}
             for prior_id in FALLBACK_EVENTS[event_id]:
                 try:
-                    prior_index = event_index(prior_id)
-                    if (not prior_index["map_pool_confirmada"]
-                        or {m.lower() for m in prior_index["map_pool"]}
-                           != {m.lower() for m in response["map_pool"]}):
-                        continue
                     prior = event_team(prior_id, team_id)
                     candidates = prior["equipes"].get(str(team_id), {}).get("mapas", [])
+                    played_maps = {m["mapa"].lower() for m in current_maps}
                     for m in candidates:
-                        if (str(m["game_id"]) in seen or m["data"] > latest["data"]
+                        if (m["mapa"].lower() in played_maps or str(m["game_id"]) in seen or m["data"] > latest["data"]
                             or {str(p["id"]) for p in m["jogadores"]} != roster):
                             continue
                         seen.add(str(m["game_id"]))
+                        played_maps.add(m["mapa"].lower())
                         current_maps.append({**m, "origem_evento_id": prior_id,
                                              "origem_evento_nome": "VCT 2026: Americas Stage 2",
                                              "composicao_emprestada": True})
@@ -546,9 +543,6 @@ def season_event_team(team_id: int, event_id: int):
     allowed.add(CHAMPIONS_2026[0])
     if event_id not in allowed:
         raise HTTPException(404, "Campeonato nao cadastrado na temporada")
-    snapshot = snapshot_team(event_id, team_id)
-    if snapshot is not None:
-        return snapshot
     # Consulta isolada: nao inclui fallback de outro torneio.
     index = event_index(event_id)
     matches = [m for m in index["partidas"]
