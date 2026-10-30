@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "year": 2026,
+  "notes": "Cadastro local. Ausencia de mapas nao significa coleta concluida. Pools nao verificadas ficam null.",
+  "events": [
+    {
+      "event_id": 2682,
+      "region": "americas",
+      "stage": "Kickoff",
+      "name": "VCT 2026 AMERICAS Kickoff",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2860,
+      "region": "americas",
+      "stage": "Stage 1",
+      "name": "VCT 2026 AMERICAS Stage 1",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2977,
+      "region": "americas",
+      "stage": "Stage 2",
+      "name": "VCT 2026 AMERICAS Stage 2",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2683,
+      "region": "pacific",
+      "stage": "Kickoff",
+      "name": "VCT 2026 PACIFIC Kickoff",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2775,
+      "region": "pacific",
+      "stage": "Stage 1",
+      "name": "VCT 2026 PACIFIC Stage 1",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2776,
+      "region": "pacific",
+      "stage": "Stage 2",
+      "name": "VCT 2026 PACIFIC Stage 2",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2684,
+      "region": "emea",
+      "stage": "Kickoff",
+      "name": "VCT 2026 EMEA Kickoff",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2863,
+      "region": "emea",
+      "stage": "Stage 1",
+      "name": "VCT 2026 EMEA Stage 1",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2976,
+      "region": "emea",
+      "stage": "Stage 2",
+      "name": "VCT 2026 EMEA Stage 2",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2685,
+      "region": "china",
+      "stage": "Kickoff",
+      "name": "VCT 2026 CHINA Kickoff",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2864,
+      "region": "china",
+      "stage": "Stage 1",
+      "name": "VCT 2026 CHINA Stage 1",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2978,
+      "region": "china",
+      "stage": "Stage 2",
+      "name": "VCT 2026 CHINA Stage 2",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2760,
+      "region": "international",
+      "stage": "Masters Santiago",
+      "name": "VCT 2026 Masters Santiago",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2765,
+      "region": "international",
+      "stage": "Masters London",
+      "name": "VCT 2026 Masters London",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 2766,
+      "region": "international",
+      "stage": "Champions",
+      "name": "VCT 2026 Champions",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    },
+    {
+      "event_id": 3134,
+      "region": "game_changers",
+      "stage": "GC Championship",
+      "name": "Game Changers 2026: Championship São Paulo",
+      "map_pool": null,
+      "map_pool_confirmed": false
+    }
+  ]
+}
