@@ -188,7 +188,7 @@ def run_due(resolve_event=None):
     now = datetime.now(timezone.utc)
     results = []
     attempted = 0
-    valid_events = {int(e["id"]) for e in _read(STORE / "catalogo_2026.json", {}).get("eventos", []) if "id" in e}
+    valid_events = {int(e["event_id"]) for e in _read(STORE / "catalogo_2026.json", {}).get("events", []) if "event_id" in e}
     for item in agenda["partidas"].values():
         for planned in item.get("consultas_utc", []):
             if planned in item.get("executadas", []) or datetime.fromisoformat(planned) > now:
