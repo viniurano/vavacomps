@@ -17,7 +17,7 @@ CACHE_TTL = 1800
 MAX_SERIES = 120
 cache = {}
 lock = threading.Lock()
-pool = ThreadPoolExecutor(max_workers=4)
+pool = ThreadPoolExecutor(max_workers=2)
 # Pool confirmada para o Champions 2026; outros eventos exigem cadastro/validacao.
 EVENT_POOLS = {2766: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"],
                2977: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"]}
@@ -314,26 +314,28 @@ def search_season_teams(q: str = Query(..., min_length=2, max_length=80)):
               for eid, _ in stages]
     events += [(eid, "international") for eid, _ in MASTERS_2026]
     events += [(CHAMPIONS_2026[0], "international"), (3134, "gc")]
-    futures = {pool.submit(event_index, eid): (eid, region) for eid, region in events}
+    # Pesquisa apenas indices JA consultados, sem disparar 16 chamadas ao VLR
+    # a cada letra digitada. Os indices sao aquecidos pelas listagens normais.
     teams, errors = {}, []
-    for future in as_completed(futures):
-        eid, region = futures[future]
-        try:
-            index = future.result()
-            for team in index["equipes"]:
-                if needle not in team["nome"].casefold():
-                    continue
-                key = str(team["team_id"])
-                entry = teams.setdefault(key, {**team, "regioes": [], "circuitos": []})
-                if region not in ("international", "gc") and region not in entry["regioes"]:
-                    entry["regioes"].append(region)
-                circuit = "gc" if region == "gc" else "vct"
-                if circuit not in entry["circuitos"]:
-                    entry["circuitos"].append(circuit)
-        except Exception as exc:
-            errors.append({"evento": eid, "erro": str(exc)[:100]})
+    with lock:
+        available = {eid: entry[1] for eid, entry in event_index_cache.items()
+                     if time.monotonic() - entry[0] < CACHE_TTL}
+    for eid, region in events:
+        index = available.get(eid)
+        if index is None:
+            continue
+        for team in index["equipes"]:
+            if needle not in team["nome"].casefold():
+                continue
+            key = str(team["team_id"])
+            entry = teams.setdefault(key, {**team, "regioes": [], "circuitos": []})
+            if region not in ("international", "gc") and region not in entry["regioes"]:
+                entry["regioes"].append(region)
+            circuit = "gc" if region == "gc" else "vct"
+            if circuit not in entry["circuitos"]:
+                entry["circuitos"].append(circuit)
     return {"equipes": sorted(teams.values(), key=lambda t: t["nome"].casefold())[:60],
-            "meta": {"erros": errors}}
+            "meta": {"erros": errors, "indices_consultados": len(available), "indices_total": len(events)}}
 
 @app.get("/api/temporadas/2026/equipes/{team_id}/eventos")
 def team_season_events(team_id: int):
