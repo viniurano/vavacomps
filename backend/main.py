@@ -265,9 +265,9 @@ def regional_teams(region: str):
     region_events = _region_events(region)
     calendar = [region_events[0], MASTERS_2026[0], region_events[1],
                 MASTERS_2026[1], region_events[2], CHAMPIONS_2026]
-    # Consulta os indices em paralelo. Nao consulta estatisticas de partidas
-    # antes de o usuario escolher equipe e campeonato.
-    futures = {pool.submit(event_index, eid): (eid, label) for eid, label in calendar}
+    # Apenas tres indices regionais para montar a lista rapidamente.
+    # Masters e Champions sao verificados somente apos selecionar a equipe.
+    futures = {pool.submit(event_index, eid): (eid, label) for eid, label in region_events}
     indexes, errors = {}, []
     for future in as_completed(futures):
         eid, label = futures[future]
@@ -276,24 +276,34 @@ def regional_teams(region: str):
         except Exception as exc:
             errors.append({"evento": eid, "erro": str(exc)[:150]})
     teams = {}
-    region_ids = {eid for eid, _ in region_events}
-    # A listagem de equipes vem somente das ligas regionais, nunca dos
-    # internacionais, para nao adicionar equipes de outras regioes.
     for eid, label in region_events:
         for team in indexes.get(eid, {}).get("equipes", []):
             key = str(team["team_id"])
             entry = teams.setdefault(key, {**team, "eventos": []})
-    for eid, label in calendar:
-        for team in indexes.get(eid, {}).get("equipes", []):
-            entry = teams.get(str(team["team_id"]))
-            if entry is not None:
-                entry["eventos"].append({"id": eid, "nome": label})
+            entry["eventos"].append({"id": eid, "nome": label})
     if not teams and errors:
         raise HTTPException(502, "Nao foi possivel consultar os eventos da regiao")
     return {"regiao": region, "temporada": 2026,
             "equipes": sorted(teams.values(), key=lambda t: t["nome"].lower()),
             "eventos": [{"id": eid, "nome": label} for eid, label in calendar],
             "meta": {"erros": errors}}
+
+@app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}/eventos")
+def regional_team_events(region: str, team_id: int):
+    region_events = _region_events(region)
+    calendar = [region_events[0], MASTERS_2026[0], region_events[1],
+                MASTERS_2026[1], region_events[2], CHAMPIONS_2026]
+    futures = {pool.submit(event_index, eid): (eid, label) for eid, label in calendar}
+    available = set()
+    for future in as_completed(futures):
+        eid, label = futures[future]
+        try:
+            if any(t["team_id"] == team_id for t in future.result()["equipes"]):
+                available.add(eid)
+        except Exception:
+            continue
+    return {"eventos": [{"id": eid, "nome": label} for eid, label in calendar
+                        if eid in available]}
 
 @app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}")
 def regional_team(region: str, team_id: int):
@@ -394,7 +404,7 @@ def team_logo(team_id: int):
         with urlopen(req, timeout=8) as response:
             html = response.read(300000).decode("utf-8", errors="replace")
         # A imagem principal da equipe aparece dentro de team-header-logo.
-        match = re.search(r'team-header-logo[^>]*>\\s*<img[^>]*src=["\\\']([^"\\\']+)', html, re.I)
+        match = re.search(r"team-header-logo[\\s\\S]{0,500}?src=[\\\"']([^\\\"']+)", html, re.I)
         url = urljoin("https://www.vlr.gg/", match.group(1)) if match else None
         if url and not url.startswith(("https://owcdn.net/", "https://www.vlr.gg/")):
             url = None
