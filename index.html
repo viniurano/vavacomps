@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.1.0 (teste)</title>
+<title>Vava Comps — V3.1.1 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -785,7 +785,7 @@ function renderPro(){
    btn.type='button';btn.title=(proSelectedMap===c?'Fechar':'Abrir')+' '+mapName+' · '+c.matches.length+' partidas';
    const map=CONFIG.mapas.find(m=>m.nome===mapName);
    if(map){const img=makeImage(mapSrc(map),'',mapName);img.draggable=false;btn.appendChild(img)}
-   btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'));
+   btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'+(c.matches.some(m=>m.composicao_emprestada)?' · ANTERIOR':'')));
    btn.onclick=()=>{proSelectedMap=proSelectedMap===c?null:c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
    const players=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0].jogadores;
    roster.forEach(name=>{
@@ -800,14 +800,16 @@ function renderPro(){
  if(!proSelectedMap||!comps.includes(proSelectedMap))return;
  const c=proSelectedMap,wrap=proEl('div','vct-map-details');
  wrap.append(proEl('h3','',c.map.toUpperCase()+' · '+c.eventLabel),proEl('p','muted','Agentes: '+c.agents.join(' · ')));
+ const fallback=c.matches.find(m=>m.composicao_emprestada);
+ if(fallback)wrap.append(proEl('p','muted','Composição recuperada de '+fallback.origem_evento_nome+' · Mesmo quinteto e map pool · Não disputada neste campeonato.'));
  const wins=c.matches.filter(m=>m.vitoria).length,played=c.matches.length;
  const tr=c.matches.reduce((s,m)=>{const r=proSide(m,'ataque');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  const ct=c.matches.reduce((s,m)=>{const r=proSide(m,'defesa');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  proStatsRow(wrap,[['Partidas',String(played)],['Vitórias / derrotas',wins+'V / '+(played-wins)+'D'],['WR mapas',proPct(wins,played)],['WR TR',proPct(tr.w,tr.total)],['WR CT',proPct(ct.w,ct.total)]]);
- const history=proEl('div','vct-history');history.appendChild(proEl('h3','','Últimas 5 partidas desta composição'));
+ const history=proEl('div','vct-history');history.appendChild(proEl('h3','',fallback?'Partida de referência do campeonato anterior':'Últimas 5 partidas desta composição'));
  [...c.matches].sort((a,b)=>b.data.localeCompare(a.data)).slice(0,5).forEach(m=>{
   const details=proEl('details'),summary=proEl('summary','',
-   proDate(m.data)+' · vs '+m.adversario+' · '+m.placar.join('–')+' · '+(m.vitoria?'Vitória':'Derrota'));
+   proDate(m.data)+' · vs '+m.adversario+' · '+m.placar.join('–')+' · '+(m.vitoria?'Vitória':'Derrota')+(m.composicao_emprestada?' · '+m.origem_evento_nome:''));
   details.appendChild(summary);
   const tr=proSide(m,'ataque'),ct=proSide(m,'defesa');
   details.appendChild(proEl('p','','TR: '+tr.w+'–'+tr.lost+' ('+proPct(tr.w,tr.total)+') · CT: '+ct.w+'–'+ct.lost+' ('+proPct(ct.w,ct.total)+')'));
