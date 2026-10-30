@@ -118,9 +118,12 @@ class CalendarParser(HTMLParser):
         if tag == "a" and re.search(r"/(\\d+)/[^/]*", a.get("href", "")) and "match-item" in a.get("class", ""):
             match = re.search(r"/(\\d+)/", a["href"])
             if match:
-                self.card = {"serie_id": int(match.group(1)), "timestamp": None, "equipes": [], "evento": ""}
+                self.card = {"serie_id": int(match.group(1)), "timestamp": None, "equipes": [], "evento": "", "evento_id": None}
                 self.depth = 0
         if self.card is not None:
+            event_link = re.search(r"/event/(\\d+)", a.get("href", ""))
+            if event_link:
+                self.card["evento_id"] = int(event_link.group(1))
             self.depth += 1
             for attr in ("data-utc-ts", "data-ts"):
                 raw = a.get(attr)
@@ -165,6 +168,7 @@ def schedule_today():
         entry = known["partidas"].get(str(mid), {})
         entry.update({"serie_id": mid, "inicio_utc": started.isoformat(),
                       "equipes": card["equipes"], "campeonato": card["evento"],
+                      "evento_id": card.get("evento_id"),
                       "consultas_utc": [(started + timedelta(hours=h)).isoformat() for h in (2, 3)],
                       "executadas": entry.get("executadas", [])})
         known["partidas"][str(mid)] = entry
@@ -173,7 +177,7 @@ def schedule_today():
     return {"partidas_no_dia": sum(datetime.fromisoformat(p["inicio_utc"]).astimezone(TZ).date() == today for p in known["partidas"].values()),
             "novos_cards": len(parser.cards)}
 
-def run_due(resolve_event):
+def run_due(resolve_event=None):
     agenda = _read(STORE / "agenda.json", {"partidas": {}})
     now = datetime.now(timezone.utc)
     results = []
@@ -181,7 +185,7 @@ def run_due(resolve_event):
         for planned in item.get("consultas_utc", []):
             if planned in item.get("executadas", []) or datetime.fromisoformat(planned) > now:
                 continue
-            event_id = resolve_event(item)
+            event_id = (resolve_event(item) if resolve_event else item.get("evento_id"))
             if not event_id:
                 results.append({"serie_id": item["serie_id"], "status": "evento_nao_identificado"})
                 continue
@@ -200,3 +204,13 @@ def run_due(resolve_event):
             time.sleep(2)
     _write(STORE / "agenda.json", agenda)
     return results
+
+if __name__ == "__main__":
+    import sys
+    action = sys.argv[1] if len(sys.argv) > 1 else ""
+    if action == "schedule":
+        print(json.dumps(schedule_today(), ensure_ascii=False))
+    elif action == "run":
+        print(json.dumps(run_due(), ensure_ascii=False))
+    else:
+        raise SystemExit("Uso: python -m backend.v4_store schedule | run")
