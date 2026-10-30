@@ -728,7 +728,8 @@ $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam
 
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
 let proSelectedTeam=null,proSelectedMap=null,PRO_SELECTED_EVENT=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
-const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map();
+const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map(),PRO_TEAM_CIRCUITS=new Map();
+let PRO_SEARCH_RESULTS=null,proSearchTimer=null,proSearchRequestId=0,PRO_SEARCH_LOADING=false;
 function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=async()=>{img.onerror=null;try{const response=await fetch(PRO_API_BASE+'/api/equipes/'+id+'/logo');if(response.ok){const data=await response.json();if(data.url){img.src=data.url;return}}}catch(err){console.warn('Logo indisponível',err)}img.replaceWith(proEl('span','pro-logo-fallback',name.split(/\s+/).map(w=>w[0]).slice(0,3).join('').toUpperCase()))};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
 const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
@@ -754,13 +755,14 @@ function proStatsRow(parent,items){
  parent.appendChild(row);
 }
 function renderPro(){
- const entries=proFiltered(),q=$('proSearch').value.trim().toLowerCase(),names=PRO_TEAMS.filter(t=>t.nome.toLowerCase().includes(q)).map(t=>t.nome);
+ const entries=proFiltered(),q=$('proSearch').value.trim().toLowerCase(),names=(q.length>=2&&PRO_SEARCH_RESULTS!==null?PRO_SEARCH_RESULTS:PRO_TEAMS).filter(t=>t.nome.toLowerCase().includes(q)).map(t=>t.nome);
  const grid=$('proTeams'),detail=$('proDetail');grid.replaceChildren();
  if(proSelectedTeam&&!names.includes(proSelectedTeam)){proSelectedTeam=null;proSelectedMap=null}
  grid.hidden=!!proSelectedTeam;detail.hidden=!proSelectedTeam;
  if(!proSelectedTeam){
   if(PRO_ERROR)grid.appendChild(proEl('p','muted',PRO_ERROR));
-  else if(!names.length)grid.appendChild(proEl('p','muted','Nenhuma equipe encontrada com esses filtros.'));
+  else if(!names.length)grid.appendChild(proEl('p','muted',PRO_SEARCH_LOADING?'Pesquisando equipes de todos os campeonatos...':'Nenhuma equipe encontrada com esses filtros.'));
+  if(PRO_SEARCH_LOADING&&names.length)grid.appendChild(proEl('p','muted','Pesquisando também em outras regiões e campeonatos...'));
   names.forEach(name=>{
    const comps=entries.filter(c=>c.team===name),b=proEl('button','pro-team-button');
    b.type='button';const left=proEl('span');
@@ -889,7 +891,22 @@ function renderPro(){
  }else panel.appendChild(wrap);
 }
 $('proBack').addEventListener('click',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
-$('proSearch').addEventListener('input',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
+$('proSearch').addEventListener('input',()=>{
+ proSelectedTeam=null;proSelectedMap=null;
+ const query=$('proSearch').value.trim();
+ clearTimeout(proSearchTimer);const request=++proSearchRequestId;
+ PRO_SEARCH_RESULTS=null;PRO_SEARCH_LOADING=query.length>=2;renderPro();
+ if(query.length<2)return;
+ proSearchTimer=setTimeout(async()=>{
+  try{
+   const data=await proFetch('/api/temporadas/2026/equipes/busca?q='+encodeURIComponent(query));
+   if(request!==proSearchRequestId)return;
+   PRO_SEARCH_RESULTS=data.equipes||[];
+   PRO_SEARCH_RESULTS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_CIRCUITS.set(t.nome,t.circuitos?.includes('vct')?'vct':'gc')});
+  }catch(err){if(request!==proSearchRequestId)return;console.warn('Busca global indisponível',err);PRO_SEARCH_RESULTS=null}
+  finally{if(request===proSearchRequestId){PRO_SEARCH_LOADING=false;renderPro()}}
+ },350);
+});
 // V3.0: consulta sob demanda na API Python, sem arquivos JSON por campeonato.
 const PRO_API_BASE = 'http://127.0.0.1:8001';
 let proRequestId=0;
@@ -928,7 +945,7 @@ async function loadProData(){
  const eventId=circuit==='GC Championship'?3134:2766;
  const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes':'/api/eventos/'+eventId+'/equipes';
  const label=regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent;
- PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
+ PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_TEAM_CIRCUITS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
  if(circuit==='GC Championship'&&region!=='international'){
   PRO_ERROR='Por enquanto o Game Changers possui somente o Championship internacional. As ligas regionais GC ficam para uma atualização futura.';
@@ -941,7 +958,7 @@ async function loadProData(){
   const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
-  PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[])});
+  PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[]);PRO_TEAM_CIRCUITS.set(t.nome,circuit==='GC Championship'?'gc':'vct')});
   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
  }catch(err){
   if(requestId!==proRequestId)return;
@@ -950,41 +967,45 @@ async function loadProData(){
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 async function loadProTeam(name,eventOverride=null){
- const id=PRO_TEAM_IDS.get(name),region=$('proRegion').value,circuit=$('proEvent').value;
+ const id=PRO_TEAM_IDS.get(name),circuit=PRO_TEAM_CIRCUITS.get(name)||($('proEvent').value==='GC Championship'?'gc':'vct');
  if(!id)return;
- const regional=region!=='international'&&circuit==='Champions';
- const eventId=circuit==='GC Championship'?3134:2766;
- const requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
- let events=regional?(PRO_TEAM_EVENTS.get(name)||[]):[];
- if(regional&&eventOverride===null){
-  showProLoading(true,'campeonatos de '+name);
-  try{
-   const catalog=await proFetch('/api/temporadas/2026/regioes/'+region+'/equipes/'+id+'/eventos');
-   if(requestId!==proRequestId)return;
-   if(catalog.eventos?.length){events=catalog.eventos;PRO_TEAM_EVENTS.set(name,events)}
-  }catch(err){console.warn('Calendário incompleto',err)}
- }
- const selected=regional?(eventOverride||events[events.length-1]?.id):eventId;
- if(!selected){PRO_ERROR='Nenhum campeonato encontrado para a equipe.';showProLoading(false);renderPro();return}
- const url=regional?'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected:'/api/eventos/'+eventId+'/equipes/'+id;
+ const gc=circuit==='gc',requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
  proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
- PRO_SELECTED_EVENT=regional?selected:null;
+ let events=[];
+ if(!gc){
+  events=PRO_TEAM_EVENTS.get(name)||[];
+  if(eventOverride===null||!events.length){
+   showProLoading(true,'campeonatos de '+name);renderPro();
+   try{
+    const catalog=await proFetch('/api/temporadas/2026/equipes/'+id+'/eventos');
+    if(requestId!==proRequestId)return;
+    if(catalog.eventos?.length){events=catalog.eventos;PRO_TEAM_EVENTS.set(name,events)}
+   }catch(err){console.warn('Calendário incompleto',err)}
+  }
+ }
+ const selected=gc?3134:(eventOverride||events[events.length-1]?.id);
+ if(!selected){
+  PRO_ERROR='Não foi possível identificar campeonatos desta equipe.';
+  PRO_SELECTED_EVENT=null;showProLoading(false);renderPro();return;
+ }
+ const url=gc?'/api/eventos/3134/equipes/'+id:'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected;
+ PRO_SELECTED_EVENT=gc?null:selected;
  const picker=$('proEventPicker'),select=$('proTeamEvent');
- picker.hidden=!regional;select.replaceChildren();
+ picker.hidden=gc;select.replaceChildren();
  events.forEach(e=>{const opt=document.createElement('option');opt.value=String(e.id);opt.textContent=e.nome;select.appendChild(opt)});
- if(regional)select.value=String(selected);
+ if(!gc)select.value=String(selected);
  showProLoading(true,'partidas de '+name);renderPro();
  try{
   const data=await proFetch(url);
   if(requestId!==proRequestId)return;
-  PRO_DATA=[];PRO_MAP_POOL=data.map_pool||PRO_MAP_POOL;PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
+  PRO_DATA=[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
   if(PRO_MAP_POOL.length<7){
    const fillers=CONFIG.mapas.filter(m=>m.ativo).map(m=>m.nome);
    PRO_MAP_POOL=[...new Set([...PRO_MAP_POOL,...fillers])].slice(0,7);
    PRO_POOL_CONFIRMED=false;
   }
-  const eventLabel=regional?(events.find(e=>e.id===Number(selected))?.nome||'Campeonato 2026'):$('proEvent').selectedOptions[0].textContent;
-  proIngestEvent(data,regional?'VCT Franquias':circuit,eventLabel,$('proYear').value);
+  const eventLabel=gc?'Game Changers Championship 2026':(events.find(e=>e.id===Number(selected))?.nome||'VCT 2026');
+  proIngestEvent(data,gc?'GC Championship':'VCT Franquias',eventLabel,$('proYear').value);
   if(data.meta?.erros?.length&&notice){notice.hidden=false;notice.textContent='Algumas partidas não puderam ser consultadas ('+data.meta.erros.length+').'}
  }catch(err){
   if(requestId!==proRequestId)return;
