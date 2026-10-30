@@ -443,7 +443,9 @@ button:focus-visible,input:focus-visible{
 .pro-scoreboard .pro-score-opponent th{background:#3e354b}
 .pro-score-agent{width:25px;height:25px;object-fit:cover;border-radius:5px;vertical-align:middle}
 .pro-scoreboard tbody tr:not(.pro-score-team):hover{background:#304057}
-#proTeams[hidden]{display:none}
+#proTeams[hidden],#proEventPicker[hidden]{display:none}
+.pro-event-picker{margin:14px 0 20px}.pro-event-picker label{display:flex;flex-direction:column;gap:6px;color:#b5c5d8;font-size:13px;max-width:330px}
+.pro-equip-btn{background:#f4b942;color:#131c2c;border:1px solid #ffda7b;font-weight:800;margin:12px 0}.pro-equip-btn:hover{background:#ffcf63}
 .vct-inline-details>td{padding:8px 4px 18px!important;text-align:left!important}
 .vct-inline-details .vct-map-details{max-width:none;margin-top:4px}
 .pro-team-logo{width:56px;height:56px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 2px 6px #0005)}
@@ -497,11 +499,10 @@ button:focus-visible,input:focus-visible{
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
     <label>Circuito<select class="select-field" id="proEvent"><option value="Champions">VCT Franquias</option><option value="GC Championship">Game Changers</option><option value="Challengers" disabled>Challengers (em breve)</option></select></label>
     <label>Região<select class="select-field" id="proRegion"><option value="international">Internacional (destaque)</option><option value="americas">Americas</option><option value="pacific">Pacific</option><option value="emea">EMEA</option><option value="china">China</option></select></label>
-    <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
   </div>
   <p id="proScope" class="muted" aria-live="polite"></p>
   <div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato"><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
-  <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
+  <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div class="pro-event-picker" id="proEventPicker" hidden><label>Campeonato da equipe <select class="select-field" id="proTeamEvent"></select></label></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
 </section>
 <section class="view" id="view-teams">
   <h1 class="view-heading">Minhas equipes</h1><p class="view-subtitle">Crie equipes personalizadas. Cada uma tem jogadores, mapas e composições independentes.</p>
@@ -725,8 +726,8 @@ $('createTeam').addEventListener('click',()=>{
 $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam').click()});
 
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
-let proSelectedTeam=null,proSelectedMap=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
-const PRO_TEAM_IDS=new Map();
+let proSelectedTeam=null,proSelectedMap=null,PRO_SELECTED_EVENT=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
+const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map();
 function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=()=>{img.style.display='none'};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
 const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
@@ -738,8 +739,8 @@ function proAgents(parent,names,cls='vct-agent'){
  names.forEach(n=>{const file=proAgentName(n),a=decorateAgent(makeImage(agentSrc(file),cls,n),agentSrc(file));a.draggable=false;a.title=n;parent.appendChild(a)});
 }
 function proFiltered(){
- const q=$('proSearch').value.trim().toLowerCase(),y=$('proYear').value,e=$('proEvent').value,m=$('proMap').value;
- return PRO_DATA.filter(c=>c.team.toLowerCase().includes(q)&&c.year===y&&(e==='all'||c.event===e)&&(m==='all'||c.map.toLowerCase()===m.toLowerCase()));
+ const q=$('proSearch').value.trim().toLowerCase(),y=$('proYear').value,e=$('proEvent').value;
+ return PRO_DATA.filter(c=>c.team.toLowerCase().includes(q)&&c.year===y&&(e==='all'||c.event===e));
 }
 function proSide(match,side){
  const w=Number(match['rounds_'+side]||0),other=match.other;
@@ -768,6 +769,7 @@ function renderPro(){
   });return;
  }
  const allComps=PRO_DATA.filter(c=>c.team===proSelectedTeam);
+ const picker=$('proEventPicker');picker.hidden=!PRO_SELECTED_EVENT;
  // Apenas a composicao mais recente de cada mapa efetivamente jogado no campeonato.
  const latestByMap=new Map();
  allComps.forEach(c=>{
@@ -776,9 +778,16 @@ function renderPro(){
   const previous=latestByMap.get(c.map);
   if(!previous||last.data>previous.last.data||(last.data===previous.last.data&&Number(last.game_id)>Number(previous.last.game_id)))latestByMap.set(c.map,{c,last});
  });
+ const latestMatch=allComps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
+ const activeRoster=latestMatch?new Set(latestMatch.jogadores.map(p=>String(p.id))):null;
+ for(const [mapName,item] of latestByMap){
+  const match=item.last;
+  if(activeRoster&&(!match.jogadores||match.jogadores.length!==5||match.jogadores.some(p=>!activeRoster.has(String(p.id)))))latestByMap.delete(mapName);
+ }
  const comps=[...latestByMap.values()].map(x=>x.c),heading=$('proTeamHeading');heading.replaceChildren();
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
  const latest=allComps.flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data)||Number(b.m.game_id)-Number(a.m.game_id))[0];
+ const currentRoster=latest?new Set(latest.m.jogadores.map(p=>String(p.id))):null;
  if(latest)heading.append(proEl('p','muted','Última composição utilizada · '+latest.c.map.toUpperCase()+' · '+latest.c.agents.join(' · ')+' · '+proDate(latest.m.data)));
  heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Mapas encontrados na temporada · As map pools podem mudar entre os stages.'));
  const table=$('proTable');table.replaceChildren();
@@ -788,7 +797,7 @@ function renderPro(){
  const roster=recent?recent.jogadores.map(p=>p.nome):CONFIG.jogadores;
  roster.forEach(n=>trh.appendChild(proEl('th','',n)));head.appendChild(trh);table.appendChild(head);
  const body=proEl('tbody');let selectedRow=null;
- const maps=PRO_MAP_POOL.length?PRO_MAP_POOL.filter(m=>$('proMap').value==='all'||m.toLowerCase()===$('proMap').value.toLowerCase()):[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
+ const maps=PRO_MAP_POOL.length?PRO_MAP_POOL:[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
  maps.forEach(mapName=>{
   const choices=comps.filter(c=>c.map===mapName);
   if(!choices.length){const row=proEl('tr'),cell=proEl('td'),map=CONFIG.mapas.find(m=>m.nome.toLowerCase()===mapName.toLowerCase());const btn=proEl('button','vct-map');btn.type='button';btn.disabled=true;if(map)btn.appendChild(makeImage(mapSrc(map),'',mapName));btn.appendChild(proEl('span','',mapName.toUpperCase()+' · Sem partidas'));cell.appendChild(btn);row.appendChild(cell);for(let i=0;i<roster.length;i++)row.appendChild(proEl('td','vct-empty','—'));body.appendChild(row)}
@@ -817,7 +826,7 @@ function renderPro(){
  const wins=c.matches.filter(m=>m.vitoria).length,played=c.matches.length;
  const tr=c.matches.reduce((s,m)=>{const r=proSide(m,'ataque');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  const ct=c.matches.reduce((s,m)=>{const r=proSide(m,'defesa');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
- const equip=proEl('button','secondary-btn','Equipar na equipe ativa');equip.type='button';
+ const equip=proEl('button','pro-equip-btn','Equipar na equipe ativa');equip.type='button';
  equip.onclick=()=>{
   const source=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
   if(!source||source.jogadores.length!==5){notify('Composição incompleta');return}
@@ -922,7 +931,7 @@ async function loadProData(){
  const eventId=circuit==='GC Championship'?3134:2766;
  const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes':'/api/eventos/'+eventId+'/equipes';
  const label=regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent;
- PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
+ PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
  if(circuit==='GC Championship'&&region!=='international'){
   PRO_ERROR='Por enquanto o Game Changers possui somente o Championship internacional. As ligas regionais GC ficam para uma atualização futura.';
@@ -935,7 +944,7 @@ async function loadProData(){
   const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
-  PRO_TEAMS.forEach(t=>PRO_TEAM_IDS.set(t.nome,t.team_id));
+  PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[])});
   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
  }catch(err){
   if(requestId!==proRequestId)return;
@@ -943,28 +952,37 @@ async function loadProData(){
   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
-async function loadProTeam(name){
+async function loadProTeam(name,eventOverride=null){
  const id=PRO_TEAM_IDS.get(name),region=$('proRegion').value,circuit=$('proEvent').value;
  if(!id)return;
  const regional=region!=='international'&&circuit==='Champions';
  const eventId=circuit==='GC Championship'?3134:2766;
- const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes/'+id:'/api/eventos/'+eventId+'/equipes/'+id;
+ const events=regional?(PRO_TEAM_EVENTS.get(name)||[]):[];
+ const selected=regional?(eventOverride||events[events.length-1]?.id):eventId;
+ if(!selected){PRO_ERROR='Nenhum campeonato encontrado para a equipe.';renderPro();return}
+ const url=regional?'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected:'/api/eventos/'+eventId+'/equipes/'+id;
  const requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
  proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
+ PRO_SELECTED_EVENT=regional?selected:null;
+ const picker=$('proEventPicker'),select=$('proTeamEvent');
+ picker.hidden=!regional;select.replaceChildren();
+ events.forEach(e=>{const opt=document.createElement('option');opt.value=String(e.id);opt.textContent=e.nome;select.appendChild(opt)});
+ if(regional)select.value=String(selected);
  showProLoading(true,'partidas de '+name);renderPro();
  try{
   const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_DATA=[];PRO_MAP_POOL=data.map_pool||PRO_MAP_POOL;PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
-  proIngestEvent(data,regional?'VCT Franquias':circuit,regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent,$('proYear').value);
+  const eventLabel=regional?(events.find(e=>e.id===Number(selected))?.nome||'Campeonato 2026'):$('proEvent').selectedOptions[0].textContent;
+  proIngestEvent(data,regional?'VCT Franquias':circuit,eventLabel,$('proYear').value);
   if(data.meta?.erros?.length&&notice){notice.hidden=false;notice.textContent='Algumas partidas não puderam ser consultadas ('+data.meta.erros.length+').'}
  }catch(err){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Erro ao consultar '+name+': '+err.message;
-  proSelectedTeam=null;
   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
+$('proTeamEvent').addEventListener('change',e=>{if(proSelectedTeam)loadProTeam(proSelectedTeam,Number(e.target.value))});
 $('proEvent').addEventListener('change',loadProData);
 $('proRegion').addEventListener('change',loadProData);
 
