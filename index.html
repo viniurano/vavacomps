@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.1.1 (teste)</title>
+<title>Vava Comps — V3.2.0 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -485,9 +485,11 @@ button:focus-visible,input:focus-visible{
   <div class="vct-filters">
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
     <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
-    <label>Campeonato<select class="select-field" id="proEvent"><option value="Champions">Valorant Champions 2026</option><option value="GC Championship">Game Changers Championship 2026</option></select></label>
+    <label>Circuito<select class="select-field" id="proEvent"><option value="Champions">VCT Franquias</option><option value="GC Championship">Game Changers</option><option value="Challengers" disabled>Challengers (em breve)</option></select></label>
+    <label>Região<select class="select-field" id="proRegion"><option value="international">Internacional (destaque)</option><option value="americas">Americas</option><option value="pacific">Pacific</option><option value="emea">EMEA</option><option value="china">China</option></select></label>
     <label>Mapa<select class="select-field" id="proMap"><option value="all">Todos</option></select></label>
   </div>
+  <p id="proScope" class="muted" aria-live="polite"></p>
   <div id="proLoading" role="status" aria-live="polite" aria-label="Carregando campeonato"><div class="pro-loading-card"><div class="pro-loading-spinner" aria-hidden="true"></div><h2>Carregando campeonato</h2><p id="proLoadingText">Buscando partidas e estatísticas no VLR. Isso pode levar alguns instantes.</p></div></div>
   <div id="proTeams" class="pro-team-grid"></div><div id="proDetail" hidden><button id="proBack" class="secondary-btn" type="button">← Voltar às equipes</button><div id="proTeamHeading"></div><div id="proTableWrap" class="table-wrap"><table id="proTable" class="vct-table"></table></div><div id="proMapDetails"></div></div>
 </section>
@@ -872,6 +874,16 @@ async function proFetch(path){
  }finally{clearTimeout(timer)}
 }
 async function loadProData(){
+ const region=$('proRegion').value,scope=$('proScope'),notice=document.querySelector('#view-vct .notice');
+ const circuit=$('proEvent').value;
+ if(region!=='international'){
+  ++proRequestId;showProLoading(false);PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];proSelectedTeam=null;proSelectedMap=null;
+  PRO_ERROR='A listagem regional de '+$('proRegion').selectedOptions[0].textContent+' ainda não está integrada. Em breve será possível consultar todos os times dessa liga, mesmo sem classificação internacional.';
+  scope.textContent='Região selecionada: '+$('proRegion').selectedOptions[0].textContent+' · integração pendente';
+  if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
+  renderPro();return;
+ }
+ scope.textContent=circuit==='Champions'?'Destaque: Champions 2026 · exibindo apenas equipes participantes deste internacional.':'Destaque: Game Changers Championship 2026 · exibindo apenas equipes participantes deste internacional.';
  const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766,requestId=++proRequestId;
  const label=select.options[select.selectedIndex].textContent,notice=document.querySelector('#view-vct .notice');
  PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
@@ -909,6 +921,7 @@ async function loadProTeam(name){
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 $('proEvent').addEventListener('change',loadProData);
+$('proRegion').addEventListener('change',loadProData);
 
 loadProData();
 renderTeamSelect();renderTeams();
