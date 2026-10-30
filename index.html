@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.3.0 (teste)</title>
+<title>Vava Comps — V3.3.1 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -433,12 +433,15 @@ button:focus-visible,input:focus-visible{
 .pro-player-stats{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}
 .pro-player-stats th,.pro-player-stats td{padding:7px 10px;border-bottom:1px solid #41516a;text-align:left;white-space:nowrap}
 .pro-player-stats th{color:#aabbd0}
-.pro-scoreboard{min-width:850px;font-variant-numeric:tabular-nums}
-.pro-scoreboard thead th{font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.pro-scoreboard{min-width:0;width:100%;table-layout:fixed;font-size:clamp(9px,.85vw,11px);font-variant-numeric:tabular-nums}
+.pro-scoreboard thead th{font-size:inherit;text-transform:uppercase;letter-spacing:0}
+.pro-scoreboard th,.pro-scoreboard td{padding:6px 3px;overflow:hidden;text-overflow:ellipsis}
+.pro-scoreboard th:first-child,.pro-scoreboard td:first-child{width:19%;text-align:left}
+.pro-scoreboard th:nth-child(2),.pro-scoreboard td:nth-child(2){width:8%}
 .pro-scoreboard td:not(:first-child),.pro-scoreboard thead th:not(:first-child){text-align:center}
 .pro-scoreboard .pro-score-team th{background:#304862;color:#fff;font-size:14px;text-align:left;padding:12px}
 .pro-scoreboard .pro-score-opponent th{background:#3e354b}
-.pro-score-agent{width:34px;height:34px;object-fit:cover;border-radius:5px;vertical-align:middle}
+.pro-score-agent{width:25px;height:25px;object-fit:cover;border-radius:5px;vertical-align:middle}
 .pro-scoreboard tbody tr:not(.pro-score-team):hover{background:#304057}
 #proTeams[hidden]{display:none}
 .vct-inline-details>td{padding:8px 4px 18px!important;text-align:left!important}
@@ -838,7 +841,7 @@ function renderPro(){
    const group=proEl('tr','pro-score-team'+(opponent?' pro-score-opponent':''));
    const cell=proEl('th','',teamName+' · '+score+' rounds');cell.colSpan=scoreHeaders.length;group.appendChild(cell);tbody.appendChild(group);
    if(!players?.length){const empty=proEl('tr'),td=proEl('td','muted','Estatísticas dos jogadores indisponíveis');td.colSpan=scoreHeaders.length;empty.appendChild(td);tbody.appendChild(empty);return}
-   [...players].sort((a,b)=>numeric(getStat(b.stats?.overall||{},'rating','rating_vlr'))-numeric(getStat(a.stats?.overall||{},'rating','rating_vlr'))).forEach(p=>{
+   [...players].sort((a,b)=>numeric(getStat(b.stats?.overall||{},'acs'))-numeric(getStat(a.stats?.overall||{},'acs'))).forEach(p=>{
     const st=p.stats?.overall||{},kills=getStat(st,'kills','kill'),deaths=getStat(st,'deaths','death');
     const kd=kills==null||deaths==null?'—':deaths===0?fmt(kills):((Number(kills)||0)/Number(deaths)).toFixed(2);
     const row=proEl('tr');
