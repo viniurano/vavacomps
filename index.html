@@ -770,34 +770,31 @@ function renderPro(){
  }
  const allComps=PRO_DATA.filter(c=>c.team===proSelectedTeam);
  const picker=$('proEventPicker');picker.hidden=!PRO_SELECTED_EVENT;
- // Apenas a composicao mais recente de cada mapa efetivamente jogado no campeonato.
+ // O quinteto de referencia e o da ultima partida do campeonato.
+ // Para cada mapa, escolher a ultima composicao jogada POR ESSE QUINTETO.
+ const latestMatch=allComps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
+ const activeRoster=latestMatch?new Set(latestMatch.jogadores.map(p=>String(p.id))):null;
  const latestByMap=new Map();
  allComps.forEach(c=>{
-  const last=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
+  const last=[...c.matches].filter(m=>activeRoster&&m.jogadores?.length===5&&m.jogadores.every(p=>activeRoster.has(String(p.id))))
+    .sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
   if(!last)return;
   const previous=latestByMap.get(c.map);
   if(!previous||last.data>previous.last.data||(last.data===previous.last.data&&Number(last.game_id)>Number(previous.last.game_id)))latestByMap.set(c.map,{c,last});
  });
- const latestMatch=allComps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
- const activeRoster=latestMatch?new Set(latestMatch.jogadores.map(p=>String(p.id))):null;
- for(const [mapName,item] of latestByMap){
-  const match=item.last;
-  if(activeRoster&&(!match.jogadores||match.jogadores.length!==5||match.jogadores.some(p=>!activeRoster.has(String(p.id)))))latestByMap.delete(mapName);
- }
  const comps=[...latestByMap.values()].map(x=>x.c),heading=$('proTeamHeading');heading.replaceChildren();
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
  const latest=allComps.flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data)||Number(b.m.game_id)-Number(a.m.game_id))[0];
- const currentRoster=latest?new Set(latest.m.jogadores.map(p=>String(p.id))):null;
  if(latest)heading.append(proEl('p','muted','Última composição utilizada · '+latest.c.map.toUpperCase()+' · '+latest.c.agents.join(' · ')+' · '+proDate(latest.m.data)));
  heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Mapas encontrados na temporada · As map pools podem mudar entre os stages.'));
  const table=$('proTable');table.replaceChildren();
  const head=proEl('thead'),trh=proEl('tr');trh.appendChild(proEl('th','','Mapa / partidas'));
  // Jogadores são apresentados conforme a partida mais recente da equipe.
  const recent=allComps.flatMap(c=>c.matches).sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
- const roster=recent?recent.jogadores.map(p=>p.nome):CONFIG.jogadores;
+ const roster=latestMatch?latestMatch.jogadores.map(p=>p.nome):CONFIG.jogadores;
  roster.forEach(n=>trh.appendChild(proEl('th','',n)));head.appendChild(trh);table.appendChild(head);
  const body=proEl('tbody');let selectedRow=null;
- const maps=PRO_MAP_POOL.length?PRO_MAP_POOL:[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
+ const maps=PRO_MAP_POOL.length?PRO_MAP_POOL.slice(0,7):[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b)).slice(0,7);
  maps.forEach(mapName=>{
   const choices=comps.filter(c=>c.map===mapName);
   if(!choices.length){const row=proEl('tr'),cell=proEl('td'),map=CONFIG.mapas.find(m=>m.nome.toLowerCase()===mapName.toLowerCase());const btn=proEl('button','vct-map');btn.type='button';btn.disabled=true;if(map)btn.appendChild(makeImage(mapSrc(map),'',mapName));btn.appendChild(proEl('span','',mapName.toUpperCase()+' · Sem partidas'));cell.appendChild(btn);row.appendChild(cell);for(let i=0;i<roster.length;i++)row.appendChild(proEl('td','vct-empty','—'));body.appendChild(row)}
@@ -808,7 +805,7 @@ function renderPro(){
    if(map){const img=makeImage(mapSrc(map),'',mapName);img.draggable=false;btn.appendChild(img)}
    btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'+(c.matches.some(m=>m.composicao_emprestada)?' · ANTERIOR':'')));
    btn.onclick=()=>{proSelectedMap=proSelectedMap===c?null:c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
-   const players=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0].jogadores;
+   const players=latestByMap.get(c.map).last.jogadores;
    roster.forEach(name=>{
     const td=proEl('td'),player=players.find(p=>p.nome===name);
     const agent=player?.agente;
@@ -938,7 +935,7 @@ async function loadProData(){
   scope.textContent='Game Changers Championship 2026';
   renderPro();return;
  }
- scope.textContent=regional?'VCT Franquias · '+$('proRegion').selectedOptions[0].textContent+' · Kickoff, Stage 1 e Stage 2 de 2026':'Destaque internacional · '+label+' · somente participantes do torneio';
+ scope.textContent=regional?'VCT Franquias · '+$('proRegion').selectedOptions[0].textContent+' · temporada 2026':'Destaque internacional · '+label+' · somente participantes do torneio';
  showProLoading(true,label);renderPro();
  try{
   const data=await proFetch(url);
