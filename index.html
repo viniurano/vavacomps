@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.0.4 (teste)</title>
+<title>Vava Comps — V3.0.5 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -755,9 +755,18 @@ function renderPro(){
    b.append(left,proEl('span','','›'));b.onclick=()=>{proSelectedTeam=name;proSelectedMap=null;renderPro()};grid.appendChild(b);
   });return;
  }
- const comps=entries.filter(c=>c.team===proSelectedTeam),heading=$('proTeamHeading');heading.replaceChildren();
+ const allComps=entries.filter(c=>c.team===proSelectedTeam);
+ // Apenas a composicao mais recente de cada mapa efetivamente jogado no campeonato.
+ const latestByMap=new Map();
+ allComps.forEach(c=>{
+  const last=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0];
+  if(!last)return;
+  const previous=latestByMap.get(c.map);
+  if(!previous||last.data>previous.last.data||(last.data===previous.last.data&&Number(last.game_id)>Number(previous.last.game_id)))latestByMap.set(c.map,{c,last});
+ });
+ const comps=[...latestByMap.values()].map(x=>x.c),heading=$('proTeamHeading');heading.replaceChildren();
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
- const latest=entries.filter(c=>c.team===proSelectedTeam).flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data))[0];
+ const latest=allComps.flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data)||Number(b.m.game_id)-Number(a.m.game_id))[0];
  if(latest)heading.append(proEl('p','muted','Última composição utilizada · '+latest.c.map.toUpperCase()+' · '+latest.c.agents.join(' · ')+' · '+proDate(latest.m.data)));
  heading.append(proEl('p','muted','Clique em uma composição para consultar partidas, jogadores e estatísticas reais.'));
  const table=$('proTable');table.replaceChildren();
@@ -769,15 +778,15 @@ function renderPro(){
  const body=proEl('tbody');let selectedRow=null;
  const maps=[...new Set(comps.map(c=>c.map))].sort((a,b)=>a.localeCompare(b));
  maps.forEach(mapName=>{
-  const choices=comps.filter(c=>c.map===mapName).sort((a,b)=>b.matches.length-a.matches.length);
-  choices.forEach((c,idx)=>{
+  const choices=comps.filter(c=>c.map===mapName);
+  choices.forEach(c=>{
    const row=proEl('tr'),cell=proEl('td'),btn=proEl('button','vct-map'+(proSelectedMap===c?' selected':''));
    btn.type='button';btn.title=(proSelectedMap===c?'Fechar':'Abrir')+' '+mapName+' · '+c.matches.length+' partidas';
    const map=CONFIG.mapas.find(m=>m.nome===mapName);
    if(map){const img=makeImage(mapSrc(map),'',mapName);img.draggable=false;btn.appendChild(img)}
-   btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'+(choices.length>1?' · #'+(idx+1):'')));
+   btn.appendChild(proEl('span','',mapName.toUpperCase()+' · '+c.matches.length+'x'));
    btn.onclick=()=>{proSelectedMap=proSelectedMap===c?null:c;renderPro()};cell.appendChild(btn);row.appendChild(cell);
-   const players=c.matches[c.matches.length-1].jogadores;
+   const players=[...c.matches].sort((a,b)=>b.data.localeCompare(a.data)||Number(b.game_id)-Number(a.game_id))[0].jogadores;
    roster.forEach(name=>{
     const td=proEl('td'),player=players.find(p=>p.nome===name);
     const agent=player?.agente;
@@ -794,7 +803,7 @@ function renderPro(){
  const tr=c.matches.reduce((s,m)=>{const r=proSide(m,'ataque');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  const ct=c.matches.reduce((s,m)=>{const r=proSide(m,'defesa');s.w+=r.w;s.total+=r.total;return s},{w:0,total:0});
  proStatsRow(wrap,[['Partidas',String(played)],['Vitórias / derrotas',wins+'V / '+(played-wins)+'D'],['WR mapas',proPct(wins,played)],['WR TR',proPct(tr.w,tr.total)],['WR CT',proPct(ct.w,ct.total)]]);
- const history=proEl('div','vct-history');history.appendChild(proEl('h3','','Últimas 5 partidas desta composição ('+played+' no total)'));
+ const history=proEl('div','vct-history');history.appendChild(proEl('h3','','Últimas 5 partidas desta composição'));
  [...c.matches].sort((a,b)=>b.data.localeCompare(a.data)).slice(0,5).forEach(m=>{
   const details=proEl('details'),summary=proEl('summary','',
    proDate(m.data)+' · vs '+m.adversario+' · '+m.placar.join('–')+' · '+(m.vitoria?'Vitória':'Derrota'));
