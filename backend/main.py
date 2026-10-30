@@ -345,17 +345,18 @@ def team_season_events(team_id: int):
               for eid, label in stages]
     events += [(eid, label, "international") for eid, label in MASTERS_2026]
     events += [(CHAMPIONS_2026[0], CHAMPIONS_2026[1], "international")]
-    futures = {pool.submit(event_index, eid): (eid, label, region) for eid, label, region in events}
+    # Nenhuma consulta remota aqui. O seletor apresenta as etapas possiveis;
+    # a participacao e verificada somente quando a etapa for escolhida.
+    with lock:
+        known = {eid: value[1] for eid, value in event_index_cache.items()
+                 if time.monotonic() - value[0] < CACHE_TTL}
     found = []
-    for future in as_completed(futures):
-        eid, label, region = futures[future]
-        try:
-            if any(t["team_id"] == team_id for t in future.result()["equipes"]):
-                found.append({"id": eid, "nome": (REGION_LABELS[region] + " " + label)
-                              if region in REGION_LABELS else label,
-                              "regiao": region})
-        except Exception:
+    for eid, label, region in events:
+        index = known.get(eid)
+        if index is not None and not any(t["team_id"] == team_id for t in index["equipes"]):
             continue
+        found.append({"id": eid, "nome": (REGION_LABELS[region] + " " + label)
+                      if region in REGION_LABELS else label, "regiao": region})
     order = {eid: n for n, eid in enumerate(
         [2682, 2683, 2684, 2685, 2760, 2860, 2775, 2863, 2864,
          2765, 2977, 2776, 2976, 2978, 2766])}
@@ -443,7 +444,37 @@ def season_event_team(team_id: int, event_id: int):
     if not response["map_pool"]:
         response["map_pool"] = sorted({m["mapa"] for t in response["equipes"].values()
                                        for m in t["mapas"]})
+    # Envia somente nomes/agentes para a grade de composicoes.
+    # Estatisticas detalhadas sao solicitadas por partida.
+    for entry in response["equipes"].values():
+        for match in entry["mapas"]:
+            for player in match.get("jogadores", []):
+                player.pop("stats", None)
     return response
+
+@app.get("/api/temporadas/2026/equipes/{team_id}/series/{series_id}/mapas/{game_id}/stats")
+def match_player_stats(team_id: int, series_id: int, game_id: int):
+    if min(team_id, series_id, game_id) <= 0:
+        raise HTTPException(400, "Identificador invalido")
+    info, data = _series_data(series_id)
+    if str(team_id) not in (str(info.team1.id), str(info.team2.id)):
+        raise HTTPException(404, "Equipe nao participa desta serie")
+    game = next((g for g in info.games if str(g.game_id) == str(game_id) and g.played), None)
+    if game is None:
+        raise HTTPException(404, "Mapa nao encontrado")
+    map_data = next((m for m in data.maps if str(m.game_id) == str(game_id)), None)
+    if map_data is None:
+        raise HTTPException(404, "Estatisticas indisponiveis")
+    def players(team):
+        return [{"nome": p.name, "id": p.player_id, "agente": p.agents[0],
+                 "stats": p.stats.model_dump(mode="json")}
+                for p in team.players if p.agents]
+    sides = [map_data.team1, map_data.team2]
+    ours = next((t for t in sides if str(t.team_id) == str(team_id)), None)
+    other = next((t for t in sides if str(t.team_id) != str(team_id)), None)
+    if ours is None or other is None:
+        raise HTTPException(404, "Times nao encontrados")
+    return {"jogadores": players(ours), "adversarios": players(other)}
 
 logo_cache = {}
 
