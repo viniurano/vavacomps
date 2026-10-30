@@ -954,11 +954,19 @@ async function loadProTeam(name,eventOverride=null){
  if(!id)return;
  const regional=region!=='international'&&circuit==='Champions';
  const eventId=circuit==='GC Championship'?3134:2766;
- const events=regional?(PRO_TEAM_EVENTS.get(name)||[]):[];
- const selected=regional?(eventOverride||events[events.length-1]?.id):eventId;
- if(!selected){PRO_ERROR='Nenhum campeonato encontrado para a equipe.';renderPro();return}
- const url=regional?'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected:'/api/eventos/'+eventId+'/equipes/'+id;
  const requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
+ let events=regional?(PRO_TEAM_EVENTS.get(name)||[]):[];
+ if(regional&&eventOverride===null){
+  showProLoading(true,'campeonatos de '+name);
+  try{
+   const catalog=await proFetch('/api/temporadas/2026/regioes/'+region+'/equipes/'+id+'/eventos');
+   if(requestId!==proRequestId)return;
+   if(catalog.eventos?.length){events=catalog.eventos;PRO_TEAM_EVENTS.set(name,events)}
+  }catch(err){console.warn('Calendário incompleto',err)}
+ }
+ const selected=regional?(eventOverride||events[events.length-1]?.id):eventId;
+ if(!selected){PRO_ERROR='Nenhum campeonato encontrado para a equipe.';showProLoading(false);renderPro();return}
+ const url=regional?'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected:'/api/eventos/'+eventId+'/equipes/'+id;
  proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
  PRO_SELECTED_EVENT=regional?selected:null;
  const picker=$('proEventPicker'),select=$('proTeamEvent');
