@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.3.1 (teste)</title>
+<title>Vava Comps — V4.0 (teste regional)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -780,7 +780,7 @@ function renderPro(){
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
  const latest=allComps.flatMap(c=>c.matches.map(m=>({c,m}))).sort((a,b)=>b.m.data.localeCompare(a.m.data)||Number(b.m.game_id)-Number(a.m.game_id))[0];
  if(latest)heading.append(proEl('p','muted','Última composição utilizada · '+latest.c.map.toUpperCase()+' · '+latest.c.agents.join(' · ')+' · '+proDate(latest.m.data)));
- heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Mapas encontrados nas partidas consultadas (map pool oficial ainda não cadastrada para este torneio).'));
+ heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Mapas encontrados na temporada · As map pools podem mudar entre os stages.'));
  const table=$('proTable');table.replaceChildren();
  const head=proEl('thead'),trh=proEl('tr');trh.appendChild(proEl('th','','Mapa / partidas'));
  // Jogadores são apresentados conforme a partida mais recente da equipe.
@@ -893,7 +893,7 @@ function proIngestEvent(data,event,eventLabel,year){
  teams.forEach(t=>{
   const groups=new Map();
   (t.mapas||[]).forEach(m=>{
-   const map=properPngName(m.mapa),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),key=map+'|'+agents.join('|');
+   const map=properPngName(m.mapa),agents=[...m.composicao].sort((a,b)=>a.localeCompare(b)),roster=(m.jogadores||[]).map(p=>String(p.id)).sort().join('|'),key=map+'|'+agents.join('|')+'|'+roster;
    if(!groups.has(key))groups.set(key,{team:t.nome,map,agents,event,eventLabel,year,matches:[]});
    const other=byGame.get(m.game_id+'|'+m.adversario_id)||null;
    groups.get(key).matches.push({...m,other});
@@ -916,27 +916,27 @@ async function proFetch(path){
  }finally{clearTimeout(timer)}
 }
 async function loadProData(){
- const region=$('proRegion').value,scope=$('proScope'),notice=document.querySelector('#view-vct .notice');
- const circuit=$('proEvent').value;
- if(region!=='international'){
-  ++proRequestId;showProLoading(false);PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];proSelectedTeam=null;proSelectedMap=null;
-  PRO_ERROR='A listagem regional de '+$('proRegion').selectedOptions[0].textContent+' ainda não está integrada. Em breve será possível consultar todos os times dessa liga, mesmo sem classificação internacional.';
-  scope.textContent='Região selecionada: '+$('proRegion').selectedOptions[0].textContent+' · integração pendente';
-  if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
-  renderPro();return;
- }
- scope.textContent=circuit==='Champions'?'Destaque: Champions 2026 · exibindo apenas equipes participantes deste internacional.':'Destaque: Game Changers Championship 2026 · exibindo apenas equipes participantes deste internacional.';
- const select=$('proEvent'),eventId=select.value==='GC Championship'?3134:2766,requestId=++proRequestId;
- const label=select.options[select.selectedIndex].textContent;
+ const region=$('proRegion').value,circuit=$('proEvent').value,requestId=++proRequestId;
+ const scope=$('proScope'),notice=document.querySelector('#view-vct .notice');
+ const regional=region!=='international'&&circuit==='Champions';
+ const eventId=circuit==='GC Championship'?3134:2766;
+ const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes':'/api/eventos/'+eventId+'/equipes';
+ const label=regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent;
  PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
- showProLoading(true,'equipes de '+label);renderPro();
+ if(circuit==='GC Championship'&&region!=='international'){
+  PRO_ERROR='Por enquanto o Game Changers possui somente o Championship internacional. As ligas regionais GC ficam para uma atualização futura.';
+  scope.textContent='Game Changers Championship 2026';
+  renderPro();return;
+ }
+ scope.textContent=regional?'VCT Franquias · '+$('proRegion').selectedOptions[0].textContent+' · Kickoff, Stage 1 e Stage 2 de 2026':'Destaque internacional · '+label+' · somente participantes do torneio';
+ showProLoading(true,label);renderPro();
  try{
-  const data=await proFetch('/api/eventos/'+eventId+'/equipes');
+  const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
   PRO_TEAMS.forEach(t=>PRO_TEAM_IDS.set(t.nome,t.team_id));
-  if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'}
+  if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
  }catch(err){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Falha ao listar equipes: '+err.message;
@@ -944,16 +944,19 @@ async function loadProData(){
  }finally{if(requestId===proRequestId){showProLoading(false);renderPro()}}
 }
 async function loadProTeam(name){
- const id=PRO_TEAM_IDS.get(name),eventId=$('proEvent').value==='GC Championship'?3134:2766;
+ const id=PRO_TEAM_IDS.get(name),region=$('proRegion').value,circuit=$('proEvent').value;
  if(!id)return;
+ const regional=region!=='international'&&circuit==='Champions';
+ const eventId=circuit==='GC Championship'?3134:2766;
+ const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes/'+id:'/api/eventos/'+eventId+'/equipes/'+id;
  const requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
  proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
  showProLoading(true,'partidas de '+name);renderPro();
  try{
-  const data=await proFetch('/api/eventos/'+eventId+'/equipes/'+id);
+  const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_DATA=[];PRO_MAP_POOL=data.map_pool||PRO_MAP_POOL;PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
-  proIngestEvent(data,$('proEvent').value,$('proEvent').selectedOptions[0].textContent,$('proYear').value);
+  proIngestEvent(data,regional?'VCT Franquias':circuit,regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent,$('proYear').value);
   if(data.meta?.erros?.length&&notice){notice.hidden=false;notice.textContent='Algumas partidas não puderam ser consultadas ('+data.meta.erros.length+').'}
  }catch(err){
   if(requestId!==proRequestId)return;
