@@ -211,12 +211,68 @@ def run_due(resolve_event=None):
     _write(STORE / "agenda.json", agenda)
     return results
 
+
+def bootstrap():
+    """Importa snapshots locais existentes, sem fazer requisicoes HTTP."""
+    sources = [
+        ROOT / "dados" / "vct_comps.json",
+        ROOT / "dados" / "gc_championship_2026.json",
+        ROOT / "dados" / "vct_comps_geral.json",
+    ]
+    report = {"arquivos_lidos": 0, "arquivos_ignorados": [], "eventos": {}, "mapas_novos": 0}
+    for source in sources:
+        if not source.is_file() or source.stat().st_size == 0:
+            report["arquivos_ignorados"].append(source.name + " (ausente ou vazio)")
+            continue
+        try:
+            snapshot = json.loads(source.read_text(encoding="utf-8"))
+        except (ValueError, OSError) as exc:
+            report["arquivos_ignorados"].append(source.name + " (" + str(exc)[:100] + ")")
+            continue
+        snapshots = snapshot if isinstance(snapshot, list) else [snapshot]
+        for item in snapshots:
+            if not isinstance(item, dict) or not isinstance(item.get("equipes"), dict) or not item.get("event_id"):
+                report["arquivos_ignorados"].append(source.name + " (estrutura nao compativel)")
+                continue
+            event_id = int(item["event_id"])
+            data = event_data(event_id)
+            data.setdefault("equipes", {})
+            data.setdefault("series", {})
+            data.setdefault("meta", {})
+            count = 0
+            for name, team in item["equipes"].items():
+                if not isinstance(team, dict) or not team.get("team_id"):
+                    continue
+                tid = str(team["team_id"])
+                target = data["equipes"].setdefault(tid, {"team_id": team["team_id"], "nome": team.get("nome") or str(name), "mapas": []})
+                target.setdefault("nome", team.get("nome") or str(name))
+                existing = {str(m["game_id"]) for m in target.get("mapas", []) if isinstance(m, dict) and m.get("game_id") is not None}
+                for mapa in team.get("mapas", []):
+                    if not isinstance(mapa, dict) or mapa.get("game_id") is None:
+                        continue
+                    key = str(mapa["game_id"])
+                    if key in existing:
+                        continue
+                    target["mapas"].append(mapa)
+                    existing.add(key)
+                    count += 1
+                target["mapas"].sort(key=lambda m: (m.get("data") or "", str(m.get("game_id") or "")))
+            if count:
+                data["meta"]["ultima_importacao"] = datetime.now(timezone.utc).isoformat()
+                _write(_event_path(event_id), data)
+            report["eventos"][str(event_id)] = report["eventos"].get(str(event_id), 0) + count
+            report["mapas_novos"] += count
+        report["arquivos_lidos"] += 1
+    return report
+
 if __name__ == "__main__":
     import sys
     action = sys.argv[1] if len(sys.argv) > 1 else ""
-    if action == "schedule":
+    if action == "bootstrap":
+        print(json.dumps(bootstrap(), ensure_ascii=False))
+    elif action == "schedule":
         print(json.dumps(schedule_today(), ensure_ascii=False))
     elif action == "run":
         print(json.dumps(run_due(), ensure_ascii=False))
     else:
-        raise SystemExit("Uso: python -m backend.v4_store schedule | run")
+        raise SystemExit("Uso: python -m backend.v4_store bootstrap | schedule | run")
