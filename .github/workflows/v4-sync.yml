@@ -3,11 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       tarefa:
-        description: "schedule (calendario) ou run (consultas vencidas)"
+        description: "bootstrap (importacao local), schedule (calendario) ou run (consultas vencidas)"
         required: true
         default: "schedule"
         type: choice
         options:
+          - bootstrap
           - schedule
           - run
   # Agendamentos do GitHub Actions so rodam automaticamente na branch padrao.
