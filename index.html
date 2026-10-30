@@ -889,8 +889,7 @@ function renderPro(){
  }else panel.appendChild(wrap);
 }
 $('proBack').addEventListener('click',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
-CONFIG.mapas.forEach(m=>{const option=document.createElement('option');option.value=m.nome;option.textContent=m.nome[0].toUpperCase()+m.nome.slice(1);$('proMap').appendChild(option)});
-['proSearch','proMap'].forEach(id=>$(id).addEventListener(id==='proSearch'?'input':'change',()=>{if(id==='proSearch'){proSelectedTeam=null;proSelectedMap=null}renderPro()}));
+$('proSearch').addEventListener('input',()=>{proSelectedTeam=null;proSelectedMap=null;renderPro()});
 // V3.0: consulta sob demanda na API Python, sem arquivos JSON por campeonato.
 const PRO_API_BASE = 'http://127.0.0.1:8001';
 let proRequestId=0;
