@@ -9,12 +9,13 @@ from urllib.request import Request, urlopen
 from urllib.parse import urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from fastapi import FastAPI, HTTPException, Query
+from backend import v4_store
 from fastapi.middleware.cors import CORSMiddleware
 from vlrdevapi import VLRClient
 
 app = FastAPI(title="Vava Comps API", version="3.1.0")
 origins = [s.strip() for s in os.getenv("CORS_ORIGINS", "http://localhost:8000,http://127.0.0.1:8000").split(",") if s.strip()]
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_methods=["GET"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_methods=["GET", "POST"], allow_headers=["*"])
 CACHE_TTL = 1800
 MAX_SERIES = 120
 cache = {}
@@ -278,7 +279,7 @@ def _series_data(match_id):
 
 def _one_series(item, team_id):
     info, data = _series_data(item["id"])
-    if str(team_id) not in (str(info.team1.id), str(info.team2.id)):
+    if team_id is not None and str(team_id) not in (str(info.team1.id), str(info.team2.id)):
         return None
     result = {"equipes": {}}
     for game in info.games:
@@ -324,6 +325,13 @@ def event_team(event_id: int, team_id: int):
         item = cache.get(key)
         if item and time.monotonic() - item[0] < CACHE_TTL:
             return item[1]
+    saved = v4_store.get_team(event_id, team_id)
+    if saved is not None:
+        stored = v4_store.event_data(event_id)
+        return {"event_id": event_id, "equipes": {str(team_id): saved},
+                "map_pool": EVENT_POOLS.get(event_id, sorted({m["mapa"] for m in saved["mapas"]})),
+                "map_pool_confirmada": event_id in EVENT_POOLS,
+                "meta": {**stored.get("meta", {}), "fonte": "json_v4"}}
     index = event_index(event_id)
     matches = [m for m in index["partidas"] if any(t["team_id"] == team_id for t in m["equipes"])]
     if not matches:
@@ -560,10 +568,45 @@ def season_event_team(team_id: int, event_id: int):
     # Consulta somente as series do time selecionado, com fallback historico.
     return event_team(event_id, team_id)
 
+def _saved_stats(team_id, series_id, game_id):
+    for path in (v4_store.STORE / "eventos").glob("*.json") if (v4_store.STORE / "eventos").exists() else []:
+        try:
+            event = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        ours = event.get("equipes", {}).get(str(team_id), {})
+        game = next((m for m in ours.get("mapas", []) if str(m["serie_id"]) == str(series_id) and str(m["game_id"]) == str(game_id)), None)
+        if game:
+            enemy = event.get("equipes", {}).get(str(game.get("adversario_id")), {})
+            other = next((m for m in enemy.get("mapas", []) if str(m["game_id"]) == str(game_id)), None)
+            return {"jogadores": game.get("jogadores", []), "adversarios": other.get("jogadores", []) if other else []}
+    return None
+
+@app.get("/api/v4/eventos/{event_id}/equipes/{team_id}/atualizacao")
+def v4_update_info(event_id: int, team_id: int):
+    event = v4_store.event_data(event_id)
+    return {"ultima_atualizacao": event.get("meta", {}).get("ultima_atualizacao"),
+            "armazenado": str(team_id) in event.get("equipes", {})}
+
+@app.post("/api/v4/eventos/{event_id}/equipes/{team_id}/atualizar")
+def v4_refresh_team(event_id: int, team_id: int):
+    if min(event_id, team_id) <= 0:
+        raise HTTPException(400, "Identificador invalido")
+    def discover(eid, tid):
+        index = event_index(eid)
+        return [m for m in index["partidas"] if any(t["team_id"] == tid for t in m["equipes"])]
+    try:
+        return v4_store.refresh_team(event_id, team_id, discover)
+    except Exception as exc:
+        raise HTTPException(502, "Falha ao atualizar equipe: " + str(exc)[:140]) from exc
+
 @app.get("/api/temporadas/2026/equipes/{team_id}/series/{series_id}/mapas/{game_id}/stats")
 def match_player_stats(team_id: int, series_id: int, game_id: int):
     if min(team_id, series_id, game_id) <= 0:
         raise HTTPException(400, "Identificador invalido")
+    saved = _saved_stats(team_id, series_id, game_id)
+    if saved is not None:
+        return saved
     info, data = _series_data(series_id)
     if str(team_id) not in (str(info.team1.id), str(info.team2.id)):
         raise HTTPException(404, "Equipe nao participa desta serie")
