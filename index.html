@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vava Comps — V3.2.1 (teste)</title>
+<title>Vava Comps — V3.3.0 (teste)</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -433,6 +433,13 @@ button:focus-visible,input:focus-visible{
 .pro-player-stats{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}
 .pro-player-stats th,.pro-player-stats td{padding:7px 10px;border-bottom:1px solid #41516a;text-align:left;white-space:nowrap}
 .pro-player-stats th{color:#aabbd0}
+.pro-scoreboard{min-width:850px;font-variant-numeric:tabular-nums}
+.pro-scoreboard thead th{font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.pro-scoreboard td:not(:first-child),.pro-scoreboard thead th:not(:first-child){text-align:center}
+.pro-scoreboard .pro-score-team th{background:#304862;color:#fff;font-size:14px;text-align:left;padding:12px}
+.pro-scoreboard .pro-score-opponent th{background:#3e354b}
+.pro-score-agent{width:34px;height:34px;object-fit:cover;border-radius:5px;vertical-align:middle}
+.pro-scoreboard tbody tr:not(.pro-score-team):hover{background:#304057}
 #proTeams[hidden]{display:none}
 .vct-inline-details>td{padding:8px 4px 18px!important;text-align:left!important}
 .vct-inline-details .vct-map-details{max-width:none;margin-top:4px}
@@ -816,20 +823,35 @@ function renderPro(){
   details.appendChild(summary);
   const tr=proSide(m,'ataque'),ct=proSide(m,'defesa');
   details.appendChild(proEl('p','','TR: '+tr.w+'–'+tr.lost+' ('+proPct(tr.w,tr.total)+') · CT: '+ct.w+'–'+ct.lost+' ('+proPct(ct.w,ct.total)+')'));
-  details.appendChild(proEl('p','','Composição adversária:'));
-  const opponents=proEl('div','vct-detail-agents');
-  if(m.other)proAgents(opponents,m.other.composicao,'');
-  else opponents.textContent='Não disponível';
-  details.appendChild(opponents);
-  const statsTable=proEl('table','pro-player-stats');
-  const hr=proEl('tr');['Jogador','Agente','K','D','A','ACS','KAST','Rating'].forEach(x=>hr.appendChild(proEl('th','',x)));
-  statsTable.appendChild(hr);
-  m.jogadores.forEach(p=>{
-   const st=p.stats?.overall||{},r=proEl('tr');
-   [p.nome,p.agente,st.kills??'—',st.deaths??'—',st.assists??'—',st.acs??'—',st.kast==null?'—':Math.round(st.kast*100)+'%',st.rating??'—'].forEach(v=>r.appendChild(proEl('td','',String(v))));
-   statsTable.appendChild(r);
-  });
-  const scroll=proEl('div','table-wrap');scroll.appendChild(statsTable);details.appendChild(scroll);
+  // Placar estilo tracker: as duas equipes, ordenadas pelo rating individual.
+  const scoreHeaders=['Player','Agente','Rating','K/D','Kill','Death','Assist','ACS','KAST','FK','FD'];
+  const getStat=(st,...keys)=>{for(const k of keys){if(st[k]!==undefined&&st[k]!==null)return st[k]}return null};
+  const numeric=v=>{const n=Number(v);return Number.isFinite(n)?n:-Infinity};
+  const fmt=v=>v===null||v===undefined||v===''?'—':String(v);
+  const pct=v=>{if(v===null||v===undefined||v==='')return '—';const n=Number(v);if(!Number.isFinite(n))return fmt(v);return (n<=1?n*100:n).toFixed(0)+'%'};
+  const table=proEl('table','pro-player-stats pro-scoreboard');
+  const header=proEl('thead'),headRow=proEl('tr');
+  scoreHeaders.forEach(h=>headRow.appendChild(proEl('th','',h)));
+  header.appendChild(headRow);table.appendChild(header);
+  const tbody=proEl('tbody');
+  const renderSide=(teamName,players,score,opponent=false)=>{
+   const group=proEl('tr','pro-score-team'+(opponent?' pro-score-opponent':''));
+   const cell=proEl('th','',teamName+' · '+score+' rounds');cell.colSpan=scoreHeaders.length;group.appendChild(cell);tbody.appendChild(group);
+   if(!players?.length){const empty=proEl('tr'),td=proEl('td','muted','Estatísticas dos jogadores indisponíveis');td.colSpan=scoreHeaders.length;empty.appendChild(td);tbody.appendChild(empty);return}
+   [...players].sort((a,b)=>numeric(getStat(b.stats?.overall||{},'rating','rating_vlr'))-numeric(getStat(a.stats?.overall||{},'rating','rating_vlr'))).forEach(p=>{
+    const st=p.stats?.overall||{},kills=getStat(st,'kills','kill'),deaths=getStat(st,'deaths','death');
+    const kd=kills==null||deaths==null?'—':deaths===0?fmt(kills):((Number(kills)||0)/Number(deaths)).toFixed(2);
+    const row=proEl('tr');
+    row.appendChild(proEl('td','',p.nome));
+    const agentCell=proEl('td','');proAgents(agentCell,[p.agente],'pro-score-agent');row.appendChild(agentCell);
+    [getStat(st,'rating','rating_vlr'),kd,kills,deaths,getStat(st,'assists','assist'),getStat(st,'acs'),pct(getStat(st,'kast')),getStat(st,'first_kills','firstKills','fk'),getStat(st,'first_deaths','firstDeaths','fd')].forEach(v=>row.appendChild(proEl('td','',fmt(v))));
+    tbody.appendChild(row);
+   });
+  };
+  renderSide(proSelectedTeam,m.jogadores,m.placar[0]);
+  renderSide(m.adversario,m.other?.jogadores||[],m.placar[1],true);
+  table.appendChild(tbody);
+  const scroll=proEl('div','table-wrap');scroll.appendChild(table);details.appendChild(scroll);
   history.appendChild(details);
  });
  wrap.appendChild(history);
