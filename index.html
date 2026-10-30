@@ -728,7 +728,7 @@ $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
 let proSelectedTeam=null,proSelectedMap=null,PRO_SELECTED_EVENT=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
 const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map();
-function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=()=>{img.style.display='none'};return img;}
+function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=async()=>{img.onerror=null;try{const response=await fetch(PRO_API_BASE+'/api/equipes/'+id+'/logo');if(response.ok){const data=await response.json();if(data.url){img.src=data.url;return}}}catch(err){console.warn('Logo indisponível',err)}img.style.display='none'};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
 const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
 const proDate=s=>{const a=String(s||'').split('-');return a.length===3?a[2]+'/'+a[1]+'/'+a[0]:s};
