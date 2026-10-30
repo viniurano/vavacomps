@@ -211,66 +211,6 @@ def run_due(resolve_event=None):
     _write(STORE / "agenda.json", agenda)
     return results
 
-
-def bootstrap_local():
-    """Importa snapshots legados para o armazenamento v4 sem acessar a rede.
-
-    Pode ser executado novamente: a chave game_id impede duplicacoes, e mapas
-    ja coletados na v4 nao sao substituidos por snapshots antigos.
-    """
-    sources = [
-        ROOT / "dados" / "vct_comps.json",
-        ROOT / "dados" / "gc_championship_2026.json",
-        ROOT / "dados" / "vct_comps_geral.json",
-    ]
-    report = {"arquivos": [], "eventos": {}, "avisos": []}
-    for source in sources:
-        if not source.is_file():
-            report["avisos"].append(f"Arquivo ausente: {source.name}")
-            continue
-        snapshot = _read(source, None)
-        if not isinstance(snapshot, dict) or not isinstance(snapshot.get("equipes"), dict):
-            report["avisos"].append(f"Formato nao reconhecido: {source.name}")
-            continue
-        event_id = snapshot.get("event_id")
-        if not event_id or not str(event_id).isdigit():
-            report["avisos"].append(f"Evento sem ID: {source.name}; ignorado para evitar misturar campeonatos")
-            continue
-        event_id = int(event_id)
-        imported = 0
-        with GUARD:
-            target = event_data(event_id)
-            target.setdefault("equipes", {})
-            target.setdefault("series", {})
-            target.setdefault("meta", {})
-            for raw_name, team in snapshot["equipes"].items():
-                if not isinstance(team, dict) or not str(team.get("team_id", "")).isdigit():
-                    continue
-                tid = str(int(team["team_id"]))
-                entry = target["equipes"].setdefault(tid, {
-                    "team_id": int(tid), "nome": team.get("nome") or str(raw_name), "mapas": []
-                })
-                if not entry.get("nome"):
-                    entry["nome"] = team.get("nome") or str(raw_name)
-                existing = {str(m.get("game_id")) for m in entry.get("mapas", []) if m.get("game_id") is not None}
-                for game in team.get("mapas", []):
-                    if not isinstance(game, dict) or game.get("game_id") is None:
-                        continue
-                    gid = str(game["game_id"])
-                    if gid in existing:
-                        continue
-                    entry["mapas"].append(game)
-                    existing.add(gid)
-                    imported += 1
-                entry["mapas"].sort(key=lambda m: (str(m.get("data", "")), str(m.get("game_id", ""))))
-            if snapshot.get("campeonato"):
-                target.setdefault("campeonato", snapshot["campeonato"])
-            target["meta"]["bootstrap_local"] = datetime.now(timezone.utc).isoformat()
-            _write(_event_path(event_id), target)
-        report["arquivos"].append(source.name)
-        report["eventos"][str(event_id)] = report["eventos"].get(str(event_id), 0) + imported
-    return report
-
 if __name__ == "__main__":
     import sys
     action = sys.argv[1] if len(sys.argv) > 1 else ""
@@ -278,7 +218,5 @@ if __name__ == "__main__":
         print(json.dumps(schedule_today(), ensure_ascii=False))
     elif action == "run":
         print(json.dumps(run_due(), ensure_ascii=False))
-    elif action == "bootstrap":
-        print(json.dumps(bootstrap_local(), ensure_ascii=False))
     else:
-        raise SystemExit("Uso: python -m backend.v4_store schedule | run | bootstrap")
+        raise SystemExit("Uso: python -m backend.v4_store schedule | run")
