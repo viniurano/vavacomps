@@ -728,9 +728,9 @@ $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam
 
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
 let proSelectedTeam=null,proSelectedMap=null,PRO_SELECTED_EVENT=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
-const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map(),PRO_TEAM_CIRCUITS=new Map();
+const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map(),PRO_TEAM_CIRCUITS=new Map(),PRO_TEAM_LOGOS=new Map();
 let PRO_SEARCH_RESULTS=null,proSearchTimer=null,proSearchRequestId=0,PRO_SEARCH_LOADING=false,PRO_SEARCH_PARTIAL=false;
-function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=async()=>{img.onerror=null;try{const response=await fetch(PRO_API_BASE+'/api/equipes/'+id+'/logo');if(response.ok){const data=await response.json();if(data.url){img.src=data.url;return}}}catch(err){console.warn('Logo indisponível',err)}img.replaceWith(proEl('span','pro-logo-fallback',name.split(/\s+/).map(w=>w[0]).slice(0,3).join('').toUpperCase()))};return img;}
+function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src=PRO_TEAM_LOGOS.get(name)||'img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=async()=>{img.onerror=null;try{const response=await fetch(PRO_API_BASE+'/api/equipes/'+id+'/logo');if(response.ok){const data=await response.json();if(data.url){img.src=data.url;return}}}catch(err){console.warn('Logo indisponível',err)}img.replaceWith(proEl('span','pro-logo-fallback',name.split(/\s+/).map(w=>w[0]).slice(0,3).join('').toUpperCase()))};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
 const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
 const proDate=s=>{const a=String(s||'').split('-');return a.length===3?a[2]+'/'+a[1]+'/'+a[0]:s};
@@ -964,9 +964,9 @@ async function loadProData(){
  const scope=$('proScope'),notice=document.querySelector('#view-vct .notice');
  const regional=region!=='international'&&circuit==='Champions';
  const eventId=circuit==='GC Championship'?3134:2766;
- const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes':'/api/eventos/'+eventId+'/equipes';
+ const url=regional?'/api/temporadas/2026/regioes/'+region+'/equipes':'/api/eventos/'+eventId+'/participantes';
  const label=regional?'VCT 2026 · '+$('proRegion').selectedOptions[0].textContent:$('proEvent').selectedOptions[0].textContent;
- PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_TEAM_CIRCUITS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
+ PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_TEAM_CIRCUITS.clear();PRO_TEAM_LOGOS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
  if(circuit==='GC Championship'&&region!=='international'){
   PRO_ERROR='Por enquanto o Game Changers possui somente o Championship internacional. As ligas regionais GC ficam para uma atualização futura.';
@@ -979,7 +979,7 @@ async function loadProData(){
   const data=await proFetch(url);
   if(requestId!==proRequestId)return;
   PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
-  PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[]);PRO_TEAM_CIRCUITS.set(t.nome,circuit==='GC Championship'?'gc':'vct')});
+  PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);if(t.logo)PRO_TEAM_LOGOS.set(t.nome,t.logo);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[]);PRO_TEAM_CIRCUITS.set(t.nome,circuit==='GC Championship'?'gc':'vct')});
   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
  }catch(err){
   if(requestId!==proRequestId)return;
