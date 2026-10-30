@@ -203,38 +203,36 @@ def event_team(event_id: int, team_id: int):
         response["equipes"][str(team_id)] = {"team_id": team_id, "nome": team["nome"], "mapas": []}
     if not response["map_pool"]:
         response["map_pool"] = sorted({m["mapa"] for e in response["equipes"].values() for m in e["mapas"]})
-    # Preenche somente mapas ausentes com partidas anteriores, exigindo o MESMO quinteto
-    # (IDs dos jogadores) e a MESMA map pool. Nunca mistura elencos distintos.
+    # Estatisticas gerais: agrega partidas de torneios anteriores cadastrados, sem
+    # misturar jogadores ou composicoes. O historico exibido e limitado no frontend.
+    # Apenas fontes com map pool historica equivalente entram nesta consulta.
     if event_id in FALLBACK_EVENTS:
         current = response["equipes"].get(str(team_id), {})
         current_maps = current.get("mapas", [])
-        played = {m["mapa"].lower() for m in current_maps}
-        missing = {m.lower() for m in response["map_pool"]} - played
         latest = max(current_maps, key=lambda m: (m["data"], int(m["game_id"])), default=None)
-        roster = {p["id"] for p in latest["jogadores"]} if latest else set()
-        if missing and len(roster) == 5:
+        roster = {str(p["id"]) for p in latest["jogadores"]} if latest else set()
+        if len(roster) == 5:
+            seen = {str(m["game_id"]) for m in current_maps}
             for prior_id in FALLBACK_EVENTS[event_id]:
                 try:
                     prior_index = event_index(prior_id)
-                    # Exige a mesma pool explicitamente confirmada, nao apenas mapas jogados.
-                    if not prior_index["map_pool_confirmada"] or {m.lower() for m in prior_index["map_pool"]} != {m.lower() for m in response["map_pool"]}:
+                    if (not prior_index["map_pool_confirmada"]
+                        or {m.lower() for m in prior_index["map_pool"]}
+                           != {m.lower() for m in response["map_pool"]}):
                         continue
                     prior = event_team(prior_id, team_id)
                     candidates = prior["equipes"].get(str(team_id), {}).get("mapas", [])
-                    for map_name in list(missing):
-                        options = [m for m in candidates if m["mapa"].lower() == map_name
-                                   and m["data"] <= latest["data"]
-                                   and {p["id"] for p in m["jogadores"]} == roster]
-                        if options:
-                            chosen = max(options, key=lambda m: (m["data"], int(m["game_id"])))
-                            current_maps.append({**chosen, "origem_evento_id": prior_id,
-                                                 "origem_evento_nome": "VCT 2026: Americas Stage 2",
-                                                 "composicao_emprestada": True})
-                            missing.remove(map_name)
-                    if not missing:
-                        break
+                    for m in candidates:
+                        if (str(m["game_id"]) in seen or m["data"] > latest["data"]
+                            or {str(p["id"]) for p in m["jogadores"]} != roster):
+                            continue
+                        seen.add(str(m["game_id"]))
+                        current_maps.append({**m, "origem_evento_id": prior_id,
+                                             "origem_evento_nome": "VCT 2026: Americas Stage 2",
+                                             "composicao_emprestada": True})
                 except Exception as exc:
-                    response["meta"]["erros"].append({"evento_anterior": prior_id, "erro": str(exc)[:120]})
+                    response["meta"]["erros"].append({"evento_anterior": prior_id,
+                                                       "erro": str(exc)[:120]})
     with lock:
         cache[key] = (time.monotonic(), response)
     return response
