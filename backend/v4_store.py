@@ -187,14 +187,23 @@ def run_due(resolve_event=None):
     agenda = _read(STORE / "agenda.json", {"partidas": {}})
     now = datetime.now(timezone.utc)
     results = []
+    attempted = 0
+    valid_events = {int(e["id"]) for e in _read(STORE / "catalogo_2026.json", {}).get("eventos", []) if "id" in e}
     for item in agenda["partidas"].values():
         for planned in item.get("consultas_utc", []):
             if planned in item.get("executadas", []) or datetime.fromisoformat(planned) > now:
                 continue
             event_id = (resolve_event(item) if resolve_event else item.get("evento_id"))
-            if not event_id:
+            if not event_id or int(event_id) not in valid_events:
                 results.append({"serie_id": item["serie_id"], "status": "evento_nao_identificado"})
                 continue
+            if str(item["serie_id"]) in event_data(event_id).get("series", {}):
+                item.setdefault("executadas", []).append(planned)
+                continue
+            if attempted >= 2:
+                _write(STORE / "agenda.json", agenda)
+                return results
+            attempted += 1
             try:
                 result = collect_series(event_id, item["serie_id"], match_date=datetime.fromisoformat(item["inicio_utc"]).astimezone(TZ).date().isoformat())
                 results.append(result)
