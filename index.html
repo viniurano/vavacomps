@@ -729,7 +729,7 @@ $('newTeamName').addEventListener('keydown',e=>{if(e.key==='Enter')$('createTeam
 // V2.7 — biblioteca profissional: dados reais carregados de dados/vct_comps_geral.json
 let proSelectedTeam=null,proSelectedMap=null,PRO_SELECTED_EVENT=null,PRO_DATA=[],PRO_ERROR='',PRO_TEAMS=[],PRO_MAP_POOL=[],PRO_POOL_CONFIRMED=false,PRO_TEAM_LOADING=false;
 const PRO_TEAM_IDS=new Map(),PRO_TEAM_EVENTS=new Map(),PRO_TEAM_CIRCUITS=new Map();
-let PRO_SEARCH_RESULTS=null,proSearchTimer=null,proSearchRequestId=0,PRO_SEARCH_LOADING=false;
+let PRO_SEARCH_RESULTS=null,proSearchTimer=null,proSearchRequestId=0,PRO_SEARCH_LOADING=false,PRO_SEARCH_PARTIAL=false;
 function proLogo(name){const id=PRO_TEAM_IDS.get(name);if(!id)return document.createTextNode('');const img=document.createElement('img');img.className='pro-team-logo';img.src='img/teams/'+id+'.png';img.alt='Logo '+name;img.loading='lazy';img.onerror=async()=>{img.onerror=null;try{const response=await fetch(PRO_API_BASE+'/api/equipes/'+id+'/logo');if(response.ok){const data=await response.json();if(data.url){img.src=data.url;return}}}catch(err){console.warn('Logo indisponível',err)}img.replaceWith(proEl('span','pro-logo-fallback',name.split(/\s+/).map(w=>w[0]).slice(0,3).join('').toUpperCase()))};return img;}
 const proAgentName=name=>Object.values(CONFIG.agentes).flat().find(a=>a.toLowerCase()===String(name).toLowerCase())||name;
 const proPct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
@@ -763,6 +763,7 @@ function renderPro(){
   if(PRO_ERROR)grid.appendChild(proEl('p','muted',PRO_ERROR));
   else if(!names.length)grid.appendChild(proEl('p','muted',PRO_SEARCH_LOADING?'Pesquisando equipes de todos os campeonatos...':'Nenhuma equipe encontrada com esses filtros.'));
   if(PRO_SEARCH_LOADING&&names.length)grid.appendChild(proEl('p','muted','Pesquisando também em outras regiões e campeonatos...'));
+  if(q.length>=2&&PRO_SEARCH_PARTIAL&&!PRO_SEARCH_LOADING)grid.appendChild(proEl('p','muted','Busca parcial: para evitar bloqueios do VLR, só pesquisamos campeonatos já carregados nesta sessão. Selecione uma região para incluir seus times.'));
   names.forEach(name=>{
    const comps=entries.filter(c=>c.team===name),b=proEl('button','pro-team-button');
    b.type='button';const left=proEl('span');
@@ -895,13 +896,13 @@ $('proSearch').addEventListener('input',()=>{
  proSelectedTeam=null;proSelectedMap=null;
  const query=$('proSearch').value.trim();
  clearTimeout(proSearchTimer);const request=++proSearchRequestId;
- PRO_SEARCH_RESULTS=null;PRO_SEARCH_LOADING=query.length>=2;renderPro();
+ PRO_SEARCH_RESULTS=null;PRO_SEARCH_PARTIAL=false;PRO_SEARCH_LOADING=query.length>=2;renderPro();
  if(query.length<2)return;
  proSearchTimer=setTimeout(async()=>{
   try{
    const data=await proFetch('/api/temporadas/2026/equipes/busca?q='+encodeURIComponent(query));
    if(request!==proSearchRequestId)return;
-   PRO_SEARCH_RESULTS=data.equipes||[];
+   PRO_SEARCH_RESULTS=data.equipes||[];PRO_SEARCH_PARTIAL=(data.meta?.indices_consultados||0)<(data.meta?.indices_total||0);
    PRO_SEARCH_RESULTS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_CIRCUITS.set(t.nome,t.circuitos?.includes('vct')?'vct':'gc')});
   }catch(err){if(request!==proSearchRequestId)return;console.warn('Busca global indisponível',err);PRO_SEARCH_RESULTS=null}
   finally{if(request===proSearchRequestId){PRO_SEARCH_LOADING=false;renderPro()}}
