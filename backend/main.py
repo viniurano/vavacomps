@@ -1,5 +1,7 @@
 """API experimental do Vava Comps: consulta campeonatos sob demanda, sem gerar JSONs."""
 import os
+import json
+from pathlib import Path
 import time
 import threading
 import re
@@ -25,6 +27,46 @@ EVENT_POOLS = {2766: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "
 FALLBACK_EVENTS = {2766: [2977]}
 series_cache = {}
 event_index_cache = {}
+
+# Snapshot ja existente no repositorio: listar Champions nao depende do VLR.
+SNAPSHOT_FILES = {2766: "vct_comps.json", 3134: "gc_championship_2026.json"}
+DATA_DIR = Path(__file__).resolve().parent.parent / "dados"
+
+def snapshot_event(event_id):
+    filename = SNAPSHOT_FILES.get(event_id)
+    if not filename:
+        return None
+    filepath = DATA_DIR / filename
+    if not filepath.is_file():
+        return None
+    with filepath.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+def snapshot_index(event_id):
+    data = snapshot_event(event_id)
+    if data is None:
+        return None
+    teams = [{"team_id": int(t["team_id"]), "nome": name}
+             for name, t in data.get("equipes", {}).items()]
+    return {"event_id": event_id, "equipes": sorted(teams, key=lambda t: t["nome"].lower()),
+            "partidas": [], "map_pool": EVENT_POOLS.get(event_id, []),
+            "map_pool_confirmada": event_id in EVENT_POOLS,
+            "meta": {"fonte": "snapshot_local"}}
+
+def snapshot_team(event_id, team_id):
+    data = snapshot_event(event_id)
+    if data is None:
+        return None
+    matches = [(name, t) for name, t in data.get("equipes", {}).items()
+               if int(t["team_id"]) == team_id]
+    if not matches:
+        raise HTTPException(404, "Equipe nao encontrada no snapshot deste campeonato")
+    name, team = matches[0]
+    return {"event_id": event_id, "equipes": {str(team_id): {
+                "team_id": team_id, "nome": name, "mapas": team.get("mapas", [])}},
+            "map_pool": EVENT_POOLS.get(event_id, []),
+            "map_pool_confirmada": event_id in EVENT_POOLS,
+            "meta": {"erros": [], "fonte": "snapshot_local"}}
 
 def salvar_equipe(result, team, opponent, game, info, date, first):
     players = [{"nome": p.name, "id": p.player_id, "agente": p.agents[0],
@@ -107,6 +149,9 @@ def _match_teams(match):
     return teams if all(teams) else []
 
 def event_index(event_id):
+    snapshot = snapshot_index(event_id)
+    if snapshot is not None:
+        return snapshot
     with lock:
         item = event_index_cache.get(event_id)
         if item and time.monotonic() - item[0] < CACHE_TTL:
@@ -176,6 +221,9 @@ def list_event_teams(event_id: int):
 def event_team(event_id: int, team_id: int):
     if not 1 <= event_id <= 9999999 or team_id <= 0:
         raise HTTPException(400, "ID invalido")
+    snapshot = snapshot_team(event_id, team_id)
+    if snapshot is not None:
+        return snapshot
     key = (event_id, team_id)
     with lock:
         item = cache.get(key)
@@ -417,6 +465,9 @@ def season_event_team(team_id: int, event_id: int):
     allowed.add(CHAMPIONS_2026[0])
     if event_id not in allowed:
         raise HTTPException(404, "Campeonato nao cadastrado na temporada")
+    snapshot = snapshot_team(event_id, team_id)
+    if snapshot is not None:
+        return snapshot
     # Consulta isolada: nao inclui fallback de outro torneio.
     index = event_index(event_id)
     matches = [m for m in index["partidas"]
