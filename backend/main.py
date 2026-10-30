@@ -237,6 +237,91 @@ def event_team(event_id: int, team_id: int):
         cache[key] = (time.monotonic(), response)
     return response
 
+
+# Eventos verificados no calendario VCT 2026 do VLR.gg.
+REGIONAL_EVENTS = {
+    "americas": [(2682, "Kickoff"), (2860, "Stage 1"), (2977, "Stage 2")],
+    "pacific": [(2683, "Kickoff"), (2775, "Stage 1"), (2776, "Stage 2")],
+    "emea": [(2684, "Kickoff"), (2863, "Stage 1"), (2976, "Stage 2")],
+    "china": [(2685, "Kickoff"), (2864, "Stage 1"), (2978, "Stage 2")],
+}
+REGION_LABELS = {"americas": "Americas", "pacific": "Pacific",
+                 "emea": "EMEA", "china": "China"}
+
+def _region_events(region):
+    events = REGIONAL_EVENTS.get(region.lower())
+    if events is None:
+        raise HTTPException(404, "Regiao nao cadastrada")
+    return events
+
+@app.get("/api/temporadas/2026/regioes/{region}/equipes")
+def regional_teams(region: str):
+    events = _region_events(region)
+    teams, errors = {}, []
+    for event_id, label in events:
+        try:
+            index = event_index(event_id)
+            for team in index["equipes"]:
+                key = str(team["team_id"])
+                entry = teams.setdefault(key, {**team, "eventos": []})
+                entry["eventos"].append({"id": event_id, "nome": label})
+        except Exception as exc:
+            errors.append({"evento": event_id, "erro": str(exc)[:150]})
+    if not teams and errors:
+        raise HTTPException(502, "Nao foi possivel consultar os eventos da regiao")
+    return {"regiao": region, "temporada": 2026,
+            "equipes": sorted(teams.values(), key=lambda t: t["nome"].lower()),
+            "eventos": [{"id": eid, "nome": label} for eid, label in events],
+            "meta": {"erros": errors}}
+
+@app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}")
+def regional_team(region: str, team_id: int):
+    events = _region_events(region)
+    if team_id <= 0:
+        raise HTTPException(400, "Equipe invalida")
+    entries, errors = [], []
+    for event_id, label in events:
+        try:
+            index = event_index(event_id)
+            if not any(t["team_id"] == team_id for t in index["equipes"]):
+                continue
+            # Evita fallback de outros torneios: cada evento contribui somente
+            # com suas partidas, sem duplicar os jogos entre stages.
+            matches = [m for m in index["partidas"]
+                       if any(t["team_id"] == team_id for t in m["equipes"])]
+            futures = {pool.submit(_one_series, m, team_id): m["id"] for m in matches}
+            for future in as_completed(futures):
+                try:
+                    result = future.result()
+                    if result:
+                        entries.append((event_id, label, result))
+                except Exception as exc:
+                    errors.append({"serie": futures[future], "erro": str(exc)[:150]})
+        except Exception as exc:
+            errors.append({"evento": event_id, "erro": str(exc)[:150]})
+    if not entries and errors:
+        raise HTTPException(502, "Nao foi possivel consultar partidas desta equipe")
+    result = {"regiao": region, "temporada": 2026, "equipes": {},
+              "map_pool": [], "map_pool_confirmada": False,
+              "meta": {"erros": errors}}
+    seen = set()
+    for event_id, label, item in entries:
+        for tid, team in item.items():
+            target = result["equipes"].setdefault(tid, {
+                "team_id": team["team_id"], "nome": team["nome"], "mapas": []})
+            for match in team["mapas"]:
+                unique = (tid, str(match["game_id"]))
+                if unique in seen:
+                    continue
+                seen.add(unique)
+                target["mapas"].append({**match, "origem_evento_id": event_id,
+                                         "origem_evento_nome": "VCT 2026: "
+                                         + REGION_LABELS[region] + " " + label})
+    # Nao presume uma map pool unica para toda a temporada.
+    result["map_pool"] = sorted({m["mapa"] for t in result["equipes"].values()
+                                 for m in t["mapas"]})
+    return result
+
 @app.get("/api/health")
 def health():
     return {"status": "ok", "versao": "3.1.0"}
