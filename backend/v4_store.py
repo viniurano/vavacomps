@@ -1,5 +1,5 @@
 """V4: armazenamento persistente e coleta agendada por serie.
-Execute: python -m backend.v4_store schedule | run
+Execute: python -m backend.v4_store bootstrap | audit | schedule | run
 O site nunca depende de uma consulta ao VLR para ler dados ja salvos.
 """
 import json
@@ -263,6 +263,9 @@ def bootstrap():
             report["eventos"][str(event_id)] = report["eventos"].get(str(event_id), 0) + count
             report["mapas_novos"] += count
         report["arquivos_lidos"] += 1
+    from backend.v4_audit import ensure_event_files, audit
+    report["eventos_criados_vazios"] = ensure_event_files()
+    report["auditoria"] = audit()
     return report
 
 if __name__ == "__main__":
@@ -270,9 +273,12 @@ if __name__ == "__main__":
     action = sys.argv[1] if len(sys.argv) > 1 else ""
     if action == "bootstrap":
         print(json.dumps(bootstrap(), ensure_ascii=False))
+    elif action == "audit":
+        from backend.v4_audit import audit
+        print(json.dumps(audit(), ensure_ascii=False))
     elif action == "schedule":
         print(json.dumps(schedule_today(), ensure_ascii=False))
     elif action == "run":
         print(json.dumps(run_due(), ensure_ascii=False))
     else:
-        raise SystemExit("Uso: python -m backend.v4_store bootstrap | schedule | run")
+        raise SystemExit("Uso: python -m backend.v4_store bootstrap | audit | schedule | run")
