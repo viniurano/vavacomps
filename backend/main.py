@@ -305,6 +305,60 @@ def regional_team_events(region: str, team_id: int):
     return {"eventos": [{"id": eid, "nome": label} for eid, label in calendar
                         if eid in available]}
 
+# Busca global no catalogo VCT 2026 e no GC Championship.
+# Os indices ficam em cache; nenhuma serie detalhada e consultada aqui.
+@app.get("/api/temporadas/2026/equipes/busca")
+def search_season_teams(q: str = Query(..., min_length=2, max_length=80)):
+    needle = q.strip().casefold()
+    events = [(eid, region) for region, stages in REGIONAL_EVENTS.items()
+              for eid, _ in stages]
+    events += [(eid, "international") for eid, _ in MASTERS_2026]
+    events += [(CHAMPIONS_2026[0], "international"), (3134, "gc")]
+    futures = {pool.submit(event_index, eid): (eid, region) for eid, region in events}
+    teams, errors = {}, []
+    for future in as_completed(futures):
+        eid, region = futures[future]
+        try:
+            index = future.result()
+            for team in index["equipes"]:
+                if needle not in team["nome"].casefold():
+                    continue
+                key = str(team["team_id"])
+                entry = teams.setdefault(key, {**team, "regioes": [], "circuitos": []})
+                if region not in ("international", "gc") and region not in entry["regioes"]:
+                    entry["regioes"].append(region)
+                circuit = "gc" if region == "gc" else "vct"
+                if circuit not in entry["circuitos"]:
+                    entry["circuitos"].append(circuit)
+        except Exception as exc:
+            errors.append({"evento": eid, "erro": str(exc)[:100]})
+    return {"equipes": sorted(teams.values(), key=lambda t: t["nome"].casefold())[:60],
+            "meta": {"erros": errors}}
+
+@app.get("/api/temporadas/2026/equipes/{team_id}/eventos")
+def team_season_events(team_id: int):
+    if team_id <= 0:
+        raise HTTPException(400, "Equipe invalida")
+    events = [(eid, label, region) for region, stages in REGIONAL_EVENTS.items()
+              for eid, label in stages]
+    events += [(eid, label, "international") for eid, label in MASTERS_2026]
+    events += [(CHAMPIONS_2026[0], CHAMPIONS_2026[1], "international")]
+    futures = {pool.submit(event_index, eid): (eid, label, region) for eid, label, region in events}
+    found = []
+    for future in as_completed(futures):
+        eid, label, region = futures[future]
+        try:
+            if any(t["team_id"] == team_id for t in future.result()["equipes"]):
+                found.append({"id": eid, "nome": (REGION_LABELS[region] + " " + label)
+                              if region in REGION_LABELS else label,
+                              "regiao": region})
+        except Exception:
+            continue
+    order = {eid: n for n, eid in enumerate(
+        [2682, 2683, 2684, 2685, 2760, 2860, 2775, 2863, 2864,
+         2765, 2977, 2776, 2976, 2978, 2766])}
+    return {"eventos": sorted(found, key=lambda e: order.get(e["id"], 99))}
+
 @app.get("/api/temporadas/2026/regioes/{region}/equipes/{team_id}")
 def regional_team(region: str, team_id: int):
     events = _region_events(region)
@@ -404,7 +458,7 @@ def team_logo(team_id: int):
         with urlopen(req, timeout=8) as response:
             html = response.read(300000).decode("utf-8", errors="replace")
         # A imagem principal da equipe aparece dentro de team-header-logo.
-        match = re.search(r"team-header-logo[\\s\\S]{0,500}?src=[\\\"']([^\\\"']+)", html, re.I)
+        match = re.search(r'team-header-logo[\\s\\S]{0,900}?<img[^>]*src=["\\\']([^"\\\']+)', html, re.I)
         url = urljoin("https://www.vlr.gg/", match.group(1)) if match else None
         if url and not url.startswith(("https://owcdn.net/", "https://www.vlr.gg/")):
             url = None
