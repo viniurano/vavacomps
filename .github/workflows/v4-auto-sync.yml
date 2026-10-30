@@ -1,0 +1,43 @@
+name: Vava v4 - sincronizacao automatica (branch de testes)
+on:
+  schedule:
+    - cron: '15 3 * * *'
+    - cron: '20 15 * * *'
+    - cron: '20 21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: vava-v4-sync-automatico
+  cancel-in-progress: false
+jobs:
+  coleta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Usar codigo da v4 (nao modifica main)
+        uses: actions/checkout@v4
+        with:
+          ref: feature/backend-dinamico-v3
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - run: pip install -r backend/requirements.txt
+      - name: Consultar calendario uma vez por dia
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
+        run: python -m backend.v4_store schedule
+      - name: Verificar ate duas series vencidas, somente eventos catalogados
+        run: python -m backend.v4_store run
+      - name: Salvar apenas dados v4 na branch de testes
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/v4/
+          if ! git diff --cached --quiet; then
+            git commit -m "data(v4): sincronizacao automatica controlada"
+            git push origin HEAD:feature/backend-dinamico-v3
+          fi
