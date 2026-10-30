@@ -458,7 +458,7 @@ def team_logo(team_id: int):
         with urlopen(req, timeout=8) as response:
             html = response.read(300000).decode("utf-8", errors="replace")
         # A imagem principal da equipe aparece dentro de team-header-logo.
-        match = re.search(r'team-header-logo[\\s\\S]{0,900}?<img[^>]*src=["\\\']([^"\\\']+)', html, re.I)
+        match = re.search(r"""team-header-logo[\s\S]{0,900}?<img[^>]*src=["']([^"']+)""", html, re.I)
         url = urljoin("https://www.vlr.gg/", match.group(1)) if match else None
         if url and not url.startswith(("https://owcdn.net/", "https://www.vlr.gg/")):
             url = None
