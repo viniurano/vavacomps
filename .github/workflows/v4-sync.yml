@@ -11,11 +11,6 @@ on:
           - bootstrap
           - schedule
           - run
-  # Agendamentos do GitHub Actions so rodam automaticamente na branch padrao.
-  # Permanecem inativos nesta branch de desenvolvimento ate autorizacao de deploy.
-  schedule:
-    - cron: '0 3 * * *'   # 00:00 Brasilia (UTC-3)
-    - cron: '5,20,35,50 * * * *' # checar fila a cada 15 minutos
 permissions:
   contents: write
 concurrency:
@@ -38,7 +33,7 @@ jobs:
       - run: pip install -r backend/requirements.txt
       - name: Atualizar calendario ou series
         env:
-          TASK: ${{ github.event_name == 'workflow_dispatch' && inputs.tarefa || (github.event.schedule == '0 3 * * *' && 'schedule' || 'run') }}
+          TASK: ${{ inputs.tarefa }}
         run: python -m backend.v4_store "$TASK"
       - name: Persistir JSONs
         run: |
