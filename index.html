@@ -433,11 +433,11 @@ button:focus-visible,input:focus-visible{
 .pro-player-stats{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}
 .pro-player-stats th,.pro-player-stats td{padding:7px 10px;border-bottom:1px solid #41516a;text-align:left;white-space:nowrap}
 .pro-player-stats th{color:#aabbd0}
-.pro-scoreboard{min-width:0;width:100%;table-layout:fixed;font-size:clamp(9px,.85vw,11px);font-variant-numeric:tabular-nums}
+.pro-scoreboard{min-width:0;width:100%;table-layout:auto;font-size:11px;font-variant-numeric:tabular-nums}
 .pro-scoreboard thead th{font-size:inherit;text-transform:uppercase;letter-spacing:0}
-.pro-scoreboard th,.pro-scoreboard td{padding:6px 3px;overflow:hidden;text-overflow:ellipsis}
-.pro-scoreboard th:first-child,.pro-scoreboard td:first-child{width:19%;text-align:left}
-.pro-scoreboard th:nth-child(2),.pro-scoreboard td:nth-child(2){width:8%}
+.pro-scoreboard th,.pro-scoreboard td{padding:6px 3px;white-space:nowrap}
+.pro-scoreboard th:first-child,.pro-scoreboard td:first-child{min-width:90px;text-align:left}
+.pro-scoreboard th:nth-child(2),.pro-scoreboard td:nth-child(2){min-width:36px}
 .pro-scoreboard td:not(:first-child),.pro-scoreboard thead th:not(:first-child){text-align:center}
 .pro-scoreboard .pro-score-team th{background:#304862;color:#fff;font-size:14px;text-align:left;padding:12px}
 .pro-scoreboard .pro-score-opponent th{background:#3e354b}
@@ -870,7 +870,7 @@ function renderPro(){
   renderSide(proSelectedTeam,m.jogadores,m.placar[0]);
   renderSide(m.adversario,m.other?.jogadores||[],m.placar[1],true);
   table.appendChild(tbody);
-  const scroll=proEl('div','table-wrap');scroll.appendChild(table);details.appendChild(scroll);
+  const scroll=proEl('div','table-wrap');scroll.style.width='100%';scroll.appendChild(table);details.appendChild(scroll);
   history.appendChild(details);
  });
  wrap.appendChild(history);
