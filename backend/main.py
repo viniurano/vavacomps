@@ -77,29 +77,31 @@ TEAM_INDEX_TTL = 86400
 participant_cache = {}
 
 class ParticipantParser(HTMLParser):
+    """Captura links de equipes dentro de blocos de participantes do evento."""
     def __init__(self):
         super().__init__()
-        self.depth = 0
+        self.level = 0
+        self.participant_level = None
         self.team = None
-        self.teams = {}
-        self.in_participants = False
-        self.participant_depth = 0
         self.team_text = []
+        self.teams = {}
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         classes = attrs.get("class", "")
-        if not self.in_participants and any(x in classes for x in ("event-teams-container", "event-teams", "event-participants", "event-team-list", "event-team")):
-            self.in_participants = True
-            self.participant_depth = 1
-        elif self.in_participants and tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
-            self.participant_depth += 1
-        if tag == "a" and self.in_participants:
-            m = re.search(r"/team/(\d+)(?:/|[?\"'])", attrs.get("href", "") + "/")
-            if m:
-                self.team = {"team_id": int(m.group(1)), "nome": "", "logo": None}
+        if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
+            self.level += 1
+        if self.participant_level is None and any(
+                x in classes.split() for x in
+                ("event-teams-container", "event-teams", "event-participants",
+                 "event-team-list", "event-team")):
+            self.participant_level = self.level
+        if tag == "a" and self.participant_level is not None:
+            match = re.search(r"/team/(\d+)(?:/|$|[?#])", attrs.get("href", ""))
+            if match:
+                self.team = {"team_id": int(match.group(1)), "nome": "", "logo": None}
                 self.team_text = []
         if tag == "img" and self.team is not None:
-            src = attrs.get("src") or attrs.get("data-src") or ""
+            src = attrs.get("src") or attrs.get("data-src")
             if src:
                 self.team["logo"] = urljoin("https://www.vlr.gg", src)
     def handle_data(self, data):
@@ -112,10 +114,19 @@ class ParticipantParser(HTMLParser):
                 self.team["nome"] = name
                 self.teams[self.team["team_id"]] = self.team
             self.team = None
-        if self.in_participants:
-            self.participant_depth -= 1
-            if self.participant_depth <= 0:
-                self.in_participants = False
+        if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
+            if self.participant_level is not None and self.level == self.participant_level:
+                self.participant_level = None
+            self.level = max(0, self.level - 1)
+
+def participant_fallback(event_id):
+    # O snapshot fornece SOMENTE a lista de participantes.
+    # As composicoes sao sempre consultadas no VLR quando o usuario seleciona o time.
+    data = snapshot_index(event_id)
+    if data is None:
+        return None
+    return {**data, "meta": {"fonte": "lista_local_reserva",
+                             "aviso": "VLR indisponivel; participantes podem estar desatualizados"}}
 
 def participant_index(event_id):
     with lock:
@@ -124,15 +135,13 @@ def participant_index(event_id):
             return old[1]
     url = f"https://www.vlr.gg/event/{event_id}"
     try:
-        req = Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; VavaComps/1.0)"})
-        with urlopen(req, timeout=12) as resp:
+        req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urlopen(req, timeout=4) as resp:
             html = resp.read(1200000).decode("utf-8", "replace")
         parser = ParticipantParser()
         parser.feed(html)
         teams = list(parser.teams.values())
         if not teams:
-            # A estrutura da pagina pode variar. Nunca tratar HTML desconhecido
-            # como lista vazia valida nem baixar todas as series por isso.
             raise ValueError("Secao de participantes nao reconhecida")
         result = {"event_id": event_id, "equipes": sorted(teams, key=lambda t: t["nome"].lower()),
                   "partidas": [], "map_pool": EVENT_POOLS.get(event_id, []),
@@ -144,6 +153,11 @@ def participant_index(event_id):
     except Exception:
         if old:
             return old[1]
+        fallback = participant_fallback(event_id)
+        if fallback is not None:
+            with lock:
+                participant_cache[event_id] = (time.monotonic() - TEAM_INDEX_TTL + 300, fallback)
+            return fallback
         raise
 
 def salvar_equipe(result, team, opponent, game, info, date, first):
