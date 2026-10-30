@@ -538,45 +538,13 @@ def regional_team(region: str, team_id: int):
 
 @app.get("/api/temporadas/2026/equipes/{team_id}/eventos/{event_id}")
 def season_event_team(team_id: int, event_id: int):
-    allowed = {eid for events in REGIONAL_EVENTS.values() for eid, _ in events}
+    allowed = {eid for stages in REGIONAL_EVENTS.values() for eid, _ in stages}
     allowed.update(eid for eid, _ in MASTERS_2026)
     allowed.add(CHAMPIONS_2026[0])
     if event_id not in allowed:
         raise HTTPException(404, "Campeonato nao cadastrado na temporada")
-    # Consulta isolada: nao inclui fallback de outro torneio.
-    index = event_index(event_id)
-    matches = [m for m in index["partidas"]
-               if any(t["team_id"] == team_id for t in m["equipes"])]
-    if not matches:
-        raise HTTPException(404, "Equipe sem partidas neste campeonato")
-    results, errors = [], []
-    futures = {pool.submit(_one_series, m, team_id): m["id"] for m in matches}
-    for future in as_completed(futures):
-        try:
-            value = future.result()
-            if value:
-                results.append(value)
-        except Exception as exc:
-            errors.append({"serie": futures[future], "erro": str(exc)[:150]})
-    response = {"event_id": event_id, "equipes": {},
-                "map_pool": index["map_pool"],
-                "map_pool_confirmada": index["map_pool_confirmada"],
-                "meta": {"erros": errors}}
-    for item in results:
-        for tid, team in item.items():
-            target = response["equipes"].setdefault(tid, {
-                "team_id": team["team_id"], "nome": team["nome"], "mapas": []})
-            target["mapas"].extend(team["mapas"])
-    if not response["map_pool"]:
-        response["map_pool"] = sorted({m["mapa"] for t in response["equipes"].values()
-                                       for m in t["mapas"]})
-    # Envia somente nomes/agentes para a grade de composicoes.
-    # Estatisticas detalhadas sao solicitadas por partida.
-    for entry in response["equipes"].values():
-        for match in entry["mapas"]:
-            for player in match.get("jogadores", []):
-                player.pop("stats", None)
-    return response
+    # Consulta somente as series do time selecionado, com fallback historico.
+    return event_team(event_id, team_id)
 
 @app.get("/api/temporadas/2026/equipes/{team_id}/series/{series_id}/mapas/{game_id}/stats")
 def match_player_stats(team_id: int, series_id: int, game_id: int):
