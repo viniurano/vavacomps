@@ -16,8 +16,11 @@ cache = {}
 lock = threading.Lock()
 pool = ThreadPoolExecutor(max_workers=4)
 # Pool confirmada para o Champions 2026; outros eventos exigem cadastro/validacao.
-EVENT_POOLS = {2766: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"],\n               2977: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"]}
-# Torneios anteriores com a mesma map pool; ampliar somente apos validacao.\nFALLBACK_EVENTS = {2766: [2977]}\nseries_cache = {}
+EVENT_POOLS = {2766: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"],
+               2977: ["Summit", "Abyss", "Split", "Ascent", "Haven", "Sunset", "Lotus"]}
+# Torneios anteriores com a mesma map pool; ampliar somente apos validacao.
+FALLBACK_EVENTS = {2766: [2977]}
+series_cache = {}
 event_index_cache = {}
 
 def salvar_equipe(result, team, opponent, game, info, date, first):
