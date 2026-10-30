@@ -57,7 +57,7 @@ def _merge_series(event_id, series_id, entries, date):
         data["meta"]["ultima_atualizacao"] = datetime.now(timezone.utc).isoformat()
         _write(_event_path(event_id), data)
 
-def collect_series(event_id, series_id, force=False):
+def collect_series(event_id, series_id, force=False, match_date=None):
     """Uma serie atualiza as duas equipes. Protecao compartilhada por processo."""
     key = (int(event_id), int(series_id))
     with GUARD:
@@ -70,8 +70,10 @@ def collect_series(event_id, series_id, force=False):
         _last[key] = now
     try:
         # Import tardio evita dependencias circulares com a API.
-        from backend.main import _one_series
-        item = {"id": int(series_id), "data": datetime.now(TZ).date().isoformat()}
+        from backend.main import _one_series, series_cache, lock
+        with lock:
+            series_cache.pop(int(series_id), None)
+        item = {"id": int(series_id), "data": match_date or datetime.now(TZ).date().isoformat()}
         entries = _one_series(item, None)
         if not entries or not any(t.get("mapas") for t in entries.values()):
             return {"status": "sem_mapas", "serie_id": series_id}
@@ -95,7 +97,7 @@ def refresh_team(event_id, team_id, discover):
         results = []
         for match in matches:
             try:
-                results.append(collect_series(event_id, match["id"]))
+                results.append(collect_series(event_id, match["id"], match_date=match.get("data")))
             except Exception as exc:
                 results.append({"serie_id": match["id"], "status": "erro", "erro": str(exc)[:160]})
                 if "429" in str(exc):
@@ -158,6 +160,8 @@ def schedule_today():
         html = response.read(2500000).decode("utf-8", "replace")
     parser = CalendarParser()
     parser.feed(html)
+    if not parser.cards:
+        raise ValueError("Calendario VLR nao reconhecido; agenda anterior preservada")
     today = datetime.now(TZ).date()
     known = _read(STORE / "agenda.json", {"partidas": {}})
     # A associacao evento/serie sera validada na coleta pelo indice de eventos.
@@ -190,7 +194,7 @@ def run_due(resolve_event=None):
                 results.append({"serie_id": item["serie_id"], "status": "evento_nao_identificado"})
                 continue
             try:
-                result = collect_series(event_id, item["serie_id"])
+                result = collect_series(event_id, item["serie_id"], match_date=datetime.fromisoformat(item["inicio_utc"]).astimezone(TZ).date().isoformat())
                 results.append(result)
                 if result["status"] in ("atualizado", "sem_mapas", "intervalo"):
                     item.setdefault("executadas", []).append(planned)
