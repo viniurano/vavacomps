@@ -1002,7 +1002,9 @@ async function loadProTeam(name,eventOverride=null){
     if(requestId!==proRequestId)return;
     if(catalog.eventos?.length){
     const current=PRO_TEAM_EVENTS.get(name)||[];
-    events=catalog.eventos.filter(e=>e.regiao==='international'||e.regiao===teamRegion||current.some(c=>c.id===e.id&&e.regiao===teamRegion));
+    const effectiveRegion=teamRegion||catalog.regioes?.[0]||'';
+    if(effectiveRegion)PRO_TEAM_REGIONS.set(name,effectiveRegion);
+    events=catalog.eventos.filter(e=>e.regiao==='international'||e.regiao===effectiveRegion||current.some(c=>c.id===e.id&&e.regiao===effectiveRegion));
     if(!events.length)events=catalog.eventos.filter(e=>e.regiao==='international');
     PRO_TEAM_EVENTS.set(name,events);
    }
