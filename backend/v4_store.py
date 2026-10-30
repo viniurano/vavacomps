@@ -115,13 +115,13 @@ class CalendarParser(HTMLParser):
         self.cards = {}
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if tag == "a" and re.search(r"/(\\d+)/[^/]*", a.get("href", "")) and "match-item" in a.get("class", ""):
-            match = re.search(r"/(\\d+)/", a["href"])
+        if tag == "a" and re.search(r"/(\d+)/[^/]*", a.get("href", "")) and "match-item" in a.get("class", ""):
+            match = re.search(r"/(\d+)/", a["href"])
             if match:
                 self.card = {"serie_id": int(match.group(1)), "timestamp": None, "equipes": [], "evento": "", "evento_id": None}
                 self.depth = 0
         if self.card is not None:
-            event_link = re.search(r"/event/(\\d+)", a.get("href", ""))
+            event_link = re.search(r"/event/(\d+)", a.get("href", ""))
             if event_link:
                 self.card["evento_id"] = int(event_link.group(1))
             self.depth += 1
