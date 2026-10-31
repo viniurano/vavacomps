@@ -197,15 +197,15 @@ def run_due(resolve_event=None):
             if not event_id or int(event_id) not in valid_events:
                 results.append({"serie_id": item["serie_id"], "status": "evento_nao_identificado"})
                 continue
-            if str(item["serie_id"]) in event_data(event_id).get("series", {}):
-                item.setdefault("executadas", []).append(planned)
-                continue
-            if attempted >= 2:
+            # Limite por execucao para evitar uma rajada excessiva de consultas.
+            # As duas tentativas da mesma serie contam separadamente.
+            if attempted >= 10:
                 _write(STORE / "agenda.json", agenda)
                 return results
             attempted += 1
             try:
-                result = collect_series(event_id, item["serie_id"], match_date=datetime.fromisoformat(item["inicio_utc"]).astimezone(TZ).date().isoformat())
+                # Reconsulta mesmo quando a serie ja existe: novos mapas podem ter terminado.
+                result = collect_series(event_id, item["serie_id"], force=True, match_date=datetime.fromisoformat(item["inicio_utc"]).astimezone(TZ).date().isoformat())
                 results.append(result)
                 if result["status"] in ("atualizado", "sem_mapas", "intervalo"):
                     item.setdefault("executadas", []).append(planned)
