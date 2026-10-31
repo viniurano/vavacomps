@@ -2,8 +2,7 @@ name: Vava v4 - sincronizacao automatica (branch de testes)
 on:
   schedule:
     - cron: '15 3 * * *'
-    - cron: '20 15 * * *'
-    - cron: '20 21 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,7 +28,7 @@ jobs:
       - name: Consultar calendario uma vez por dia
         if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
         run: python -m backend.v4_store schedule
-      - name: Verificar ate duas series vencidas, somente eventos catalogados
+      - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
         run: python -m backend.v4_store run
       - name: Salvar apenas dados v4 na branch de testes
         if: always()
