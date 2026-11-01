@@ -7,8 +7,16 @@ STORE = ROOT / "dados" / "v4"
 CATALOG = STORE / "catalogo_2026.json"
 
 def catalog():
-    data = json.loads(CATALOG.read_text(encoding="utf-8"))
-    events = data["events"]
+    """Une catalogo legado e dinamico sem descartar eventos historicos."""
+    events_by_id = {}
+    for path in (CATALOG, STORE / "catalogo.json"):
+        if not path.exists():
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for event in data.get("events", []):
+            eid = int(event["event_id"])
+            events_by_id[eid] = {**events_by_id.get(eid, {}), **event}
+    events = list(events_by_id.values())
     ids = [int(e["event_id"]) for e in events]
     if len(ids) != len(set(ids)):
         raise ValueError("IDs duplicados no catalogo")
