@@ -121,7 +121,7 @@ class EventListParser(HTMLParser):
                 self._save(candidate, frame["text"], frame["classes"])
 
     def _save(self, candidate, text, classes):
-        title = candidate["anchor_title"] or text.strip() or _name_from_slug(candidate["slug"])
+        title = candidate["anchor_title"] or _name_from_slug(candidate["slug"])
         title = re.sub(r"\s+", " ", title).strip()
         if not MAIN_EVENT.search(title):
             return
