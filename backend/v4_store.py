@@ -129,6 +129,7 @@ class CalendarParser(HTMLParser):
         self._event = False
         self._pending_timestamp = None
         self._pending_event_id = None
+        self._last_card_id = None
 
     @staticmethod
     def _timestamp(attrs):
@@ -167,6 +168,7 @@ class CalendarParser(HTMLParser):
             if self.card["timestamp"]:
                 self.cards[self.card["serie_id"]] = self.card
                 self.with_timestamp += 1
+                self._last_card_id = self.card["serie_id"]
             self.card = None
             self.depth = 0
             self._team = self._event = False
@@ -181,6 +183,9 @@ class CalendarParser(HTMLParser):
         if self.card is None:
             if event_link:
                 self._pending_event_id = int(event_link.group(1))
+                previous = self.cards.get(self._last_card_id)
+                if previous is not None and not previous.get("evento_id"):
+                    previous["evento_id"] = self._pending_event_id
             if ts:
                 self._pending_timestamp = ts
 
@@ -250,8 +255,12 @@ def schedule_today():
         html = response.read(2500000).decode("utf-8", "replace")
     parser = CalendarParser()
     parser.feed(html)
+    parser.close()
     if not parser.cards:
-        raise ValueError("Calendario VLR nao reconhecido; agenda anterior preservada")
+        raise ValueError(
+            "Calendario VLR nao reconhecido; agenda anterior preservada "
+            "(links_candidatos=%s, com_horario=%s)" % (parser.candidates, parser.with_timestamp)
+        )
     today = datetime.now(TZ).date()
     known = _read(STORE / "agenda.json", {"partidas": {}})
     # A associacao evento/serie sera validada na coleta pelo indice de eventos.
