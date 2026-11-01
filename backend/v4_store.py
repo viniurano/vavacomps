@@ -109,51 +109,139 @@ def refresh_team(event_id, team_id, discover):
             _inflight.discard(key)
 
 class CalendarParser(HTMLParser):
-    """Extrai cards /match/ do calendario VLR; horarios sao timestamps UTC do HTML."""
+    """Leitor tolerante do calendario VLR.
+
+    A VLR ja alterou classes CSS no passado. Por isso, a identificacao principal
+    usa o formato estavel dos links de partida (/ID/time-a-vs-time-b), e nao
+    exige a classe CSS match-item.
+    """
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr"}
+
     def __init__(self):
         super().__init__()
         self.depth = 0
         self.card = None
         self.cards = {}
+        self.candidates = 0
+        self.with_timestamp = 0
+        self._team = False
+        self._event = False
+        self._pending_timestamp = None
+        self._pending_event_id = None
+
+    @staticmethod
+    def _timestamp(attrs):
+        for attr in ("data-utc-ts", "data-ts", "data-timestamp",
+                     "data-start-time", "datetime", "content"):
+            raw = attrs.get(attr)
+            if not raw:
+                continue
+            raw = str(raw).strip()
+            if raw.isdigit():
+                value = int(raw)
+                return value // 1000 if value > 10_000_000_000 else value
+            try:
+                parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    parsed = parsed.replace(tzinfo=timezone.utc)
+                return int(parsed.timestamp())
+            except ValueError:
+                continue
+        return None
+
+    @staticmethod
+    def _match_id(href, css):
+        # Links de partida atuais: /773436/equipe-a-vs-equipe-b-evento
+        match = re.match(r"^/(\d+)/([^/?#]+)", href or "")
+        if not match:
+            return None
+        slug = match.group(2).lower()
+        classes = (css or "").lower().split()
+        if "-vs-" not in slug and "match-item" not in classes:
+            return None
+        return int(match.group(1))
+
+    def _finish_card(self):
+        if self.card is not None:
+            if self.card["timestamp"]:
+                self.cards[self.card["serie_id"]] = self.card
+                self.with_timestamp += 1
+            self.card = None
+            self.depth = 0
+            self._team = self._event = False
+            self._pending_timestamp = None
+
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        if tag == "a" and re.search(r"/(\d+)/[^/]*", a.get("href", "")) and "match-item" in a.get("class", ""):
-            match = re.search(r"/(\d+)/", a["href"])
-            if match:
-                self.card = {"serie_id": int(match.group(1)), "timestamp": None, "equipes": [], "evento": "", "evento_id": None}
-                self.depth = 0
-        if self.card is not None:
-            event_link = re.search(r"/event/(\d+)", a.get("href", ""))
+        href = a.get("href", "")
+        event_link = re.search(r"/event/(\d+)", href)
+        ts = self._timestamp(a)
+
+        if self.card is None:
             if event_link:
-                self.card["evento_id"] = int(event_link.group(1))
-            if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
-                self.depth += 1
-            for attr in ("data-utc-ts", "data-ts"):
-                raw = a.get(attr)
-                if raw and raw.isdigit():
-                    self.card["timestamp"] = int(raw)
-            if "match-item-vs-team-name" in a.get("class", ""):
-                self._team = True
-            if "match-item-event" in a.get("class", ""):
-                self._event = True
+                self._pending_event_id = int(event_link.group(1))
+            if ts:
+                self._pending_timestamp = ts
+
+        css = a.get("class", "")
+        match_id = self._match_id(href, css) if tag == "a" else None
+        if match_id is not None:
+            if self.card is not None:
+                self._finish_card()
+            self.candidates += 1
+            self.card = {
+                "serie_id": match_id,
+                "timestamp": ts or self._pending_timestamp,
+                "equipes": [],
+                "evento": "",
+                "evento_id": int(event_link.group(1)) if event_link else self._pending_event_id,
+            }
+            self._pending_timestamp = None
+            self.depth = 1
+            self._team = self._event = False
+            return
+
+        if self.card is None:
+            return
+
+        if event_link:
+            self.card["evento_id"] = int(event_link.group(1))
+        if ts:
+            self.card["timestamp"] = ts
+        if tag not in self.VOID:
+            self.depth += 1
+
+        classes = css.lower().split()
+        if any("team-name" in c for c in classes):
+            self._team = True
+        if any(("match-item-event" in c) or c in ("event-name", "event-title") for c in classes):
+            self._event = True
+
     def handle_data(self, data):
-        if self.card is not None:
-            value = data.strip()
-            if value and getattr(self, "_team", False):
+        if self.card is None:
+            return
+        value = data.strip()
+        if not value:
+            return
+        if self._team:
+            if value not in self.card["equipes"]:
                 self.card["equipes"].append(value)
-                self._team = False
-            if value and getattr(self, "_event", False):
-                self.card["evento"] = value
-                self._event = False
+            self._team = False
+        if self._event:
+            self.card["evento"] = value
+            self._event = False
+
     def handle_endtag(self, tag):
-        if self.card is not None:
-            if tag not in ("img", "br", "hr", "input", "meta", "link", "source"):
-                self.depth -= 1
-            if self.depth <= 0:
-                if self.card["timestamp"]:
-                    self.cards[self.card["serie_id"]] = self.card
-                self.card = None
-                self._team = self._event = False
+        if self.card is None or tag in self.VOID:
+            return
+        self.depth -= 1
+        if self.depth <= 0:
+            self._finish_card()
+
+    def close(self):
+        super().close()
+        self._finish_card()
 
 def schedule_today():
     """Uma consulta diaria ao calendario; nunca consulta detalhes das series."""
