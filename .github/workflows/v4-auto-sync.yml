@@ -25,6 +25,10 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r backend/requirements.txt
+      - name: Descobrir torneios principais no VLR
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
+        continue-on-error: true
+        run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
         if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
         run: python -m backend.v4_store schedule
