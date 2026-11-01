@@ -285,7 +285,14 @@ def run_due(resolve_event=None):
     now = datetime.now(timezone.utc)
     results = []
     attempted = 0
-    valid_events = {int(e["event_id"]) for e in _read(STORE / "catalogo_2026.json", {}).get("events", []) if "event_id" in e}
+    # Aceita tanto o catalogo historico de 2026 quanto o catalogo dinamico.
+    valid_events = set()
+    for catalog_name in ("catalogo_2026.json", "catalogo.json"):
+        catalog = _read(STORE / catalog_name, {})
+        valid_events.update(
+            int(e["event_id"]) for e in catalog.get("events", [])
+            if isinstance(e, dict) and e.get("event_id") is not None
+        )
     for item in agenda["partidas"].values():
         for planned in item.get("consultas_utc", []):
             if planned in item.get("executadas", []) or datetime.fromisoformat(planned) > now:
