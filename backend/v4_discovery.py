@@ -78,6 +78,7 @@ class EventListParser(HTMLParser):
                 "slug": match.group(2),
                 "anchor_title": attrs.get("title") or attrs.get("aria-label") or "",
             }
+            frame["event_candidate"] = candidate
             target = None
             for parent in reversed(self.stack[:-1]):
                 if any(any(token in cls.casefold() for token in self.CARD_CLASSES)
@@ -105,6 +106,8 @@ class EventListParser(HTMLParser):
         closed = self.stack[index:]
         del self.stack[index:]
         for frame in closed:
+            if frame.get("event_candidate") and not frame["event_candidate"]["anchor_title"]:
+                frame["event_candidate"]["anchor_title"] = frame["text"]
             for candidate in frame["candidates"]:
                 self._save(candidate, frame["text"], frame["classes"])
 
@@ -112,6 +115,8 @@ class EventListParser(HTMLParser):
         super().close()
         while self.stack:
             frame = self.stack.pop()
+            if frame.get("event_candidate") and not frame["event_candidate"]["anchor_title"]:
+                frame["event_candidate"]["anchor_title"] = frame["text"]
             for candidate in frame["candidates"]:
                 self._save(candidate, frame["text"], frame["classes"])
 
