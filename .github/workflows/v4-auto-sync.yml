@@ -12,6 +12,7 @@ on:
         options:
           - sync
           - team_refresh
+          - americas_stage2_full
         default: sync
       event_id:
         description: 'ID do campeonato para atualização manual'
@@ -47,8 +48,11 @@ jobs:
       - name: Atualizar equipe solicitada pelo site
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'team_refresh'
         run: python -m backend.v4_manual "${{ inputs.event_id }}" "${{ inputs.team_id }}"
+      - name: Coletar Americas Stage 2 completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'americas_stage2_full'
+        run: python -m backend.v4_region americas 0 2977
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
