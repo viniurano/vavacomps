@@ -1007,11 +1007,14 @@ async function v4StaticFetch(path){
   for(const match of team.mapas||[]){
    const opponentId=String(match.adversario_id);
    const opponent=data.equipes?.[opponentId];
-   if(!opponent||equipes[opponentId])continue;
+   if(!opponent)continue;
    const opponentMaps=(opponent.mapas||[]).filter(map=>
     gameIds.has(String(map.game_id))&&String(map.adversario_id)===String(id)
    );
-   if(opponentMaps.length)equipes[opponentId]={...opponent,mapas:opponentMaps};
+   if(!opponentMaps.length)continue;
+   if(!equipes[opponentId])equipes[opponentId]={...opponent,mapas:[]};
+   const included=new Set(equipes[opponentId].mapas.map(map=>String(map.game_id)));
+   opponentMaps.forEach(map=>{if(!included.has(String(map.game_id)))equipes[opponentId].mapas.push(map)});
   }
   return {event_id:eid,equipes,map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
  }
