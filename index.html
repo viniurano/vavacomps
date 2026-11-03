@@ -1096,13 +1096,10 @@ async function loadProTeam(name,eventOverride=null){
     const teamRegion=PRO_TEAM_REGIONS.get(name)||($('proRegion').value!=='all'&&$('proEvent').value==='Champions'?$('proRegion').value:'all');
      const catalog=await proFetch('/api/temporadas/2026/equipes/'+id+'/eventos'+(teamRegion?'?region='+encodeURIComponent(teamRegion):''));
     if(requestId!==proRequestId)return;
-    if(catalog.eventos?.length){
-    const current=PRO_TEAM_EVENTS.get(name)||[];
     const effectiveRegion=teamRegion||catalog.regioes?.[0]||'';
     if(effectiveRegion)PRO_TEAM_REGIONS.set(name,effectiveRegion);
-    events=catalog.eventos.filter(e=>e.regiao==='international'||(['americas','pacific','emea','china'].includes(e.regiao)&&(effectiveRegion==='all'||e.regiao===effectiveRegion)));
+    events=(catalog.eventos||[]).filter(e=>e.regiao==='international'||(['americas','pacific','emea','china'].includes(e.regiao)&&(effectiveRegion==='all'||e.regiao===effectiveRegion)));
     PRO_TEAM_EVENTS.set(name,events);
-   }
    }catch(err){console.warn('Calendário incompleto',err)}
   }
  }
