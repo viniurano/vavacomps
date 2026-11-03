@@ -25,23 +25,13 @@ def _now():
 
 def _name_from_slug(slug):
     """Gera nome legivel a partir do slug, sem incorporar metadados do card."""
-    value = re.sub(r"[-_]+", " ", slug).strip()
-    replacements = (
-        (r"\\bgame changers\\b", "Game Changers"),
-        (r"\\bvalorant champions\\b", "Valorant Champions"),
-        (r"\\bvalorant masters\\b", "Valorant Masters"),
-        (r"\\bvct\\b", "VCT"),
-        (r"\\bvcl\\b", "VCL"),
-        (r"\\bemea\\b", "EMEA"),
-        (r"\\bna\\b", "NA"),
-        (r"\\blatam\\b", "LATAM"),
-        (r"\\bamericas\\b", "Americas"),
-        (r"\\bpacific\\b", "Pacific"),
-        (r"\\bchina\\b", "China"),
-    )
-    value = value.title()
-    for pattern, label in replacements:
-        value = re.sub(pattern, label, value, flags=re.I)
+    value = re.sub(r"[-_]+", " ", slug).strip().title()
+    for old, new in (
+        ("Vct", "VCT"), ("Vcl", "VCL"),
+        ("Emea", "EMEA"), ("Na ", "NA "),
+        ("Latam", "LATAM"), ("Usa", "USA"),
+    ):
+        value = value.replace(old, new)
     return value
 
 def _tier(name):
@@ -65,12 +55,13 @@ def _region(name):
 
 def _status(text, classes):
     value = (text + " " + " ".join(classes)).casefold()
-    if re.search(r"\b(completed|finished|concluded)\b|mod-completed", value):
+    # Prioriza estados explicitos; "upcoming" nao pode virar "ongoing".
+    if "completed" in value or "finished" in value or "concluded" in value or "mod-completed" in value:
         return "completed"
-    if re.search(r"\b(ongoing|live|in progress)\b|mod-ongoing", value):
-        return "ongoing"
-    if re.search(r"\b(upcoming|starts in)\b|mod-upcoming", value):
+    if "upcoming" in value or "starts in" in value or "mod-upcoming" in value:
         return "upcoming"
+    if "ongoing" in value or "in progress" in value or "mod-ongoing" in value:
+        return "ongoing"
     return "discovered"
 
 class EventListParser(HTMLParser):
@@ -139,10 +130,10 @@ class EventListParser(HTMLParser):
                 self._save(candidate, frame["text"], frame["classes"])
 
     def _save(self, candidate, text, classes):
-        title = candidate["anchor_title"] or _name_from_slug(candidate["slug"])
+        # O VLR pode colocar o card inteiro dentro do link; seu texto inclui
+        # status, premiacao e datas. O slug e a fonte estavel do nome.
+        title = _name_from_slug(candidate["slug"])
         title = re.sub(r"\s+", " ", title).strip()
-        if not MAIN_EVENT.search(title):
-            return
         eid = candidate["event_id"]
         self.events[eid] = {
             "event_id": eid,
