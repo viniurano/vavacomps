@@ -42,6 +42,8 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r backend/requirements.txt
+      - name: Validar sintaxe do backend
+        run: python -m compileall -q backend
       - name: Atualizar equipe solicitada pelo site
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'team_refresh'
         run: python -m backend.v4_manual "${{ inputs.event_id }}" "${{ inputs.team_id }}"
