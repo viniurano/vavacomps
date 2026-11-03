@@ -30,7 +30,7 @@ concurrency:
 jobs:
   coleta:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - name: Usar codigo da v4 (nao modifica main)
         uses: actions/checkout@v4
@@ -61,12 +61,16 @@ jobs:
       - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
         run: python -m backend.v4_store run
+      - name: Atualizar logos de todas as equipes V4
+        if: always()
+        continue-on-error: true
+        run: python scripts/baixar_logos.py
       - name: Salvar apenas dados v4 na branch de testes
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dados/v4/
+          git add dados/v4/ img/teams/
           if ! git diff --cached --quiet; then
             git commit -m "data(v4): sincronizacao automatica controlada"
             git push origin HEAD:feature/backend-dinamico-v3
