@@ -37,7 +37,7 @@ jobs:
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r backend/requirements.txt
       - name: Coletar partidas da regiao
-        run: python -m backend.v4_region "${{ inputs.regiao }}" "${{ inputs.limite }}"
+        run: python -m backend.v4_region "${{ inputs.regiao }}" "${{ inputs.limite }}" "2977"
       - name: Validar Python
         run: python -m compileall -q backend
       - name: Persistir JSONs
