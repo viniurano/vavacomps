@@ -4,6 +4,23 @@ on:
     - cron: '15 3 * * *'
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      task:
+        description: 'Tipo de execução'
+        required: false
+        type: choice
+        options:
+          - sync
+          - team_refresh
+        default: sync
+      event_id:
+        description: 'ID do campeonato para atualização manual'
+        required: false
+        type: string
+      team_id:
+        description: 'ID da equipe para atualização manual'
+        required: false
+        type: string
 permissions:
   contents: write
 concurrency:
@@ -25,14 +42,18 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r backend/requirements.txt
+      - name: Atualizar equipe solicitada pelo site
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'team_refresh'
+        run: python -m backend.v4_manual "${{ inputs.event_id }}" "${{ inputs.team_id }}"
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '15 3 * * *'
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh')
         run: python -m backend.v4_store schedule
       - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh')
         run: python -m backend.v4_store run
       - name: Salvar apenas dados v4 na branch de testes
         if: always()
