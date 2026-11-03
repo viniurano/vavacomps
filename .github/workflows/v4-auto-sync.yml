@@ -13,6 +13,7 @@ on:
           - sync
           - team_refresh
           - americas_stage2_full
+          - pacific_stage2_full
         default: sync
       event_id:
         description: 'ID do campeonato para atualização manual'
@@ -51,15 +52,18 @@ jobs:
       - name: Coletar Americas Stage 2 completo (todas as series pendentes)
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'americas_stage2_full'
         run: python -m backend.v4_region americas 0 2977
+      - name: Coletar Pacific Stage 2 completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'pacific_stage2_full'
+        run: python -m backend.v4_region pacific 0 2776
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full')
         run: python -m backend.v4_store schedule
       - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full')
         run: python -m backend.v4_store run
       - name: Atualizar logos de todas as equipes V4
         if: always()
