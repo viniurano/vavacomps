@@ -1090,7 +1090,7 @@ async function loadProTeam(name,eventOverride=null){
  let events=[];
  if(!gc){
   events=PRO_TEAM_EVENTS.get(name)||[];
-  if(eventOverride===null||!events.length){
+  {
    showProLoading(true,'campeonatos de '+name);renderPro();
    try{
     const teamRegion=PRO_TEAM_REGIONS.get(name)||($('proRegion').value!=='all'&&$('proEvent').value==='Champions'?$('proRegion').value:'all');
@@ -1100,8 +1100,7 @@ async function loadProTeam(name,eventOverride=null){
     const current=PRO_TEAM_EVENTS.get(name)||[];
     const effectiveRegion=teamRegion||catalog.regioes?.[0]||'';
     if(effectiveRegion)PRO_TEAM_REGIONS.set(name,effectiveRegion);
-    events=catalog.eventos.filter(e=>['americas','pacific','emea','china'].includes(e.regiao)&&(effectiveRegion==='all'||e.regiao===effectiveRegion));
-    if(!events.length)events=catalog.eventos.filter(e=>['americas','pacific','emea','china'].includes(e.regiao));
+    events=catalog.eventos.filter(e=>e.regiao==='international'||(['americas','pacific','emea','china'].includes(e.regiao)&&(effectiveRegion==='all'||e.regiao===effectiveRegion)));
     PRO_TEAM_EVENTS.set(name,events);
    }
    }catch(err){console.warn('Calendário incompleto',err)}
