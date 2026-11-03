@@ -10,17 +10,22 @@ from backend.main import REGIONAL_EVENTS, event_index
 from backend import v4_store
 
 
-def collect_region(region, limit=30):
+def collect_region(region, limit=0, only_event_id=None):
     region = region.lower()
     if region not in REGIONAL_EVENTS:
         raise SystemExit("Regiao invalida: " + region)
     report = {"regiao": region, "eventos": [], "limite_por_evento": limit}
-    for event_id, label in REGIONAL_EVENTS[region]:
+    selected_events = REGIONAL_EVENTS[region]
+    if only_event_id is not None:
+        selected_events = [(eid, label) for eid, label in selected_events if int(eid) == int(only_event_id)]
+        if not selected_events:
+            raise SystemExit("Evento nao pertence a regiao selecionada: " + str(only_event_id))
+    for event_id, label in selected_events:
         index = event_index(event_id)
         data = v4_store.event_data(event_id)
         done = {str(k) for k in data.get("series", {})}
         pending = [m for m in index["partidas"] if str(m["id"]) not in done]
-        batch = pending[:limit]
+        batch = pending if limit <= 0 else pending[:limit]
         results = []
         for match in batch:
             try:
@@ -52,4 +57,4 @@ def collect_region(region, limit=30):
 
 
 if __name__ == "__main__":
-    collect_region(sys.argv[1] if len(sys.argv) > 1 else "", int(sys.argv[2]) if len(sys.argv) > 2 else 30)
+    collect_region(sys.argv[1] if len(sys.argv) > 1 else "", int(sys.argv[2]) if len(sys.argv) > 2 else 0, int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3] else None)
