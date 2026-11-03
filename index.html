@@ -790,6 +790,7 @@ function renderPro(){
  const headRow=proEl('div','pro-heading-row');headRow.append(proLogo(proSelectedTeam),proEl('h2','',proSelectedTeam));heading.append(headRow);
  heading.append(proEl('p','muted','Últimas composições utilizadas pela equipe em cada mapa.'));
  heading.append(proEl('p','muted',PRO_POOL_CONFIRMED?'Map pool do campeonato · Clique no mapa para ver até cinco partidas desta composição.':'Map pool provisória: mapas não confirmados para este torneio podem aparecer vazios.'));
+  heading.append(proEl('p','muted','Se algum mapa estiver sem composição, é porque a equipe não chegou a jogá-lo durante o campeonato.'));
  const table=$('proTable');table.replaceChildren();
  const head=proEl('thead'),trh=proEl('tr');trh.appendChild(proEl('th','','Mapa / partidas'));
  // Jogadores são apresentados conforme a partida mais recente da equipe.
