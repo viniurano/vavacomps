@@ -1118,20 +1118,17 @@ async function proUpdateRefreshInfo(){
 $('proRefreshBtn').addEventListener('click',async()=>{
  const name=proSelectedTeam,id=PRO_TEAM_IDS.get(name),eid=PRO_SELECTED_EVENT||($('proEvent').value==='GC Championship'?3134:null);
  if(!id||!eid)return;
- if(!PRO_API_BASE){$('proRefreshInfo').textContent='Atualização manual indisponível no teste estático; dados salvos continuam disponíveis.';return;}
  const button=$('proRefreshBtn');button.disabled=true;
- $('proRefreshInfo').textContent='Atualizando partidas do time...';
+ $('proRefreshInfo').textContent='Enviando solicitação de atualização...';
  try{
-  const response=await fetch(PRO_API_BASE+'/api/v4/eventos/'+eid+'/equipes/'+id+'/atualizar',{method:'POST'});
-  const data=await response.json();
-  if(!response.ok)throw new Error(data.detail||'HTTP '+response.status);
-  if(data.status==='intervalo'){
-   $('proRefreshInfo').textContent='Atualização recente. Aguarde '+Math.ceil((data.aguarde_segundos||900)/60)+' min.';
-  }else{
-   await loadProTeam(name,eid);
-   await proUpdateRefreshInfo();
-  }
- }catch(err){$('proRefreshInfo').textContent='Não foi possível atualizar: '+err.message}
+  const response=await fetch('/.netlify/functions/refresh-data',{
+   method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({event_id:eid,team_id:id})
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'HTTP '+response.status);
+  $('proRefreshInfo').textContent='Atualização enviada ao GitHub Actions. Após a conclusão e publicação dos dados, recarregue a página.';
+ }catch(err){$('proRefreshInfo').textContent='Não foi possível solicitar a atualização: '+err.message}
  finally{button.disabled=false}
 });
 $('proTeamEvent').addEventListener('change',e=>{if(proSelectedTeam)loadProTeam(proSelectedTeam,Number(e.target.value))});
