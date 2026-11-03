@@ -1,5 +1,6 @@
 const ALLOWED_ORIGINS = new Set([
   "https://poetic-sunshine-55c175.netlify.app"
+  "https://regal-croissant-fffaa0.netlify.app"
 ]);
 const REPOSITORY = "viniurano/vavacomps";
 const WORKFLOW = "v4-auto-sync.yml";
