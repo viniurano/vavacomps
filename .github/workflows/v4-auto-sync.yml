@@ -22,6 +22,10 @@ on:
           - pacific_split1_full
           - emea_split1_full
           - china_split1_full
+          - china_kickoff_full
+          - emea_kickoff_full
+          - pacific_kickoff_full
+          - americas_kickoff_full
         default: sync
       event_id:
         description: 'ID do campeonato para atualização manual'
@@ -87,15 +91,27 @@ jobs:
       - name: Coletar China Split 1 completo (todas as series pendentes)
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'china_split1_full'
         run: python -m backend.v4_region china 0 2864
+      - name: Coletar Americas Kickoff completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'americas_kickoff_full'
+        run: python -m backend.v4_region americas 0 2682
+      - name: Coletar Pacific Kickoff completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'pacific_kickoff_full'
+        run: python -m backend.v4_region pacific 0 2683
+      - name: Coletar EMEA Kickoff completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'emea_kickoff_full'
+        run: python -m backend.v4_region emea 0 2684
+      - name: Coletar China Kickoff completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'china_kickoff_full'
+        run: python -m backend.v4_region china 0 2685
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'emea_split1_full' && inputs.task != 'china_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'masters_santiago_full' && inputs.task != 'americas_split1_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_kickoff_full' && inputs.task != 'pacific_kickoff_full' && inputs.task != 'emea_kickoff_full' && inputs.task != 'china_kickoff_full' && inputs.task != 'pacific_split1_full' && inputs.task != 'emea_split1_full' && inputs.task != 'china_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'masters_santiago_full' && inputs.task != 'americas_split1_full')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_kickoff_full' && inputs.task != 'pacific_kickoff_full' && inputs.task != 'emea_kickoff_full' && inputs.task != 'china_kickoff_full' && inputs.task != 'pacific_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full')
         run: python -m backend.v4_store schedule
       - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_kickoff_full' && inputs.task != 'pacific_kickoff_full' && inputs.task != 'emea_kickoff_full' && inputs.task != 'china_kickoff_full' && inputs.task != 'pacific_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full')
         run: python -m backend.v4_store run
       - name: Atualizar logos de todas as equipes V4
         if: always()
