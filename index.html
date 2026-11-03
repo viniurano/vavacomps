@@ -1021,7 +1021,7 @@ async function v4StaticFetch(path){
  if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/busca\?q=(.*)$/))){
   const q=decodeURIComponent(m[1]).toLowerCase();
   const regionalEvents=V4_EVENTS.filter(e=>['americas','pacific','emea','china'].includes(e.regiao));
-  const searchEvents=[...regionalEvents.map(e=>e.id),2766,3134];
+  const searchEvents=[...regionalEvents.map(e=>e.id),3134];
   const results=await Promise.all(searchEvents.map(id=>v4LocalEvent(id)));
   const teams=new Map();
   results.forEach((data,i)=>v4TeamList(data).forEach(t=>{
