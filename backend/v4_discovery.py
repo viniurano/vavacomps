@@ -24,7 +24,25 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 def _name_from_slug(slug):
-    return re.sub(r"[-_]+", " ", slug).strip().title()
+    """Gera nome legivel a partir do slug, sem incorporar metadados do card."""
+    value = re.sub(r"[-_]+", " ", slug).strip()
+    replacements = (
+        (r"\\bgame changers\\b", "Game Changers"),
+        (r"\\bvalorant champions\\b", "Valorant Champions"),
+        (r"\\bvalorant masters\\b", "Valorant Masters"),
+        (r"\\bvct\\b", "VCT"),
+        (r"\\bvcl\\b", "VCL"),
+        (r"\\bemea\\b", "EMEA"),
+        (r"\\bna\\b", "NA"),
+        (r"\\blatam\\b", "LATAM"),
+        (r"\\bamericas\\b", "Americas"),
+        (r"\\bpacific\\b", "Pacific"),
+        (r"\\bchina\\b", "China"),
+    )
+    value = value.title()
+    for pattern, label in replacements:
+        value = re.sub(pattern, label, value, flags=re.I)
+    return value
 
 def _tier(name):
     value = name.casefold()
