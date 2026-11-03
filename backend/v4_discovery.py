@@ -34,6 +34,10 @@ def _name_from_slug(slug):
         value = value.replace(old, new)
     return value
 
+def _year(name):
+    match = re.search(r"\\b(20\\d{2})\\b", name)
+    return int(match.group(1)) if match else None
+
 def _tier(name):
     value = name.casefold()
     if "game changers" in value:
@@ -60,7 +64,9 @@ def _status(text, classes):
         return "completed"
     if "upcoming" in value or "starts in" in value or "mod-upcoming" in value:
         return "upcoming"
-    if "ongoing" in value or "in progress" in value or "mod-ongoing" in value:
+    if "ongoing" in value or "in progress" in value or "mod-ongoing" in value or any(
+        cls.casefold() in ("live", "mod-live") for cls in classes
+    ):
         return "ongoing"
     return "discovered"
 
@@ -138,6 +144,7 @@ class EventListParser(HTMLParser):
         self.events[eid] = {
             "event_id": eid,
             "name": title,
+            "year": _year(title),
             "tier": _tier(title),
             "region": _region(title),
             "status": _status(text, classes),
