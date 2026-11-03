@@ -29,7 +29,7 @@ def _name_from_slug(slug):
     for old, new in (
         ("Vct", "VCT"), ("Vcl", "VCL"),
         ("Emea", "EMEA"), ("Na ", "NA "),
-        ("Latam", "LATAM"), ("Usa", "USA"), ("Sao Paulo", "São Paulo"),
+        ("Latam", "LATAM"), ("Usa", "USA"), ("S O Paulo", "São Paulo"), ("Sao Paulo", "São Paulo"),
     ):
         value = value.replace(old, new)
     return value
@@ -146,6 +146,10 @@ class EventListParser(HTMLParser):
             "name": title,
             "year": _year(title),
             "tier": _tier(title),
+            "scope": ("cup" if "cash cup" in title.casefold() else
+                      "qualifier" if "qualifier" in title.casefold() else "main"),
+            "is_main_event": not any(token in title.casefold()
+                                     for token in ("qualifier", "cash cup")),
             "region": _region(title),
             "status": _status(text, classes),
             "url": "https://www.vlr.gg/event/%s/%s" % (eid, candidate["slug"]),
