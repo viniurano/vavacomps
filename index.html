@@ -837,9 +837,10 @@ function renderPro(){
   const old=state.comps[map.nome]||[];
   if(old.some(Boolean)&&!confirm('Substituir os agentes de '+map.nome+' na equipe ativa? Os nomes dos jogadores serão preservados.'))return;
   state.comps[map.nome]=agents.map(a=>agentSrc(a));
-  if(!state.activeMaps.includes(map.nome))state.activeMaps.push(map.nome);
+  // Copiar/equipar uma composição não ativa o mapa automaticamente.
+  // O mapa permanece no pool de inativos até o usuário arrastá-lo para a tabela.
   save();render();renderPool();showView('editor');
-  notify('Composição de '+c.map+' equipada na equipe ativa');
+  notify('Composição de '+c.map+' copiada. Para exibir o mapa, arraste-o dos inativos.');
  };
  wrap.appendChild(equip);
  wrap.append(proEl('p','muted','Estatísticas gerais: todas as partidas encontradas com esta composição e o mesmo quinteto, incluindo torneios anteriores compatíveis. Histórico individual limitado a 5.'));
