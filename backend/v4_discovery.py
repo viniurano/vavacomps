@@ -29,13 +29,13 @@ def _name_from_slug(slug):
     for old, new in (
         ("Vct", "VCT"), ("Vcl", "VCL"),
         ("Emea", "EMEA"), ("Na ", "NA "),
-        ("Latam", "LATAM"), ("Usa", "USA"),
+        ("Latam", "LATAM"), ("Usa", "USA"), ("Sao Paulo", "São Paulo"),
     ):
         value = value.replace(old, new)
     return value
 
 def _year(name):
-    match = re.search(r"\\b(20\\d{2})\\b", name)
+    match = re.search(r"(20[0-9]{2})", name)
     return int(match.group(1)) if match else None
 
 def _tier(name):
