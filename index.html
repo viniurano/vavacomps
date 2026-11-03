@@ -1020,12 +1020,21 @@ async function v4StaticFetch(path){
  }
  if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/busca\?q=(.*)$/))){
   const q=decodeURIComponent(m[1]).toLowerCase();
-  const regionalEvents=V4_EVENTS.filter(e=>['americas','pacific','emea','china'].includes(e.regiao));\n  const searchEvents=[...regionalEvents.map(e=>e.id),2766,3134];\n  const results=await Promise.all(searchEvents.map(id=>v4LocalEvent(id)));
+  const regionalEvents=V4_EVENTS.filter(e=>['americas','pacific','emea','china'].includes(e.regiao));
+  const searchEvents=[...regionalEvents.map(e=>e.id),2766,3134];
+  const results=await Promise.all(searchEvents.map(id=>v4LocalEvent(id)));
   const teams=new Map();
   results.forEach((data,i)=>v4TeamList(data).forEach(t=>{
-   if(t.nome.toLowerCase().includes(q))teams.set(t.team_id,{...t,circuitos:[searchEvents[i]===3134?'gc':'vct'],regioes:regionalEvents.find(e=>e.id===searchEvents[i])?[regionalEvents.find(e=>e.id===searchEvents[i]).regiao]:[]});
+   if(t.nome.toLowerCase().includes(q)){
+    const ev=V4_EVENTS.find(e=>e.id===searchEvents[i]);
+    const old=teams.get(t.team_id)||{...t,circuitos:[],regioes:[]};
+    const circuit=searchEvents[i]===3134?'gc':'vct';
+    if(!old.circuitos.includes(circuit))old.circuitos.push(circuit);
+    if(ev&&['americas','pacific','emea','china'].includes(ev.regiao)&&!old.regioes.includes(ev.regiao))old.regioes.push(ev.regiao);
+    teams.set(t.team_id,old);
+   }
   }));
-  return {equipes:[...teams.values()],meta:{indices_consultados:2,indices_total:2}};
+  return {equipes:[...teams.values()],meta:{indices_consultados:searchEvents.length,indices_total:searchEvents.length}};
  }
  if(path.includes('/atualizacao'))return {ultima_atualizacao:null};
  throw Error('Esta função exige o backend de atualização, ainda não publicado.');
