@@ -59,7 +59,7 @@ jobs:
         if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
         run: python -m backend.v4_store schedule
       - name: Verificar series vencidas, somente eventos catalogados (ate 10 tentativas por execucao)
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh')
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'americas_stage2_full')
         run: python -m backend.v4_store run
       - name: Salvar apenas dados v4 na branch de testes
         if: always()
