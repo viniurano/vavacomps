@@ -979,7 +979,7 @@ async function v4StaticFetch(path){
   return {equipes:v4TeamList(data),map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
  }
  if((m=path.match(/^\/api\/temporadas\/2026\/regioes\/([^/]+)\/equipes$/))){
-  const region=m[1],events=V4_EVENTS.filter(e=>e.regiao===region);
+  const region=m[1],events=V4_EVENTS.filter(e=>['americas','pacific','emea','china'].includes(e.regiao)&&(region==='all'||e.regiao===region));
   const results=await Promise.all(events.map(e=>v4LocalEvent(e.id)));
   const teams=new Map();
   results.forEach((data,i)=>v4TeamList(data).forEach(t=>{
