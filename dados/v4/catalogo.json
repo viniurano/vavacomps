@@ -5,7 +5,7 @@
   "events": [
     {
       "event_id": 3099,
-      "name": "Game Changers 2026: Americas Last Chance Qualifier completed Status $0 Prize Pool Oct 14—15 Dates Region",
+      "name": "Game Changers 2026 Americas Last Chance Qualifier",
       "tier": "game_changers",
       "region": "americas",
       "status": "completed",
@@ -13,13 +13,14 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3134,
       "region": "international",
       "stage": "GC Championship",
-      "name": "Game Changers 2026: Championship São Paulo completed Status $500,000 Prize Pool Oct 22—Nov 2 Dates Region",
+      "name": "Game Changers 2026 Championship S O Paulo",
       "map_pool": null,
       "map_pool_confirmed": false,
       "tier": "game_changers",
@@ -28,11 +29,12 @@
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
       "source": "vlr.gg/events",
-      "url": "https://www.vlr.gg/event/3134/game-changers-2026-championship-s-o-paulo"
+      "url": "https://www.vlr.gg/event/3134/game-changers-2026-championship-s-o-paulo",
+      "year": 2026
     },
     {
       "event_id": 3129,
-      "name": "Game Changers 2026: China completed Status $0 Prize Pool Sep 12—20 Dates Region",
+      "name": "Game Changers 2026 China",
       "tier": "game_changers",
       "region": "china",
       "status": "completed",
@@ -40,11 +42,12 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3140,
-      "name": "Game Changers 2026: EMEA Cash Cup September completed Status $2,293 Prize Pool Sep 22—27 Dates Region",
+      "name": "Game Changers 2026 EMEA Cash Cup September",
       "tier": "game_changers",
       "region": "emea",
       "status": "completed",
@@ -52,11 +55,12 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3082,
-      "name": "Game Changers 2026: LATAM Main Event completed Status TBD Prize Pool Aug 3—Sep 13 Dates Region",
+      "name": "Game Changers 2026 LATAM Main Event",
       "tier": "game_changers",
       "region": "americas",
       "status": "completed",
@@ -64,11 +68,12 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3037,
-      "name": "Game Changers 2026: North America Stage 2 completed Status $60,000 Prize Pool Jun 16—Sep 17 Dates Region",
+      "name": "Game Changers 2026 North America Stage 2",
       "tier": "game_changers",
       "region": "americas",
       "status": "completed",
@@ -76,11 +81,12 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3065,
-      "name": "Game Changers 2026: Pacific completed Status $20,000 Prize Pool Sep 13—20 Dates Region",
+      "name": "Game Changers 2026 Pacific",
       "tier": "game_changers",
       "region": "pacific",
       "status": "completed",
@@ -88,13 +94,14 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 2766,
       "region": "international",
       "stage": "Champions",
-      "name": "Valorant Champions 2026 completed Status $2,250,000 Prize Pool Sep 24—Oct 18 Dates Region",
+      "name": "Valorant Champions 2026",
       "map_pool": null,
       "map_pool_confirmed": false,
       "tier": "vct",
@@ -103,11 +110,12 @@
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
       "source": "vlr.gg/events",
-      "url": "https://www.vlr.gg/event/2766/valorant-champions-2026"
+      "url": "https://www.vlr.gg/event/2766/valorant-champions-2026",
+      "year": 2026
     },
     {
       "event_id": 3163,
-      "name": "Valorant Champions 2027 upcoming Status TBD Prize Pool Sep 15—Oct 10 Dates Region",
+      "name": "Valorant Champions 2027",
       "tier": "vct",
       "region": "international",
       "status": "ongoing",
@@ -115,11 +123,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3161,
-      "name": "Valorant Masters Seoul 2027 upcoming Status TBD Prize Pool Feb 19—Mar 7 Dates Region",
+      "name": "Valorant Masters Seoul 2027",
       "tier": "vct",
       "region": "international",
       "status": "ongoing",
@@ -127,11 +136,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3162,
-      "name": "Valorant Masters Valencia 2027 upcoming Status TBD Prize Pool Jun 5—20 Dates Region",
+      "name": "Valorant Masters Valencia 2027",
       "tier": "vct",
       "region": "international",
       "status": "ongoing",
@@ -139,7 +149,8 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 2682,
@@ -153,7 +164,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2860,
@@ -167,7 +179,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2977,
@@ -181,7 +194,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2685,
@@ -195,7 +209,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2864,
@@ -209,7 +224,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2978,
@@ -223,7 +239,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2684,
@@ -237,7 +254,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2863,
@@ -251,7 +269,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2976,
@@ -265,7 +284,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2765,
@@ -279,7 +299,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2760,
@@ -293,7 +314,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2683,
@@ -307,7 +329,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2775,
@@ -321,7 +344,8 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 2776,
@@ -335,11 +359,12 @@
       "active": false,
       "first_seen_at": null,
       "last_seen_at": null,
-      "source": "catalogo_2026.json"
+      "source": "catalogo_2026.json",
+      "year": 2026
     },
     {
       "event_id": 3166,
-      "name": "VCT 2026: China Threshold completed Status TBD Prize Pool Oct 20—Nov 1 Dates Region",
+      "name": "VCT 2026 China Threshold",
       "tier": "vct",
       "region": "china",
       "status": "completed",
@@ -347,11 +372,12 @@
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2026
     },
     {
       "event_id": 3187,
-      "name": "VCT 2027: America Kickoff - Brazil Open Qualifier upcoming Status TBD Prize Pool Nov 5—16 Dates Region",
+      "name": "VCT 2027 America Kickoff Brazil Open Qualifier",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -359,11 +385,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3183,
-      "name": "VCT 2027: America Kickoff - Brazil Qualifier Playoffs upcoming Status TBD Prize Pool Nov 20—Dec 6 Dates Region",
+      "name": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -371,11 +398,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3180,
-      "name": "VCT 2027: America Kickoff - Last Chance Qualifier upcoming Status TBD Prize Pool Dec 17—18 Dates Region",
+      "name": "VCT 2027 America Kickoff Last Chance Qualifier",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -383,11 +411,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3188,
-      "name": "VCT 2027: America Kickoff - LATAM Final upcoming Status TBD Prize Pool Dec 16 Dates Region",
+      "name": "VCT 2027 America Kickoff LATAM Final",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -395,11 +424,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3189,
-      "name": "VCT 2027: America Kickoff - LATAM North Open Qualifier upcoming Status TBD Prize Pool Nov 6—16 Dates Region",
+      "name": "VCT 2027 America Kickoff LATAM North Open Qualifier",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -407,11 +437,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3184,
-      "name": "VCT 2027: America Kickoff - LATAM North Qualifier Playoffs upcoming Status TBD Prize Pool Nov 20—Dec 6 Dates Region",
+      "name": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -419,11 +450,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3190,
-      "name": "VCT 2027: America Kickoff - LATAM South Open Qualifier upcoming Status TBD Prize Pool Nov 6—16 Dates Region",
+      "name": "VCT 2027 America Kickoff LATAM South Open Qualifier",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -431,11 +463,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3185,
-      "name": "VCT 2027: America Kickoff - LATAM South Qualifier Playoffs upcoming Status TBD Prize Pool Nov 21—Dec 6 Dates Region",
+      "name": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -443,11 +476,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3186,
-      "name": "VCT 2027: America Kickoff - North America Open Qualifier upcoming Status TBD Prize Pool Nov 6—16 Dates Region",
+      "name": "VCT 2027 America Kickoff North America Open Qualifier",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -455,11 +489,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3178,
-      "name": "VCT 2027: Americas Kickoff upcoming Status TBD Prize Pool Jan 3—Feb 26 Dates Region",
+      "name": "VCT 2027 Americas Kickoff",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -467,11 +502,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3182,
-      "name": "VCT 2027: China Kickoff upcoming Status TBD Prize Pool Dec 31—Feb 27 Dates Region",
+      "name": "VCT 2027 China Kickoff",
       "tier": "vct",
       "region": "china",
       "status": "ongoing",
@@ -479,11 +515,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3175,
-      "name": "VCT 2027: EMEA Kickoff - Europe Qualifier upcoming Status $0 Prize Pool Nov 5—Dec 5 Dates Region",
+      "name": "VCT 2027 EMEA Kickoff Europe Qualifier",
       "tier": "vct",
       "region": "emea",
       "status": "ongoing",
@@ -491,11 +528,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3167,
-      "name": "VCT 2027: EMEA Kickoff - MENA Qualifier upcoming Status TBD Prize Pool Nov 9—Dec 6 Dates Region",
+      "name": "VCT 2027 EMEA Kickoff Mena Qualifier",
       "tier": "vct",
       "region": "emea",
       "status": "ongoing",
@@ -503,11 +541,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3177,
-      "name": "VCT 2027: EMEA Kickoff - Türkiye Qualifier upcoming Status TBD Prize Pool Nov 10—Dec 6 Dates Region",
+      "name": "VCT 2027 EMEA Kickoff T Rkiye Qualifier",
       "tier": "vct",
       "region": "emea",
       "status": "ongoing",
@@ -515,11 +554,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3176,
-      "name": "VCT 2027: EMEA Kickoff upcoming Status TBD Prize Pool Jan 2—Feb 26 Dates Region",
+      "name": "VCT 2027 EMEA Kickoff",
       "tier": "vct",
       "region": "emea",
       "status": "ongoing",
@@ -527,11 +567,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3192,
-      "name": "VCT 2027: Pacific Cups 1 upcoming Status TBD Prize Pool May 5—23 Dates Region",
+      "name": "VCT 2027 Pacific Cups 1",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -539,11 +580,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3193,
-      "name": "VCT 2027: Pacific Cups 2 upcoming Status TBD Prize Pool Aug 11—29 Dates Region",
+      "name": "VCT 2027 Pacific Cups 2",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -551,11 +593,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3204,
-      "name": "VCT 2027: Pacific Kickoff - Indonesia Qualifier upcoming Status $0 Prize Pool Nov 30—Dec 5 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Indonesia Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -563,11 +606,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3210,
-      "name": "VCT 2027: Pacific Kickoff - Japan Qualifier upcoming Status $0 Prize Pool Nov 21—Dec 12 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Japan Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -575,11 +619,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3211,
-      "name": "VCT 2027: Pacific Kickoff - Korea Qualifier upcoming Status $0 Prize Pool Nov 24—Dec 6 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Korea Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -587,11 +632,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3205,
-      "name": "VCT 2027: Pacific Kickoff - Oceania Qualifier upcoming Status $0 Prize Pool Nov 20—29 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Oceania Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -599,11 +645,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3207,
-      "name": "VCT 2027: Pacific Kickoff - SEA Qualifier Playoffs upcoming Status $0 Prize Pool Dec 6—13 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Sea Qualifier Playoffs",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -611,11 +658,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3206,
-      "name": "VCT 2027: Pacific Kickoff - South Asia Qualifier upcoming Status $0 Prize Pool Nov 16—29 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff South Asia Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -623,11 +671,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3203,
-      "name": "VCT 2027: Pacific Kickoff - Southeast Asia Qualifier 1 upcoming Status $0 Prize Pool Nov 23—Dec 5 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Southeast Asia Qualifier 1",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -635,11 +684,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3208,
-      "name": "VCT 2027: Pacific Kickoff - Southeast Asia Qualifier 2 upcoming Status $0 Prize Pool Nov 30—Dec 5 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Southeast Asia Qualifier 2",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -647,11 +697,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3202,
-      "name": "VCT 2027: Pacific Kickoff - Thailand Qualifier 1 upcoming Status $0 Prize Pool Nov 23—Dec 5 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Thailand Qualifier 1",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -659,11 +710,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3209,
-      "name": "VCT 2027: Pacific Kickoff - Thailand Qualifier 2 upcoming Status $0 Prize Pool Nov 30—Dec 5 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Thailand Qualifier 2",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -671,11 +723,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3201,
-      "name": "VCT 2027: Pacific Kickoff - Vietnam Qualifier upcoming Status TBD Prize Pool Nov 23—28 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff Vietnam Qualifier",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -683,11 +736,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3181,
-      "name": "VCT 2027: Pacific Kickoff upcoming Status TBD Prize Pool Jan 10—31 Dates Region",
+      "name": "VCT 2027 Pacific Kickoff",
       "tier": "vct",
       "region": "pacific",
       "status": "ongoing",
@@ -695,11 +749,12 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": 2027
     },
     {
       "event_id": 3179,
-      "name": "VCT 27: America Kickoff - North America Qualifier Playoffs upcoming Status TBD Prize Pool Nov 22—Dec 6 Dates Region",
+      "name": "VCT 27 America Kickoff North America Qualifier Playoffs",
       "tier": "vct",
       "region": "americas",
       "status": "ongoing",
@@ -707,7 +762,8 @@
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
       "last_seen_at": "2026-11-03T10:45:41.265643+00:00",
-      "source": "vlr.gg/events"
+      "source": "vlr.gg/events",
+      "year": null
     }
   ]
 }
