@@ -964,7 +964,7 @@ async function v4LocalEvent(id){
  id=Number(id);
  if(!V4_EVENTS.some(e=>e.id===id))throw Error('Campeonato desconhecido');
  if(!V4_LOCAL_CACHE.has(id)){
-  const promise=fetch('dados/v4/eventos/'+id+'.json').then(r=>{if(!r.ok)throw Error('JSON do campeonato indisponível: HTTP '+r.status);return r.json()});
+  const promise=fetch('dados/v4/eventos/'+id+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('JSON do campeonato indisponível: HTTP '+r.status);return r.json()});
   V4_LOCAL_CACHE.set(id,promise);
  }
  return V4_LOCAL_CACHE.get(id);
