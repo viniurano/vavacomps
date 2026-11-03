@@ -43,8 +43,8 @@ def profile_logo(session, team_id):
     response.raise_for_status()
     html = response.text
     patterns = [
-        r'team-header-logo[\\s\\S]{0,1200}?<img[^>]+(?:src|data-src)=["\\']([^"\\']+)',
-        r'<img[^>]+class=["\\'][^"\\']*team-logo[^"\\']*["\\'][^>]+src=["\\']([^"\\']+)',
+        r"""team-header-logo[\s\S]{0,1200}?<img[^>]+(?:src|data-src)=["']([^"']+)""",
+        r"""<img[^>]+class=["'][^"']*team-logo[^"']*["'][^>]+src=["']([^"']+)""",
     ]
     for pattern in patterns:
         match = re.search(pattern, html, re.I)
