@@ -19,6 +19,7 @@ on:
           - masters_london_full
           - americas_split1_full
           - pacific_split1_full
+          - emea_split1_full
         default: sync
       event_id:
         description: 'ID do campeonato para atualização manual'
@@ -75,8 +76,11 @@ jobs:
       - name: Coletar Pacific Split 1 completo (todas as series pendentes)
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'pacific_split1_full'
         run: python -m backend.v4_region pacific 0 2775
+      - name: Coletar EMEA Split 1 completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'emea_split1_full'
+        run: python -m backend.v4_region emea 0 2863
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'americas_split1_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'emea_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'americas_split1_full')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
