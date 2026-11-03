@@ -3,25 +3,25 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 const REPOSITORY = "viniurano/vavacomps";
 const WORKFLOW = "v4-auto-sync.yml";
+const cooldowns = new Map();
 
-function json(statusCode, payload, origin) {
-  return {
-    statusCode,
+function response(status, payload, origin = "") {
+  return new Response(JSON.stringify(payload), {
+    status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
       ...(origin ? { "Access-Control-Allow-Origin": origin, "Vary": "Origin" } : {})
-    },
-    body: JSON.stringify(payload)
-  };
+    }
+  });
 }
 
 export default async (request) => {
   const origin = request.headers.get("origin") || "";
   if (request.method === "OPTIONS") {
-    if (!ALLOWED_ORIGINS.has(origin)) return json(403, { error: "Origem nao autorizada" });
-    return {
-      statusCode: 204,
+    if (!ALLOWED_ORIGINS.has(origin)) return response(403, { error: "Origem nao autorizada" });
+    return new Response(null, {
+      status: 204,
       headers: {
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -29,27 +29,34 @@ export default async (request) => {
         "Access-Control-Max-Age": "600",
         "Vary": "Origin"
       }
-    };
+    });
   }
-  if (request.method !== "POST") return json(405, { error: "Metodo nao permitido" });
-  if (!ALLOWED_ORIGINS.has(origin)) return json(403, { error: "Origem nao autorizada" });
+  if (request.method !== "POST") return response(405, { error: "Metodo nao permitido" });
+  if (!ALLOWED_ORIGINS.has(origin)) return response(403, { error: "Origem nao autorizada" });
 
   const token = process.env.GITHUB_TOKEN;
-  if (!token) return json(503, { error: "GITHUB_TOKEN nao configurado nas variaveis do Netlify" }, origin);
+  if (!token) return response(503, { error: "GITHUB_TOKEN nao configurado nas variaveis do Netlify" }, origin);
 
   let body;
   try { body = await request.json(); }
-  catch { return json(400, { error: "Corpo JSON invalido" }, origin); }
+  catch { return response(400, { error: "Corpo JSON invalido" }, origin); }
 
   const eventId = Number(body?.event_id);
   const teamId = Number(body?.team_id);
   if (!Number.isSafeInteger(eventId) || eventId <= 0 ||
       !Number.isSafeInteger(teamId) || teamId <= 0) {
-    return json(400, { error: "IDs de campeonato/equipe invalidos" }, origin);
+    return response(400, { error: "IDs de campeonato/equipe invalidos" }, origin);
+  }
+
+  const cooldownKey = eventId + ":" + teamId;
+  const now = Date.now();
+  const last = cooldowns.get(cooldownKey) || 0;
+  if (now - last < 120000) {
+    return response(429, { error: "Ja existe uma solicitacao recente para esta equipe. Aguarde dois minutos." }, origin);
   }
 
   try {
-    const response = await fetch(
+    const result = await fetch(
       `https://api.github.com/repos/${REPOSITORY}/actions/workflows/${WORKFLOW}/dispatches`,
       {
         method: "POST",
@@ -69,19 +76,20 @@ export default async (request) => {
         })
       }
     );
-    if (response.status !== 204) {
-      const detail = await response.text();
-      return json(502, {
-        error: "GitHub recusou a solicitacao (" + response.status + "): " + detail.slice(0, 240)
+    if (result.status !== 204) {
+      const detail = await result.text();
+      return response(502, {
+        error: "GitHub recusou a solicitacao (" + result.status + "): " + detail.slice(0, 240)
       }, origin);
     }
-    return json(202, {
+    cooldowns.set(cooldownKey, now);
+    return response(202, {
       status: "queued",
       event_id: eventId,
       team_id: teamId,
       message: "Atualizacao enviada ao GitHub Actions"
     }, origin);
   } catch (error) {
-    return json(502, { error: "Falha ao contatar GitHub: " + String(error).slice(0, 180) }, origin);
+    return response(502, { error: "Falha ao contatar GitHub: " + String(error).slice(0, 180) }, origin);
   }
 };
