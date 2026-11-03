@@ -17,6 +17,7 @@ on:
           - emea_stage2_full
           - china_stage2_full
           - masters_london_full
+          - masters_santiago_full
           - americas_split1_full
           - pacific_split1_full
           - emea_split1_full
@@ -68,6 +69,9 @@ jobs:
       - name: Coletar China Stage 2 completo (todas as series pendentes)
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'china_stage2_full'
         run: python -m backend.v4_region china 0 2978
+      - name: Coletar Masters Santiago completo (todas as series pendentes)
+        if: github.event_name == 'workflow_dispatch' && inputs.task == 'masters_santiago_full'
+        run: python -m backend.v4_event 2760 0
       - name: Coletar Masters London completo (todas as series pendentes)
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'masters_london_full'
         run: python -m backend.v4_event 2765 0
@@ -84,7 +88,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.task == 'china_split1_full'
         run: python -m backend.v4_region china 0 2864
       - name: Descobrir torneios principais no VLR
-        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'emea_split1_full' && inputs.task != 'china_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'americas_split1_full')
+        if: github.event_name == 'schedule' && github.event.schedule == '15 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.task != 'team_refresh' && inputs.task != 'pacific_split1_full' && inputs.task != 'emea_split1_full' && inputs.task != 'china_split1_full' && inputs.task != 'americas_stage2_full' && inputs.task != 'pacific_stage2_full' && inputs.task != 'emea_stage2_full' && inputs.task != 'china_stage2_full' && inputs.task != 'masters_london_full' && inputs.task != 'masters_santiago_full' && inputs.task != 'americas_split1_full')
         continue-on-error: true
         run: python -m backend.v4_discovery sync
       - name: Consultar calendario uma vez por dia
