@@ -763,7 +763,7 @@ function renderPro(){
   if(PRO_ERROR)grid.appendChild(proEl('p','muted',PRO_ERROR));
   else if(!names.length)grid.appendChild(proEl('p','muted',PRO_SEARCH_LOADING?'Pesquisando equipes de todos os campeonatos...':'Nenhuma equipe encontrada com esses filtros.'));
   if(PRO_SEARCH_LOADING&&names.length)grid.appendChild(proEl('p','muted','Pesquisando também em outras regiões e campeonatos...'));
-  if(q.length>=2&&PRO_SEARCH_PARTIAL&&!PRO_SEARCH_LOADING)grid.appendChild(proEl('p','muted','Busca parcial: para evitar bloqueios do VLR, só pesquisamos campeonatos já carregados nesta sessão. Selecione uma região para incluir seus times.'));
+  if(q.length>=2&&PRO_SEARCH_PARTIAL&&!PRO_SEARCH_LOADING)grid.appendChild(proEl('p','muted','Busca nos JSONs regionais locais. Regiões ainda não preenchidas podem não aparecer nos resultados.'));
   names.forEach(name=>{
    const comps=entries.filter(c=>c.team===name),b=proEl('button','pro-team-button');
    b.type='button';const left=proEl('span');
@@ -1062,7 +1062,7 @@ async function loadProData(){
   if(requestId!==proRequestId)return;
   PRO_TEAMS=data.equipes||[];PRO_MAP_POOL=data.map_pool||[];PRO_POOL_CONFIRMED=!!data.map_pool_confirmada;
   PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);if(t.logo)PRO_TEAM_LOGOS.set(t.nome,t.logo);PRO_TEAM_EVENTS.set(t.nome,t.eventos||[]);PRO_TEAM_CIRCUITS.set(t.nome,circuit==='GC Championship'?'gc':'vct');if(regional&&region!=='all')PRO_TEAM_REGIONS.set(t.nome,region)});
-  if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
+  if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: JSON local'+(data.meta?.erros?.length?' · '+data.meta.erros.length+' eventos indisponíveis':'')}
  }catch(err){
   if(requestId!==proRequestId)return;
   PRO_ERROR='Falha ao listar equipes: '+err.message;
