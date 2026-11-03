@@ -4,3 +4,11 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Dados dinamicos de eventos: sempre buscar a versao publicada mais recente.
+[[headers]]
+  for = "/dados/v4/eventos/*"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate, proxy-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
