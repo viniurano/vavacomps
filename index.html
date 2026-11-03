@@ -1000,7 +1000,20 @@ async function v4StaticFetch(path){
   const data=await v4LocalEvent(eid);
   const team=data.equipes?.[String(id)];
   if(!team) return {event_id:eid,equipes:{[id]:{team_id:id,nome:[...PRO_TEAM_IDS].find(x=>x[1]===id)?.[0]||String(id),mapas:[]}},map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
-  return {event_id:eid,equipes:{[id]:team},map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+  // Inclui apenas os mapas dos adversarios que correspondem as partidas da equipe selecionada.
+  // Assim o frontend consegue montar m.other sem carregar o campeonato inteiro.
+  const equipes={[id]:team};
+  const gameIds=new Set((team.mapas||[]).map(map=>String(map.game_id)));
+  for(const match of team.mapas||[]){
+   const opponentId=String(match.adversario_id);
+   const opponent=data.equipes?.[opponentId];
+   if(!opponent||equipes[opponentId])continue;
+   const opponentMaps=(opponent.mapas||[]).filter(map=>
+    gameIds.has(String(map.game_id))&&String(map.adversario_id)===String(id)
+   );
+   if(opponentMaps.length)equipes[opponentId]={...opponent,mapas:opponentMaps};
+  }
+  return {event_id:eid,equipes,map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
  }
  if((m=path.match(/^\/api\/temporadas\/2026\/equipes\/busca\?q=(.*)$/))){
   const q=decodeURIComponent(m[1]).toLowerCase();
