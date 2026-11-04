@@ -1058,6 +1058,11 @@ async function loadProData(){
  scope.textContent=gc?'Game Changers · '+$('proRegion').selectedOptions[0].textContent+' · participantes do Championship':label+' · '+$('proRegion').selectedOptions[0].textContent;
  showProLoading(true,label);renderPro();
  try{
+  if(gc&&region!=='all'){
+   PRO_ERROR='O cadastro regional de equipes de Game Changers ainda não está disponível nos dados locais. O Championship contém apenas os participantes internacionais.';
+   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
+   showProLoading(false);renderPro();return;
+  }
   if(gc){
    const data=await proFetch('/api/eventos/3134/participantes');
    if(requestId!==proRequestId)return;
@@ -1114,7 +1119,7 @@ async function loadProData(){
    PRO_TEAMS=[...visibleIds].map(id=>byTeam.get(id)).filter(Boolean).sort((a,b)=>a.nome.localeCompare(b.nome));
    PRO_TEAMS.forEach(t=>{
     PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,sortV4Events(t.eventos));PRO_TEAM_CIRCUITS.set(t.nome,'vct');
-    if(t.regioes?.length)PRO_TEAM_REGIONS.set(t.nome,region==='all'?t.regioes[0]:region);
+    if(region!=='all'&&t.regioes?.length)PRO_TEAM_REGIONS.set(t.nome,region);
    });
    if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: JSON local'+(failed.length?' · '+failed.length+' eventos indisponíveis':'')}
   }
