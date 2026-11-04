@@ -497,9 +497,10 @@ button:focus-visible,input:focus-visible{
   <div class="notice" hidden></div>
   <div class="vct-filters">
     <label>Pesquisar equipe<input class="field" id="proSearch" placeholder="Nome da equipe..."></label>
-    <label>Temporada<select class="select-field" id="proYear"><option>2026</option><option>2025</option><option>2024</option></select></label>
-    <label>Circuito<select class="select-field" id="proEvent"><option value="Champions">VCT</option><option value="GC Championship">Game Changers</option></select></label>
+    <label>Temporada<select class="select-field" id="proYear"><option value="2027">2027</option><option value="2026" selected>2026</option><option value="2025">2025</option><option value="2024">2024</option></select></label>
+    <label>Circuito<select class="select-field" id="proEvent"><option value="vct">VCT</option></select></label>
     <label>Região<select class="select-field" id="proRegion"><option value="all">Todas as regiões</option><option value="americas">Americas</option><option value="pacific">Pacific</option><option value="emea">EMEA</option><option value="china">China</option></select></label>
+    <label id="proSubregionFilter" hidden>Sub-região<select class="select-field" id="proSubregion"><option value="all">Todas as sub-regiões</option></select></label>
     <label id="proTournamentFilter">Torneio<select class="select-field" id="proTournament"><option value="all">Todos os torneios</option><option value="kickoff">Kickoff</option><option value="split1">Split 1</option><option value="masters">Masters</option><option value="split2">Split 2</option><option value="champions">Champions</option></select></label>
   </div>
   <p id="proScope" class="muted" aria-live="polite"></p>
@@ -1046,16 +1047,92 @@ async function v4StaticFetch(path){
 }
 async function proFetch(path){return v4StaticFetch(path)}
 
+const PRO_SEASON_CONFIGS = new Map();
+let PRO_ACTIVE_SEASON = null;
+
+async function loadProSeasonConfig(year){
+ const key=String(year);
+ if(PRO_SEASON_CONFIGS.has(key))return PRO_SEASON_CONFIGS.get(key);
+ const response=await fetch('dados/v4/temporadas/'+key+'.json',{cache:'no-store'});
+ if(!response.ok)throw Error('Configuração da temporada '+key+' indisponível (HTTP '+response.status+')');
+ const config=await response.json();
+ if(String(config.year)!==key||!Array.isArray(config.competitions)||!Array.isArray(config.regions))throw Error('Configuração da temporada inválida: '+key);
+ PRO_SEASON_CONFIGS.set(key,config);
+ return config;
+}
+function setFilterOptions(select,items,allLabel){
+ const previous=select.value;
+ select.replaceChildren();
+ if(allLabel){const all=document.createElement('option');all.value='all';all.textContent=allLabel;select.appendChild(all)}
+ items.forEach(item=>{const option=document.createElement('option');option.value=item.id;option.textContent=item.name;select.appendChild(option)});
+ select.value=[...select.options].some(option=>option.value===previous)?previous:(allLabel?'all':(items[0]?.id||''));
+}
+function updateProSubregions(){
+ const config=PRO_ACTIVE_SEASON,region=$('proRegion').value,wrapper=$('proSubregionFilter'),select=$('proSubregion');
+ const selected=config?.regions?.find(item=>item.id===region);
+ wrapper.hidden=!selected;
+ if(!selected){select.replaceChildren();select.disabled=true;return}
+ select.disabled=false;
+ setFilterOptions(select,selected.subregions||[],'Todas as sub-regiões');
+}
+async function configureProSeason(){
+ const year=$('proYear').value,config=await loadProSeasonConfig(year);
+ PRO_ACTIVE_SEASON=config;
+ const isDynamic=year==='2027';
+ $('proEvent').value=config.circuit?.id||'vct';
+ $('proEvent').disabled=true;
+ if(isDynamic){
+  setFilterOptions($('proTournament'),config.competitions||[],'Todos os torneios');
+  setFilterOptions($('proRegion'),config.regions||[],'Todas as regiões');
+  $('proSubregionFilter').hidden=false;
+  updateProSubregions();
+ }else{
+  $('proSubregionFilter').hidden=true;
+  $('proSubregion').replaceChildren();
+  $('proRegion').innerHTML='<option value="all">Todas as regiões</option><option value="americas">Americas</option><option value="pacific">Pacific</option><option value="emea">EMEA</option><option value="china">China</option>';
+  $('proTournament').innerHTML='<option value="all">Todos os torneios</option><option value="kickoff">Kickoff</option><option value="split1">Split 1</option><option value="masters">Masters</option><option value="split2">Split 2</option><option value="champions">Champions</option>';
+ }
+}
+async function initializeProSeasons(){
+ try{
+  await configureProSeason();
+  await loadProData();
+ }catch(error){
+  const notice=document.querySelector('#view-vct .notice');
+  if(notice){notice.hidden=false;notice.textContent='Não foi possível carregar a configuração da temporada: '+error.message}
+  showProLoading(false);
+ }
+}
+$('proYear').addEventListener('change',async()=>{
+ try{await configureProSeason();await loadProData()}
+ catch(error){const notice=document.querySelector('#view-vct .notice');if(notice){notice.hidden=false;notice.textContent='Erro ao trocar temporada: '+error.message}}
+});
+$('proRegion').addEventListener('change',()=>{
+ if($('proYear').value==='2027')updateProSubregions();
+ loadProData();
+});
+$('proSubregion').addEventListener('change',loadProData);
+
 async function loadProData(){
- const region=$('proRegion').value,circuit=$('proEvent').value,tournament=$('proTournament').value,requestId=++proRequestId;
+ const year=$('proYear').value,region=$('proRegion').value,circuit=$('proEvent').value,tournament=$('proTournament').value,subregion=$('proSubregion').value,requestId=++proRequestId;
  const scope=$('proScope'),notice=document.querySelector('#view-vct .notice'),tournamentFilter=$('proTournamentFilter');
- const gc=circuit==='GC Championship';
+ const gc=false;
  tournamentFilter.hidden=gc;
  $('proRegion').disabled=false;
  const label=gc?'Game Changers Championship 2026':(tournament==='all'?'VCT 2026 · Todos os torneios':({kickoff:'VCT 2026 · Kickoff',split1:'VCT 2026 · Split 1',masters:'VCT 2026 · Masters',split2:'VCT 2026 · Split 2',champions:'VCT 2026 · Champions'}[tournament]||'VCT 2026'));
  PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_TEAM_CIRCUITS.clear();PRO_TEAM_LOGOS.clear();PRO_TEAM_REGIONS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
- scope.textContent=gc?'Game Changers · '+$('proRegion').selectedOptions[0].textContent+' · participantes do Championship':label+' · '+$('proRegion').selectedOptions[0].textContent;
+ if(year==='2027'){
+  const season=PRO_ACTIVE_SEASON;
+  const competition=season?.competitions?.find(item=>item.id===tournament);
+  const regionName=season?.regions?.find(item=>item.id===region)?.name||'Todas as regiões';
+  const subregionName=season?.regions?.find(item=>item.id===region)?.subregions?.find(item=>item.id===subregion)?.name;
+  const title='VCT 2027 · '+(competition?.name||'Todos os torneios');
+  scope.textContent=title+' · '+regionName+(subregionName?' · '+subregionName:'');
+  if(notice){notice.hidden=false;notice.textContent=season?.events?.length?'A temporada 2027 está configurada. Os eventos serão conectados na próxima etapa.':'Estrutura VCT 2027 carregada. Ainda não há eventos ou equipes cadastrados.'}
+  showProLoading(false);renderPro();return;
+ }
+ scope.textContent=label+' · '+$('proRegion').selectedOptions[0].textContent;
  showProLoading(true,label);renderPro();
  try{
   if(gc){
