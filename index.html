@@ -410,7 +410,7 @@ button:focus-visible,input:focus-visible{
 .team-card{background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:18px}
 .team-card.selected{border-color:#a5c3e4}.team-card h3{margin:0 0 8px}.team-card p{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
 .team-actions{display:flex;gap:7px;flex-wrap:wrap}.team-actions button{padding:8px 11px;font-size:12px}
-.vct-filters{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.vct-filters label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px}
+.vct-filters{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.vct-filters label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px}.vct-filters label[hidden]{display:none}
 .pro-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;max-width:1150px}
 .pro-card{background:#1e293b;border:1px solid #33465e;border-radius:12px;padding:16px}
 .pro-card h3{margin:0 0 6px}.pro-card p{margin:6px 0;font-size:13px;color:var(--muted)}
@@ -1079,8 +1079,10 @@ async function configureProSeason(){
  const year=$('proYear').value,config=year==='2027'?await loadProSeasonConfig(year):null;
  PRO_ACTIVE_SEASON=config;
  const isDynamic=year==='2027';
- $('proEvent').value=config?.circuit?.id||'vct';
- $('proEvent').disabled=true;
+ const circuitSelect=$('proEvent');
+ circuitSelect.innerHTML=year==='2026'?'<option value="vct">VCT</option><option value="gc">Game Changers</option>':'<option value="vct">VCT</option>';
+ circuitSelect.value=config?.circuit?.id||'vct';
+ circuitSelect.disabled=false;
  if(isDynamic){
   setFilterOptions($('proTournament'),config.competitions||[],'Todos os torneios');
   setFilterOptions($('proRegion'),config.regions||[],'Todas as regiões');
@@ -1116,10 +1118,10 @@ $('proSubregion').addEventListener('change',loadProData);
 async function loadProData(){
  const year=$('proYear').value,region=$('proRegion').value,circuit=$('proEvent').value,tournament=$('proTournament').value,subregion=$('proSubregion').value,requestId=++proRequestId;
  const scope=$('proScope'),notice=document.querySelector('#view-vct .notice'),tournamentFilter=$('proTournamentFilter');
- const gc=false;
- tournamentFilter.hidden=gc;
- $('proRegion').disabled=false;
- const label=gc?'Game Changers Championship 2026':(tournament==='all'?'VCT 2026 · Todos os torneios':({kickoff:'VCT 2026 · Kickoff',split1:'VCT 2026 · Split 1',masters:'VCT 2026 · Masters',split2:'VCT 2026 · Split 2',champions:'VCT 2026 · Champions'}[tournament]||'VCT 2026'));
+ const gc=year==='2026'&&circuit==='gc';
+  tournamentFilter.hidden=gc;
+  $('proRegion').disabled=false;
+  const label=gc?'Game Changers Championship 2026':(tournament==='all'?'VCT 2026 · Todos os torneios':({kickoff:'VCT 2026 · Kickoff',split1:'VCT 2026 · Split 1',masters:'VCT 2026 · Masters',split2:'VCT 2026 · Split 2',champions:'VCT 2026 · Champions'}[tournament]||'VCT 2026'));
  PRO_ERROR='';PRO_DATA=[];PRO_TEAMS=[];PRO_TEAM_IDS.clear();PRO_TEAM_EVENTS.clear();PRO_TEAM_CIRCUITS.clear();PRO_TEAM_LOGOS.clear();PRO_TEAM_REGIONS.clear();PRO_SELECTED_EVENT=null;PRO_MAP_POOL=[];PRO_POOL_CONFIRMED=false;proSelectedTeam=null;proSelectedMap=null;
  if(notice)notice.hidden=true;
  if(year==='2027'){
