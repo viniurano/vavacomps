@@ -1198,7 +1198,7 @@ $('proRefreshBtn').addEventListener('click',async()=>{
  const button=$('proRefreshBtn');button.disabled=true;
  $('proRefreshInfo').textContent='Enviando solicitação de atualização...';
  try{
-  const response=await fetch('/.netlify/functions/refresh-data',{
+  const response=await fetch('/refresh-data',{
    method:'POST',headers:{'Content-Type':'application/json'},
    body:JSON.stringify({event_id:eid,team_id:id})
   });
