@@ -1076,10 +1076,10 @@ function updateProSubregions(){
  setFilterOptions(select,selected.subregions||[],'Todas as sub-regiões');
 }
 async function configureProSeason(){
- const year=$('proYear').value,config=await loadProSeasonConfig(year);
+ const year=$('proYear').value,config=year==='2027'?await loadProSeasonConfig(year):null;
  PRO_ACTIVE_SEASON=config;
  const isDynamic=year==='2027';
- $('proEvent').value=config.circuit?.id||'vct';
+ $('proEvent').value=config?.circuit?.id||'vct';
  $('proEvent').disabled=true;
  if(isDynamic){
   setFilterOptions($('proTournament'),config.competitions||[],'Todos os torneios');
@@ -1287,10 +1287,9 @@ $('proRefreshBtn').addEventListener('click',async()=>{
 });
 $('proTeamEvent').addEventListener('change',e=>{if(proSelectedTeam)loadProTeam(proSelectedTeam,Number(e.target.value))});
 $('proEvent').addEventListener('change',loadProData);
-$('proRegion').addEventListener('change',loadProData);
 $('proTournament').addEventListener('change',loadProData);
 
-loadProData();
+initializeProSeasons();
 renderTeamSelect();renderTeams();
 renderAgents();renderPool();render();
 </script>
