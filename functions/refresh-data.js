@@ -46,6 +46,7 @@ export async function onRequestPost({ request, env }) {
         method: "POST",
         headers: {
           "Accept": "application/vnd.github+json",
+          "User-Agent": "VavaComps-Cloudflare-Pages",
           "Authorization": `Bearer ${token}`,
           "X-GitHub-Api-Version": "2022-11-28",
           "Content-Type": "application/json"
