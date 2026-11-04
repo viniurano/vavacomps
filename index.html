@@ -1058,17 +1058,14 @@ async function loadProData(){
  scope.textContent=gc?'Game Changers · '+$('proRegion').selectedOptions[0].textContent+' · participantes do Championship':label+' · '+$('proRegion').selectedOptions[0].textContent;
  showProLoading(true,label);renderPro();
  try{
-  if(gc&&region!=='all'){
-   PRO_ERROR='O cadastro regional de equipes de Game Changers ainda não está disponível nos dados locais. O Championship contém apenas os participantes internacionais.';
-   if(notice){notice.hidden=false;notice.textContent=PRO_ERROR}
-   showProLoading(false);renderPro();return;
-  }
   if(gc){
    const data=await proFetch('/api/eventos/3134/participantes');
    if(requestId!==proRequestId)return;
-   PRO_TEAMS=data.equipes||[];
-   PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_CIRCUITS.set(t.nome,'gc')});
-   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: JSON local'}
+   // Regiao de origem das equipes classificadas para o GC Championship 2026.
+   const gcRegions={6530:'emea',7055:'americas',7511:'americas',8050:'americas',9516:'pacific',13807:'china',14278:'americas',15832:'emea',21093:'emea',21858:'pacific'};
+   PRO_TEAMS=(data.equipes||[]).filter(t=>region==='all'||gcRegions[t.team_id]===region);
+   PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_CIRCUITS.set(t.nome,'gc');if(gcRegions[t.team_id])PRO_TEAM_REGIONS.set(t.nome,gcRegions[t.team_id])});
+   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes'+(region==='all'?'': ' · '+$('proRegion').selectedOptions[0].textContent)+' · Fonte: JSON local'}
   }else{
    const regionalEvents=V4_EVENTS.filter(e=>V4_REGIONS.includes(e.regiao));
    const internationalEvents=V4_EVENTS.filter(e=>e.regiao==='international');
