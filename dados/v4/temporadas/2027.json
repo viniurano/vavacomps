@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "year": 2027,
+  "circuit": {
+    "id": "vct",
+    "name": "VCT"
+  },
+  "status": "planned",
+  "notes": "Configuracao estrutural da temporada VCT 2027. Eventos, equipes e partidas serao cadastrados separadamente quando forem definidos.",
+  "regions": [
+    {
+      "id": "americas",
+      "name": "Americas",
+      "subregions": [
+        { "id": "brazil", "name": "Brazil" },
+        { "id": "latam", "name": "LATAM" },
+        { "id": "north_america", "name": "North America" }
+      ]
+    },
+    {
+      "id": "emea",
+      "name": "EMEA",
+      "subregions": [
+        { "id": "europe", "name": "Europe" },
+        { "id": "turkey", "name": "Turkey" },
+        { "id": "mea", "name": "Middle East & Africa" }
+      ]
+    },
+    {
+      "id": "china",
+      "name": "China",
+      "subregions": [
+        { "id": "china", "name": "China" }
+      ]
+    },
+    {
+      "id": "pacific",
+      "name": "Pacific",
+      "subregions": [
+        { "id": "japan", "name": "Japan" },
+        { "id": "korea", "name": "Korea" },
+        { "id": "southeast_asia", "name": "Southeast Asia" },
+        { "id": "south_asia", "name": "South Asia" }
+      ]
+    }
+  ],
+  "competitions": [
+    {
+      "id": "qualifiers",
+      "name": "Qualifiers",
+      "order": 1,
+      "scope": "regional",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "event"
+    },
+    {
+      "id": "lcq",
+      "name": "LCQ",
+      "order": 2,
+      "scope": "regional",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "event"
+    },
+    {
+      "id": "kickoff",
+      "name": "Kickoff",
+      "order": 3,
+      "scope": "regional",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "event"
+    },
+    {
+      "id": "masters",
+      "name": "Masters",
+      "order": 4,
+      "scope": "international",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "team"
+    },
+    {
+      "id": "stage_1",
+      "name": "Stage 1",
+      "order": 5,
+      "scope": "regional",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "event"
+    },
+    {
+      "id": "stage_2",
+      "name": "Stage 2",
+      "order": 6,
+      "scope": "regional",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "event"
+    },
+    {
+      "id": "champions",
+      "name": "Champions",
+      "order": 7,
+      "scope": "international",
+      "regions": ["americas", "emea", "china", "pacific"],
+      "region_filter_source": "team"
+    }
+  ],
+  "events": [],
+  "teams": []
+}
