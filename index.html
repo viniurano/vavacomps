@@ -1283,7 +1283,7 @@ $('proRefreshBtn').addEventListener('click',async()=>{
   });
   const data=await response.json().catch(()=>({}));
   if(!response.ok)throw new Error(data.error||'HTTP '+response.status);
-  $('proRefreshInfo').textContent='Atualização enviada ao GitHub Actions. Após a conclusão e publicação dos dados, recarregue a página.';
+  $('proRefreshInfo').textContent='Atualização enviada ao GitHub Actions. Pode ser necessário aguardar até 1 minuto para os dados serem processados e publicados. Depois, recarregue a página.';
  }catch(err){$('proRefreshInfo').textContent='Não foi possível solicitar a atualização: '+err.message}
  finally{button.disabled=false}
 });
