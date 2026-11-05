@@ -1144,7 +1144,7 @@ async function loadProData(){
    const gcRegions={6530:'emea',7055:'americas',7511:'americas',8050:'americas',9516:'pacific',13807:'china',14278:'americas',15832:'emea',21093:'emea',21858:'pacific'};
    PRO_TEAMS=(data.equipes||[]).filter(t=>region==='all'||gcRegions[t.team_id]===region);
    PRO_TEAMS.forEach(t=>{PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_CIRCUITS.set(t.nome,'gc');if(gcRegions[t.team_id])PRO_TEAM_REGIONS.set(t.nome,gcRegions[t.team_id])});
-   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes'+(region==='all'?'': ' · '+$('proRegion').selectedOptions[0].textContent)+' · Fonte: JSON local'}
+   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes'+(region==='all'?'': ' · '+$('proRegion').selectedOptions[0].textContent)+' · Fonte: VLR.gg · Dados salvos em JSON local'}
   }else{
    const regionalEvents=V4_EVENTS.filter(e=>V4_REGIONS.includes(e.regiao));
    const internationalEvents=V4_EVENTS.filter(e=>e.regiao==='international');
@@ -1197,7 +1197,7 @@ async function loadProData(){
     PRO_TEAM_IDS.set(t.nome,t.team_id);PRO_TEAM_EVENTS.set(t.nome,sortV4Events(t.eventos));PRO_TEAM_CIRCUITS.set(t.nome,'vct');
     if(region!=='all'&&t.regioes?.length)PRO_TEAM_REGIONS.set(t.nome,region);
    });
-   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: JSON local'+(failed.length?' · '+failed.length+' eventos indisponíveis':'')}
+   if(notice){notice.hidden=false;notice.textContent=label+' · '+PRO_TEAMS.length+' equipes · Fonte: VLR.gg · Dados salvos em JSON local'+(failed.length?' · '+failed.length+' eventos indisponíveis':'')}
   }
  }catch(err){
   if(requestId!==proRequestId)return;
