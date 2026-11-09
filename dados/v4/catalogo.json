@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "https://www.vlr.gg/events/?region=all&tier=all",
-  "last_sync_at": "2026-11-08T10:13:34.904919+00:00",
+  "last_sync_at": "2026-11-09T11:24:06.360671+00:00",
   "events": [
     {
       "event_id": 3099,
@@ -12,7 +12,7 @@
       "url": "https://www.vlr.gg/event/3099/game-changers-2026-americas-last-chance-qualifier",
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2026,
       "scope": "qualifier",
@@ -29,7 +29,7 @@
       "status": "completed",
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "url": "https://www.vlr.gg/event/3134/game-changers-2026-championship-s-o-paulo",
       "year": 2026,
@@ -60,7 +60,7 @@
       "url": "https://www.vlr.gg/event/3140/game-changers-2026-emea-cash-cup-september",
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2026,
       "scope": "cup",
@@ -123,7 +123,7 @@
       "url": "https://www.vlr.gg/event/3194/betboom-streamers-battle-1",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -138,7 +138,7 @@
       "url": "https://www.vlr.gg/event/3159/brena-best-player-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -149,11 +149,11 @@
       "scope": "main",
       "is_main_event": true,
       "region": "china",
-      "status": "upcoming",
+      "status": "completed",
       "url": "https://www.vlr.gg/event/3195/china-asean-esports-competition-2026",
-      "active": true,
+      "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -168,7 +168,7 @@
       "url": "https://www.vlr.gg/event/3219/china-national-tournament-season-7-finals",
       "active": true,
       "first_seen_at": "2026-11-05T10:46:34.022776+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -183,7 +183,7 @@
       "url": "https://www.vlr.gg/event/3218/china-national-tournament-season-7-pro-qualifier",
       "active": true,
       "first_seen_at": "2026-11-05T10:46:34.022776+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -194,11 +194,11 @@
       "scope": "main",
       "is_main_event": true,
       "region": "unknown",
-      "status": "upcoming",
+      "status": "completed",
       "url": "https://www.vlr.gg/event/3191/circuito-tormenta-2026-halloween-cup",
-      "active": true,
+      "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -209,11 +209,11 @@
       "scope": "main",
       "is_main_event": true,
       "region": "unknown",
-      "status": "upcoming",
+      "status": "completed",
       "url": "https://www.vlr.gg/event/3217/concord-esports-passion-series-2026",
-      "active": true,
+      "active": false,
       "first_seen_at": "2026-11-05T10:46:34.022776+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -228,7 +228,7 @@
       "url": "https://www.vlr.gg/event/3168/ctrlpoint-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -243,7 +243,7 @@
       "url": "https://www.vlr.gg/event/3215/draguignan-gaming-festival-2026",
       "active": false,
       "first_seen_at": "2026-11-05T10:46:34.022776+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -258,7 +258,7 @@
       "url": "https://www.vlr.gg/event/3125/elevate-play-avalanche",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -273,7 +273,7 @@
       "url": "https://www.vlr.gg/event/3197/epic-lan-49",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -288,7 +288,7 @@
       "url": "https://www.vlr.gg/event/3008/esports-nations-cup-2027",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -303,7 +303,7 @@
       "url": "https://www.vlr.gg/event/3154/evc-2026-elite-uk-league",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -318,7 +318,7 @@
       "url": "https://www.vlr.gg/event/3153/evc-the-surge-14",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -348,7 +348,7 @@
       "url": "https://www.vlr.gg/event/3170/frost-classic-season-1",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -363,7 +363,7 @@
       "url": "https://www.vlr.gg/event/3135/funhavergg-back-to-basics-2-0-5",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -378,7 +378,7 @@
       "url": "https://www.vlr.gg/event/3150/funhavergg-back-to-basics-2-0-6",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -393,7 +393,7 @@
       "url": "https://www.vlr.gg/event/3164/funhavergg-back-to-basics-2-0-7",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -408,7 +408,7 @@
       "url": "https://www.vlr.gg/event/3142/funhavergg-double-down-2",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -423,7 +423,7 @@
       "url": "https://www.vlr.gg/event/3155/funhavergg-double-down-2-0",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -438,7 +438,7 @@
       "url": "https://www.vlr.gg/event/3169/funhavergg-lock-n-load-3-0-1",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -453,7 +453,7 @@
       "url": "https://www.vlr.gg/event/3199/funhavergg-lock-n-load-3-0-2",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -483,7 +483,7 @@
       "url": "https://www.vlr.gg/event/3107/haste-cup-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -498,7 +498,7 @@
       "url": "https://www.vlr.gg/event/3158/herlan-4",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -513,7 +513,7 @@
       "url": "https://www.vlr.gg/event/3200/institut-fran-ais-dalg-rie-constantine-2026",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -528,7 +528,7 @@
       "url": "https://www.vlr.gg/event/3128/kaizen-valorant-championship-season-1-division-1",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -543,7 +543,7 @@
       "url": "https://www.vlr.gg/event/3157/kirihana-academy-cup-vol-2",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -558,7 +558,7 @@
       "url": "https://www.vlr.gg/event/3123/komplettligaen-2026-autumn-division-1",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -573,7 +573,7 @@
       "url": "https://www.vlr.gg/event/3173/kov-ascend-league-2026-final",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -588,7 +588,7 @@
       "url": "https://www.vlr.gg/event/3196/krokoboss-invitational-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -603,7 +603,7 @@
       "url": "https://www.vlr.gg/event/3148/league-trolli-5th-year-anniversary",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -618,7 +618,7 @@
       "url": "https://www.vlr.gg/event/3112/monsters-reloaded-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -633,7 +633,7 @@
       "url": "https://www.vlr.gg/event/3110/monsters-reloaded-2026-emea-qualifier",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -648,7 +648,7 @@
       "url": "https://www.vlr.gg/event/3114/monsters-reloaded-2026-turkish-qualifier",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -663,7 +663,7 @@
       "url": "https://www.vlr.gg/event/3223/nrg-neon-dream-invitational-2026",
       "active": true,
       "first_seen_at": "2026-11-08T10:13:34.904919+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -678,7 +678,7 @@
       "url": "https://www.vlr.gg/event/3145/nuvy-ignite",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -693,7 +693,7 @@
       "url": "https://www.vlr.gg/event/3226/optimi-val-cafe-cup",
       "active": false,
       "first_seen_at": "2026-11-08T10:13:34.904919+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -708,7 +708,7 @@
       "url": "https://www.vlr.gg/event/3147/pcyard-cup-season-1",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -723,7 +723,7 @@
       "url": "https://www.vlr.gg/event/3143/phoenix-series-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -738,7 +738,7 @@
       "url": "https://www.vlr.gg/event/3224/polymarket-esports-5v5-apac",
       "active": false,
       "first_seen_at": "2026-11-08T10:13:34.904919+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -768,7 +768,7 @@
       "url": "https://www.vlr.gg/event/3213/predator-league-2027-indonesia",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -783,7 +783,7 @@
       "url": "https://www.vlr.gg/event/3214/predator-league-2027-japan",
       "active": true,
       "first_seen_at": "2026-11-04T10:49:36.950506+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -798,7 +798,7 @@
       "url": "https://www.vlr.gg/event/3221/predator-league-2027-oceania",
       "active": false,
       "first_seen_at": "2026-11-07T09:59:17.077181+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -813,7 +813,7 @@
       "url": "https://www.vlr.gg/event/3172/predator-league-2027-philippines",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -828,7 +828,7 @@
       "url": "https://www.vlr.gg/event/3222/predator-league-2027-singapore",
       "active": true,
       "first_seen_at": "2026-11-07T09:59:17.077181+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -843,7 +843,7 @@
       "url": "https://www.vlr.gg/event/3212/predator-league-2027-vietnam",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -858,7 +858,7 @@
       "url": "https://www.vlr.gg/event/3122/project-blender-2026",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -888,7 +888,7 @@
       "url": "https://www.vlr.gg/event/3174/radiantku-series-malaysia-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -903,7 +903,7 @@
       "url": "https://www.vlr.gg/event/3165/raidiant-academy-2026-304",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -918,7 +918,7 @@
       "url": "https://www.vlr.gg/event/3116/rbcorp-tournament-3",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -933,7 +933,7 @@
       "url": "https://www.vlr.gg/event/3121/red-bull-home-ground-2026",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -948,7 +948,7 @@
       "url": "https://www.vlr.gg/event/3144/rz-x-solaris-invitational-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -959,11 +959,11 @@
       "scope": "main",
       "is_main_event": true,
       "region": "unknown",
-      "status": "upcoming",
+      "status": "completed",
       "url": "https://www.vlr.gg/event/3216/singapore-youth-esports-league-season-1",
-      "active": true,
+      "active": false,
       "first_seen_at": "2026-11-05T10:46:34.022776+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -978,7 +978,7 @@
       "url": "https://www.vlr.gg/event/3124/spike-series-2026-convergence-emea-dach",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -993,7 +993,7 @@
       "url": "https://www.vlr.gg/event/3126/spike-series-2026-convergence-emea-france",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1008,7 +1008,7 @@
       "url": "https://www.vlr.gg/event/3130/spike-series-2026-convergence-emea-ibit",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1023,7 +1023,7 @@
       "url": "https://www.vlr.gg/event/3132/spike-series-2026-convergence-emea-t-rkiye",
       "active": true,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1053,7 +1053,7 @@
       "url": "https://www.vlr.gg/event/3139/spike-tour-2026-summer",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1068,7 +1068,7 @@
       "url": "https://www.vlr.gg/event/3149/switzerlan-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1098,7 +1098,7 @@
       "url": "https://www.vlr.gg/event/3225/taiwan-national-youth-championship-2026-x-kaohsiung-esports-showdown",
       "active": false,
       "first_seen_at": "2026-11-08T10:13:34.904919+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1113,7 +1113,7 @@
       "url": "https://www.vlr.gg/event/3198/ternoiscom-games-cup-2026",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1124,11 +1124,11 @@
       "scope": "main",
       "is_main_event": true,
       "region": "unknown",
-      "status": "upcoming",
+      "status": "completed",
       "url": "https://www.vlr.gg/event/3136/trailblazer-series-2026-project-kizuna",
-      "active": true,
+      "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1143,7 +1143,7 @@
       "url": "https://www.vlr.gg/event/3220/uniclash-anz-2026",
       "active": true,
       "first_seen_at": "2026-11-06T10:46:59.348157+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1157,7 +1157,7 @@
       "status": "completed",
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "url": "https://www.vlr.gg/event/2766/valorant-champions-2026",
       "year": 2026,
@@ -1173,7 +1173,7 @@
       "url": "https://www.vlr.gg/event/3163/valorant-champions-2027",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1188,7 +1188,7 @@
       "url": "https://www.vlr.gg/event/3161/valorant-masters-seoul-2027",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1203,7 +1203,7 @@
       "url": "https://www.vlr.gg/event/3162/valorant-masters-valencia-2027",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1221,7 +1221,7 @@
       "url": "https://www.vlr.gg/event/3171/valorant-uk-circuit-2026-septober-cup",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
@@ -1335,7 +1335,7 @@
       "url": "https://www.vlr.gg/event/3166/vct-2026-china-threshold",
       "active": false,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2026,
       "scope": "main",
@@ -1486,7 +1486,7 @@
       "url": "https://www.vlr.gg/event/3187/vct-2027-america-kickoff-brazil-open-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1501,7 +1501,7 @@
       "url": "https://www.vlr.gg/event/3183/vct-2027-america-kickoff-brazil-qualifier-playoffs",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1516,7 +1516,7 @@
       "url": "https://www.vlr.gg/event/3180/vct-2027-america-kickoff-last-chance-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1531,7 +1531,7 @@
       "url": "https://www.vlr.gg/event/3188/vct-2027-america-kickoff-latam-final",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1546,7 +1546,7 @@
       "url": "https://www.vlr.gg/event/3189/vct-2027-america-kickoff-latam-north-open-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1561,7 +1561,7 @@
       "url": "https://www.vlr.gg/event/3184/vct-2027-america-kickoff-latam-north-qualifier-playoffs",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1576,7 +1576,7 @@
       "url": "https://www.vlr.gg/event/3190/vct-2027-america-kickoff-latam-south-open-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1591,7 +1591,7 @@
       "url": "https://www.vlr.gg/event/3185/vct-2027-america-kickoff-latam-south-qualifier-playoffs",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1606,7 +1606,7 @@
       "url": "https://www.vlr.gg/event/3186/vct-2027-america-kickoff-north-america-open-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1621,7 +1621,7 @@
       "url": "https://www.vlr.gg/event/3179/vct-2027-america-kickoff-north-america-qualifier-playoffs",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1636,7 +1636,7 @@
       "url": "https://www.vlr.gg/event/3178/vct-2027-americas-kickoff",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1651,7 +1651,7 @@
       "url": "https://www.vlr.gg/event/3182/vct-2027-china-kickoff",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1666,7 +1666,7 @@
       "url": "https://www.vlr.gg/event/3176/vct-2027-emea-kickoff",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1681,7 +1681,7 @@
       "url": "https://www.vlr.gg/event/3175/vct-2027-emea-kickoff-europe-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1696,7 +1696,7 @@
       "url": "https://www.vlr.gg/event/3167/vct-2027-emea-kickoff-mena-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1711,7 +1711,7 @@
       "url": "https://www.vlr.gg/event/3177/vct-2027-emea-kickoff-t-rkiye-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1726,7 +1726,7 @@
       "url": "https://www.vlr.gg/event/3192/vct-2027-pacific-cups-1",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1741,7 +1741,7 @@
       "url": "https://www.vlr.gg/event/3193/vct-2027-pacific-cups-2",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1756,7 +1756,7 @@
       "url": "https://www.vlr.gg/event/3181/vct-2027-pacific-kickoff",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "main",
@@ -1771,7 +1771,7 @@
       "url": "https://www.vlr.gg/event/3204/vct-2027-pacific-kickoff-indonesia-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1786,7 +1786,7 @@
       "url": "https://www.vlr.gg/event/3210/vct-2027-pacific-kickoff-japan-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1801,7 +1801,7 @@
       "url": "https://www.vlr.gg/event/3211/vct-2027-pacific-kickoff-korea-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1816,7 +1816,7 @@
       "url": "https://www.vlr.gg/event/3205/vct-2027-pacific-kickoff-oceania-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1831,7 +1831,7 @@
       "url": "https://www.vlr.gg/event/3207/vct-2027-pacific-kickoff-sea-qualifier-playoffs",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1846,7 +1846,7 @@
       "url": "https://www.vlr.gg/event/3206/vct-2027-pacific-kickoff-south-asia-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1861,7 +1861,7 @@
       "url": "https://www.vlr.gg/event/3203/vct-2027-pacific-kickoff-southeast-asia-qualifier-1",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1876,7 +1876,7 @@
       "url": "https://www.vlr.gg/event/3208/vct-2027-pacific-kickoff-southeast-asia-qualifier-2",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1891,7 +1891,7 @@
       "url": "https://www.vlr.gg/event/3202/vct-2027-pacific-kickoff-thailand-qualifier-1",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1906,7 +1906,7 @@
       "url": "https://www.vlr.gg/event/3209/vct-2027-pacific-kickoff-thailand-qualifier-2",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1921,7 +1921,7 @@
       "url": "https://www.vlr.gg/event/3201/vct-2027-pacific-kickoff-vietnam-qualifier",
       "active": true,
       "first_seen_at": "2026-11-02T10:56:19.790721+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events",
       "year": 2027,
       "scope": "qualifier",
@@ -1939,7 +1939,7 @@
       "url": "https://www.vlr.gg/event/3096/wave-oce-2026-breakwater-open",
       "active": false,
       "first_seen_at": "2026-11-03T19:14:34.970116+00:00",
-      "last_seen_at": "2026-11-08T10:13:34.904919+00:00",
+      "last_seen_at": "2026-11-09T11:24:06.360671+00:00",
       "source": "vlr.gg/events"
     },
     {
