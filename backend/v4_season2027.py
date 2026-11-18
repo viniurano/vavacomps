@@ -51,6 +51,12 @@ def eligible(event):
         return False
     if not (value.startswith("vct 2027") or "valorant champions tour 2027" in value):
         return False
+    # Open Qualifiers e qualifiers preliminares nao entram, mesmo quando
+    # o nome tambem contem "Kickoff". So passam Playoffs e LCQ.
+    if "open qualifier" in value:
+        return False
+    if "qualifier" in value and "qualifier playoff" not in value and "last chance" not in value and not re.search(r"\\blcq\\b", value):
+        return False
     kind = competition(name)
     if not kind:
         return False
