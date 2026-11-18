@@ -206,7 +206,7 @@ def sync_event(event, season, report):
         event_ids.add(event_id)
         team_map[team_id] = {
             **old, "team_id": team_id, "name": team.get("nome") or str(team_id),
-            "region": region if region != "unknown" else old.get("region"),
+            "region": region if region in ("americas", "emea", "pacific", "china") else old.get("region"),
             "subregion": sub or old.get("subregion"), "events": sorted(event_ids),
         }
     season["teams"] = sorted(team_map.values(), key=lambda t: t.get("name", "").casefold())
