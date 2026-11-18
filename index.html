@@ -971,9 +971,9 @@ async function v4StaticFetch(path){
   const id=Number(m[1]),data=await v4LocalEvent(id);
   return {equipes:v4TeamList(data),map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
  }
- if((m=path.match(/^\\/api\\/temporadas\\/2027\\/equipes\\/(\\d+)\\/eventos(?:\\/(\\d+))?(?:\\?.*)?$/))){
+ if((m=path.match(/^\/api\/temporadas\/2027\/equipes\/(\d+)\/eventos(?:\/(\d+))?(?:\?.*)?$/))){
   const teamId=Number(m[1]),config=await loadProSeasonConfig(2027);
-  const eventIdMatch=path.match(/^\\/api\\/temporadas\\/2027\\/equipes\\/\\d+\\/eventos\\/(\\d+)$/);
+  const eventIdMatch=path.match(/^\/api\/temporadas\/2027\/equipes\/\d+\/eventos\/(\d+)$/);
   if(!eventIdMatch){
    const team=config.teams?.find(t=>Number(t.team_id)===teamId);
    const ids=new Set((team?.events||[]).map(Number));
