@@ -1,0 +1,97 @@
+{
+  "event_id": 3233,
+  "equipes": {
+    "23727": {
+      "team_id": 23727,
+      "nome": "Aurora Gaming",
+      "mapas": []
+    },
+    "14461": {
+      "team_id": 14461,
+      "nome": "Barça eSports",
+      "mapas": []
+    },
+    "5214": {
+      "team_id": 5214,
+      "nome": "CGN Esports",
+      "mapas": []
+    },
+    "14478": {
+      "team_id": 14478,
+      "nome": "Eintracht Frankfurt",
+      "mapas": []
+    },
+    "876": {
+      "team_id": 876,
+      "nome": "Enterprise Esports",
+      "mapas": []
+    },
+    "18494": {
+      "team_id": 18494,
+      "nome": "F9 EICAR",
+      "mapas": []
+    },
+    "14419": {
+      "team_id": 14419,
+      "nome": "GIANTX",
+      "mapas": []
+    },
+    "11232": {
+      "team_id": 11232,
+      "nome": "Joblife",
+      "mapas": []
+    },
+    "18025": {
+      "team_id": 18025,
+      "nome": "La Masia",
+      "mapas": []
+    },
+    "7967": {
+      "team_id": 7967,
+      "nome": "Mandatory",
+      "mapas": []
+    },
+    "17945": {
+      "team_id": 17945,
+      "nome": "MIR",
+      "mapas": []
+    },
+    "21715": {
+      "team_id": 21715,
+      "nome": "Natus Vincere Junior",
+      "mapas": []
+    },
+    "17177": {
+      "team_id": 17177,
+      "nome": "Pixel Lumina",
+      "mapas": []
+    },
+    "4616": {
+      "team_id": 4616,
+      "nome": "UCAM Esports Club",
+      "mapas": []
+    },
+    "19391": {
+      "team_id": 19391,
+      "nome": "WIP Esports",
+      "mapas": []
+    },
+    "23693": {
+      "team_id": 23693,
+      "nome": "xXxMasterProMegaTeamxXx",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
+    "regiao": "emea",
+    "subregiao": "europe",
+    "ultima_sincronizacao": "2026-11-18T22:35:55.575290+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

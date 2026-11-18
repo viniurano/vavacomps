@@ -1,0 +1,16 @@
+{
+  "event_id": 3192,
+  "equipes": {},
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 Pacific Cups 1",
+    "regiao": "pacific",
+    "subregiao": null,
+    "ultima_sincronizacao": "2026-11-18T22:35:55.661778+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

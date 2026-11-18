@@ -1,0 +1,27 @@
+{
+  "event_id": 3207,
+  "equipes": {
+    "623": {
+      "team_id": 623,
+      "nome": "Sharper Esports",
+      "mapas": []
+    },
+    "6199": {
+      "team_id": 6199,
+      "nome": "Team Secret",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 Pacific Kickoff Sea Qualifier Playoffs",
+    "regiao": "pacific",
+    "subregiao": "southeast_asia",
+    "ultima_sincronizacao": "2026-11-18T22:35:55.977940+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

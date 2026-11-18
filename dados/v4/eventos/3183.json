@@ -1,0 +1,408 @@
+{
+  "event_id": 3183,
+  "equipes": {
+    "25111": {
+      "team_id": 25111,
+      "nome": "0 intelecto",
+      "mapas": []
+    },
+    "15072": {
+      "team_id": 15072,
+      "nome": "2Game Esports",
+      "mapas": []
+    },
+    "23180": {
+      "team_id": 23180,
+      "nome": "Arashi",
+      "mapas": []
+    },
+    "12642": {
+      "team_id": 12642,
+      "nome": "ARRANCA DREAMS",
+      "mapas": []
+    },
+    "24496": {
+      "team_id": 24496,
+      "nome": "BRASIL2002",
+      "mapas": []
+    },
+    "18622": {
+      "team_id": 18622,
+      "nome": "ELEVATE",
+      "mapas": []
+    },
+    "23141": {
+      "team_id": 23141,
+      "nome": "Fluxo W7M",
+      "mapas": []
+    },
+    "25330": {
+      "team_id": 25330,
+      "nome": "GANGUE",
+      "mapas": []
+    },
+    "24553": {
+      "team_id": 24553,
+      "nome": "Mafiosos",
+      "mapas": []
+    },
+    "23778": {
+      "team_id": 23778,
+      "nome": "Manticore",
+      "mapas": []
+    },
+    "24507": {
+      "team_id": 24507,
+      "nome": "Master Bank",
+      "mapas": []
+    },
+    "20741": {
+      "team_id": 20741,
+      "nome": "Next",
+      "mapas": []
+    },
+    "16854": {
+      "team_id": 16854,
+      "nome": "Piranhas do Caribe",
+      "mapas": []
+    },
+    "24478": {
+      "team_id": 24478,
+      "nome": "SÓ TEM VELHO",
+      "mapas": []
+    },
+    "19265": {
+      "team_id": 19265,
+      "nome": "Team Solid",
+      "mapas": []
+    },
+    "24401": {
+      "team_id": 24401,
+      "nome": "TIME DO B3M",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
+    "regiao": "americas",
+    "subregiao": "brazil",
+    "ultima_sincronizacao": "2026-11-18T22:35:51.914887+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {
+    "791701": {
+      "serie_id": 791701,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 23141,
+          "nome": "Fluxo W7M"
+        },
+        {
+          "team_id": 25111,
+          "nome": "0 intelecto"
+        }
+      ],
+      "url": "https://www.vlr.gg/791701"
+    },
+    "791702": {
+      "serie_id": 791702,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 15072,
+          "nome": "2Game Esports"
+        },
+        {
+          "team_id": 24507,
+          "nome": "Master Bank"
+        }
+      ],
+      "url": "https://www.vlr.gg/791702"
+    },
+    "791703": {
+      "serie_id": 791703,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 19265,
+          "nome": "Team Solid"
+        },
+        {
+          "team_id": 12642,
+          "nome": "ARRANCA DREAMS"
+        }
+      ],
+      "url": "https://www.vlr.gg/791703"
+    },
+    "791704": {
+      "serie_id": 791704,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 20741,
+          "nome": "Next"
+        },
+        {
+          "team_id": 24478,
+          "nome": "SÓ TEM VELHO"
+        }
+      ],
+      "url": "https://www.vlr.gg/791704"
+    },
+    "791705": {
+      "serie_id": 791705,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 18622,
+          "nome": "ELEVATE"
+        },
+        {
+          "team_id": 16854,
+          "nome": "Piranhas do Caribe"
+        }
+      ],
+      "url": "https://www.vlr.gg/791705"
+    },
+    "791706": {
+      "serie_id": 791706,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 23778,
+          "nome": "Manticore"
+        },
+        {
+          "team_id": 23180,
+          "nome": "Arashi"
+        }
+      ],
+      "url": "https://www.vlr.gg/791706"
+    },
+    "791707": {
+      "serie_id": 791707,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 24496,
+          "nome": "BRASIL2002"
+        },
+        {
+          "team_id": 24401,
+          "nome": "TIME DO B3M"
+        }
+      ],
+      "url": "https://www.vlr.gg/791707"
+    },
+    "791708": {
+      "serie_id": 791708,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 25330,
+          "nome": "GANGUE"
+        },
+        {
+          "team_id": 24553,
+          "nome": "Mafiosos"
+        }
+      ],
+      "url": "https://www.vlr.gg/791708"
+    },
+    "792029": {
+      "serie_id": 792029,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792029"
+    },
+    "792030": {
+      "serie_id": 792030,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792030"
+    },
+    "792031": {
+      "serie_id": 792031,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792031"
+    },
+    "792032": {
+      "serie_id": 792032,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792032"
+    },
+    "792033": {
+      "serie_id": 792033,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792033"
+    },
+    "792034": {
+      "serie_id": 792034,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792034"
+    },
+    "792035": {
+      "serie_id": 792035,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792035"
+    },
+    "792036": {
+      "serie_id": 792036,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792036"
+    },
+    "792038": {
+      "serie_id": 792038,
+      "data": "2026-11-22",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792038"
+    },
+    "792039": {
+      "serie_id": 792039,
+      "data": "2026-11-22",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792039"
+    },
+    "792040": {
+      "serie_id": 792040,
+      "data": "2026-11-22",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792040"
+    },
+    "792041": {
+      "serie_id": 792041,
+      "data": "2026-11-22",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792041"
+    },
+    "792042": {
+      "serie_id": 792042,
+      "data": "2026-11-26",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792042"
+    },
+    "792043": {
+      "serie_id": 792043,
+      "data": "2026-11-26",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792043"
+    },
+    "792044": {
+      "serie_id": 792044,
+      "data": "2026-11-27",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792044"
+    },
+    "792045": {
+      "serie_id": 792045,
+      "data": "2026-11-27",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792045"
+    },
+    "792046": {
+      "serie_id": 792046,
+      "data": "2026-11-28",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792046"
+    },
+    "792047": {
+      "serie_id": 792047,
+      "data": "2026-11-28",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792047"
+    },
+    "792048": {
+      "serie_id": 792048,
+      "data": "2026-11-29",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792048"
+    },
+    "792049": {
+      "serie_id": 792049,
+      "data": "2026-11-29",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792049"
+    },
+    "792050": {
+      "serie_id": 792050,
+      "data": "2026-12-03",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792050"
+    },
+    "792051": {
+      "serie_id": 792051,
+      "data": "2026-12-03",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792051"
+    },
+    "792052": {
+      "serie_id": 792052,
+      "data": "2026-12-04",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792052"
+    },
+    "792053": {
+      "serie_id": 792053,
+      "data": "2026-12-04",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792053"
+    },
+    "792054": {
+      "serie_id": 792054,
+      "data": "2026-12-05",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792054"
+    },
+    "792055": {
+      "serie_id": 792055,
+      "data": "2026-12-06",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/792055"
+    }
+  }
+}

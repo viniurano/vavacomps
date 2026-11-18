@@ -1,0 +1,57 @@
+{
+  "event_id": 3184,
+  "equipes": {
+    "25292": {
+      "team_id": 25292,
+      "nome": "505",
+      "mapas": []
+    },
+    "2131": {
+      "team_id": 2131,
+      "nome": "Chivas Esports",
+      "mapas": []
+    },
+    "10376": {
+      "team_id": 10376,
+      "nome": "Contra",
+      "mapas": []
+    },
+    "17252": {
+      "team_id": 17252,
+      "nome": "FUEGO",
+      "mapas": []
+    },
+    "23777": {
+      "team_id": 23777,
+      "nome": "LEONS",
+      "mapas": []
+    },
+    "25283": {
+      "team_id": 25283,
+      "nome": "Old School Krew",
+      "mapas": []
+    },
+    "12889": {
+      "team_id": 12889,
+      "nome": "Squirtle Rangers",
+      "mapas": []
+    },
+    "21459": {
+      "team_id": 21459,
+      "nome": "STREAMER ARENA",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
+    "regiao": "americas",
+    "subregiao": "latam",
+    "ultima_sincronizacao": "2026-11-18T22:35:52.193761+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

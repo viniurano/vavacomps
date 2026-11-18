@@ -1,0 +1,67 @@
+{
+  "event_id": 3182,
+  "equipes": {
+    "1119": {
+      "team_id": 1119,
+      "nome": "All Gamers",
+      "mapas": []
+    },
+    "12010": {
+      "team_id": 12010,
+      "nome": "Bilibili Gaming",
+      "mapas": []
+    },
+    "11981": {
+      "team_id": 11981,
+      "nome": "Dragon Ranger Gaming",
+      "mapas": []
+    },
+    "1120": {
+      "team_id": 1120,
+      "nome": "EDward Gaming",
+      "mapas": []
+    },
+    "13576": {
+      "team_id": 13576,
+      "nome": "JD Gaming",
+      "mapas": []
+    },
+    "12064": {
+      "team_id": 12064,
+      "nome": "Nova Esports",
+      "mapas": []
+    },
+    "12685": {
+      "team_id": 12685,
+      "nome": "Trace Esports",
+      "mapas": []
+    },
+    "731": {
+      "team_id": 731,
+      "nome": "TYLOO",
+      "mapas": []
+    },
+    "1224": {
+      "team_id": 1224,
+      "nome": "Weibo Gaming",
+      "mapas": []
+    },
+    "13581": {
+      "team_id": 13581,
+      "nome": "Xi Lai Gaming",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 China Kickoff",
+    "regiao": "china",
+    "subregiao": "china",
+    "ultima_sincronizacao": "2026-11-18T22:35:55.358314+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

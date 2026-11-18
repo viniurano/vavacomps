@@ -1,0 +1,57 @@
+{
+  "event_id": 3176,
+  "equipes": {
+    "397": {
+      "team_id": 397,
+      "nome": "BBL Esports",
+      "mapas": []
+    },
+    "2593": {
+      "team_id": 2593,
+      "nome": "FNATIC",
+      "mapas": []
+    },
+    "1184": {
+      "team_id": 1184,
+      "nome": "FUT Esports",
+      "mapas": []
+    },
+    "12694": {
+      "team_id": 12694,
+      "nome": "Gentle Mates",
+      "mapas": []
+    },
+    "8877": {
+      "team_id": 8877,
+      "nome": "Karmine Corp",
+      "mapas": []
+    },
+    "1001": {
+      "team_id": 1001,
+      "nome": "Team Heretics",
+      "mapas": []
+    },
+    "474": {
+      "team_id": 474,
+      "nome": "Team Liquid",
+      "mapas": []
+    },
+    "2059": {
+      "team_id": 2059,
+      "nome": "Team Vitality",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 EMEA Kickoff",
+    "regiao": "emea",
+    "subregiao": null,
+    "ultima_sincronizacao": "2026-11-18T22:35:55.446380+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

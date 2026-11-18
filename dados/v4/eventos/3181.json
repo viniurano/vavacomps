@@ -1,0 +1,57 @@
+{
+  "event_id": 3181,
+  "equipes": {
+    "277": {
+      "team_id": 277,
+      "nome": "Crazy Raccoon",
+      "mapas": []
+    },
+    "4050": {
+      "team_id": 4050,
+      "nome": "FULL SENSE",
+      "mapas": []
+    },
+    "23700": {
+      "team_id": 23700,
+      "nome": "GAM Esports",
+      "mapas": []
+    },
+    "17": {
+      "team_id": 17,
+      "nome": "Gen.G",
+      "mapas": []
+    },
+    "624": {
+      "team_id": 624,
+      "nome": "Paper Rex",
+      "mapas": []
+    },
+    "878": {
+      "team_id": 878,
+      "nome": "Rex Regum Qeon",
+      "mapas": []
+    },
+    "14": {
+      "team_id": 14,
+      "nome": "T1",
+      "mapas": []
+    },
+    "5448": {
+      "team_id": 5448,
+      "nome": "ZETA DIVISION",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 Pacific Kickoff",
+    "regiao": "pacific",
+    "subregiao": null,
+    "ultima_sincronizacao": "2026-11-18T22:35:55.816434+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

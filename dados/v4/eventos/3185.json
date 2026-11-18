@@ -1,0 +1,57 @@
+{
+  "event_id": 3185,
+  "equipes": {
+    "367": {
+      "team_id": 367,
+      "nome": "9z Globant",
+      "mapas": []
+    },
+    "24246": {
+      "team_id": 24246,
+      "nome": "ARG.MIX",
+      "mapas": []
+    },
+    "24258": {
+      "team_id": 24258,
+      "nome": "EL LEGADO",
+      "mapas": []
+    },
+    "24320": {
+      "team_id": 24320,
+      "nome": "fracasados ny",
+      "mapas": []
+    },
+    "7511": {
+      "team_id": 7511,
+      "nome": "KRÜ BLAZE",
+      "mapas": []
+    },
+    "25222": {
+      "team_id": 25222,
+      "nome": "MALAJUNTA",
+      "mapas": []
+    },
+    "24257": {
+      "team_id": 24257,
+      "nome": "TRAMITE",
+      "mapas": []
+    },
+    "20209": {
+      "team_id": 20209,
+      "nome": "University War",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
+    "regiao": "americas",
+    "subregiao": "latam",
+    "ultima_sincronizacao": "2026-11-18T22:35:52.389275+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

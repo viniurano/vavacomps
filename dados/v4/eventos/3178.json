@@ -1,0 +1,57 @@
+{
+  "event_id": 3178,
+  "equipes": {
+    "120": {
+      "team_id": 120,
+      "nome": "100 Thieves",
+      "mapas": []
+    },
+    "11058": {
+      "team_id": 11058,
+      "nome": "G2 Esports",
+      "mapas": []
+    },
+    "2355": {
+      "team_id": 2355,
+      "nome": "KRÜ Esports",
+      "mapas": []
+    },
+    "2359": {
+      "team_id": 2359,
+      "nome": "LEVIATÁN",
+      "mapas": []
+    },
+    "6961": {
+      "team_id": 6961,
+      "nome": "LOUD",
+      "mapas": []
+    },
+    "7386": {
+      "team_id": 7386,
+      "nome": "MIBR",
+      "mapas": []
+    },
+    "1034": {
+      "team_id": 1034,
+      "nome": "NRG",
+      "mapas": []
+    },
+    "2": {
+      "team_id": 2,
+      "nome": "Sentinels",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 Americas Kickoff",
+    "regiao": "americas",
+    "subregiao": null,
+    "ultima_sincronizacao": "2026-11-18T22:35:55.271625+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {}
+}

@@ -5,42 +5,75 @@
     "id": "vct",
     "name": "VCT"
   },
-  "status": "planned",
-  "notes": "Configuracao estrutural da temporada VCT 2027. Eventos, equipes e partidas serao cadastrados separadamente quando forem definidos.",
+  "status": "active",
+  "notes": "Sincronizacao automatica via VLR.gg. Open Qualifiers ignorados; Qualifier Playoffs e LCQ incluidos em Americas, EMEA e Pacific; classificatorias da China ignoradas. Partidas, participantes e resultados sao atualizados incrementalmente.",
   "regions": [
     {
       "id": "americas",
       "name": "Americas",
       "subregions": [
-        { "id": "brazil", "name": "Brazil" },
-        { "id": "latam", "name": "LATAM" },
-        { "id": "north_america", "name": "North America" }
+        {
+          "id": "brazil",
+          "name": "Brazil"
+        },
+        {
+          "id": "latam",
+          "name": "LATAM"
+        },
+        {
+          "id": "north_america",
+          "name": "North America"
+        }
       ]
     },
     {
       "id": "emea",
       "name": "EMEA",
       "subregions": [
-        { "id": "europe", "name": "Europe" },
-        { "id": "turkey", "name": "Turkey" },
-        { "id": "mea", "name": "Middle East & Africa" }
+        {
+          "id": "europe",
+          "name": "Europe"
+        },
+        {
+          "id": "turkey",
+          "name": "Turkey"
+        },
+        {
+          "id": "mea",
+          "name": "Middle East & Africa"
+        }
       ]
     },
     {
       "id": "china",
       "name": "China",
       "subregions": [
-        { "id": "china", "name": "China" }
+        {
+          "id": "china",
+          "name": "China"
+        }
       ]
     },
     {
       "id": "pacific",
       "name": "Pacific",
       "subregions": [
-        { "id": "japan", "name": "Japan" },
-        { "id": "korea", "name": "Korea" },
-        { "id": "southeast_asia", "name": "Southeast Asia" },
-        { "id": "south_asia", "name": "South Asia" }
+        {
+          "id": "japan",
+          "name": "Japan"
+        },
+        {
+          "id": "korea",
+          "name": "Korea"
+        },
+        {
+          "id": "southeast_asia",
+          "name": "Southeast Asia"
+        },
+        {
+          "id": "south_asia",
+          "name": "South Asia"
+        }
       ]
     }
   ],
@@ -50,7 +83,12 @@
       "name": "Qualifiers",
       "order": 1,
       "scope": "regional",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "event"
     },
     {
@@ -58,7 +96,12 @@
       "name": "LCQ",
       "order": 2,
       "scope": "regional",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "event"
     },
     {
@@ -66,7 +109,12 @@
       "name": "Kickoff",
       "order": 3,
       "scope": "regional",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "event"
     },
     {
@@ -74,7 +122,12 @@
       "name": "Masters",
       "order": 4,
       "scope": "international",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "team"
     },
     {
@@ -82,7 +135,12 @@
       "name": "Stage 1",
       "order": 5,
       "scope": "regional",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "event"
     },
     {
@@ -90,7 +148,12 @@
       "name": "Stage 2",
       "order": 6,
       "scope": "regional",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "event"
     },
     {
@@ -98,10 +161,1143 @@
       "name": "Champions",
       "order": 7,
       "scope": "international",
-      "regions": ["americas", "emea", "china", "pacific"],
+      "regions": [
+        "americas",
+        "emea",
+        "china",
+        "pacific"
+      ],
       "region_filter_source": "team"
     }
   ],
-  "events": [],
-  "teams": []
+  "events": [
+    {
+      "id": 3178,
+      "event_id": 3178,
+      "name": "VCT 2027 Americas Kickoff",
+      "nome": "VCT 2027 Americas Kickoff",
+      "competition": "kickoff",
+      "region": "americas",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3178/vct-2027-americas-kickoff",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.271914+00:00",
+      "teams_count": 8,
+      "matches_count": 0
+    },
+    {
+      "id": 3188,
+      "event_id": 3188,
+      "name": "VCT 2027 America Kickoff LATAM Final",
+      "nome": "VCT 2027 America Kickoff LATAM Final",
+      "competition": "kickoff",
+      "region": "americas",
+      "subregion": "latam",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3188/vct-2027-america-kickoff-latam-final",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:52.094987+00:00",
+      "teams_count": 0,
+      "matches_count": 0
+    },
+    {
+      "id": 3182,
+      "event_id": 3182,
+      "name": "VCT 2027 China Kickoff",
+      "nome": "VCT 2027 China Kickoff",
+      "competition": "kickoff",
+      "region": "china",
+      "subregion": "china",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3182/vct-2027-china-kickoff",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.358570+00:00",
+      "teams_count": 10,
+      "matches_count": 0
+    },
+    {
+      "id": 3176,
+      "event_id": 3176,
+      "name": "VCT 2027 EMEA Kickoff",
+      "nome": "VCT 2027 EMEA Kickoff",
+      "competition": "kickoff",
+      "region": "emea",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3176/vct-2027-emea-kickoff",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.446618+00:00",
+      "teams_count": 8,
+      "matches_count": 0
+    },
+    {
+      "id": 3181,
+      "event_id": 3181,
+      "name": "VCT 2027 Pacific Kickoff",
+      "nome": "VCT 2027 Pacific Kickoff",
+      "competition": "kickoff",
+      "region": "pacific",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3181/vct-2027-pacific-kickoff",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.816696+00:00",
+      "teams_count": 8,
+      "matches_count": 0
+    },
+    {
+      "id": 3180,
+      "event_id": 3180,
+      "name": "VCT 2027 America Kickoff Last Chance Qualifier",
+      "nome": "VCT 2027 America Kickoff Last Chance Qualifier",
+      "competition": "lcq",
+      "region": "americas",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3180/vct-2027-america-kickoff-last-chance-qualifier",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:52.010982+00:00",
+      "teams_count": 0,
+      "matches_count": 0
+    },
+    {
+      "id": 3236,
+      "event_id": 3236,
+      "name": "VCT 2027 Pacific Kickoff Last Chance",
+      "nome": "VCT 2027 Pacific Kickoff Last Chance",
+      "competition": "lcq",
+      "region": "pacific",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3236/vct-2027-pacific-kickoff-last-chance",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.895308+00:00",
+      "teams_count": 0,
+      "matches_count": 0
+    },
+    {
+      "id": 3183,
+      "event_id": 3183,
+      "name": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
+      "nome": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "americas",
+      "subregion": "brazil",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3183/vct-2027-america-kickoff-brazil-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:51.915479+00:00",
+      "teams_count": 16,
+      "matches_count": 34
+    },
+    {
+      "id": 3184,
+      "event_id": 3184,
+      "name": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
+      "nome": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "americas",
+      "subregion": "latam",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3184/vct-2027-america-kickoff-latam-north-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:52.194085+00:00",
+      "teams_count": 8,
+      "matches_count": 0
+    },
+    {
+      "id": 3185,
+      "event_id": 3185,
+      "name": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
+      "nome": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "americas",
+      "subregion": "latam",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3185/vct-2027-america-kickoff-latam-south-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:52.389550+00:00",
+      "teams_count": 8,
+      "matches_count": 0
+    },
+    {
+      "id": 3179,
+      "event_id": 3179,
+      "name": "VCT 2027 America Kickoff North America Qualifier Playoffs",
+      "nome": "VCT 2027 America Kickoff North America Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "americas",
+      "subregion": "north_america",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3179/vct-2027-america-kickoff-north-america-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:55.183114+00:00",
+      "teams_count": 16,
+      "matches_count": 8
+    },
+    {
+      "id": 3233,
+      "event_id": 3233,
+      "name": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
+      "nome": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "emea",
+      "subregion": "europe",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3233/vct-2027-emea-kickoff-europe-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:55.575586+00:00",
+      "teams_count": 16,
+      "matches_count": 0
+    },
+    {
+      "id": 3207,
+      "event_id": 3207,
+      "name": "VCT 2027 Pacific Kickoff Sea Qualifier Playoffs",
+      "nome": "VCT 2027 Pacific Kickoff Sea Qualifier Playoffs",
+      "competition": "qualifiers",
+      "region": "pacific",
+      "subregion": "southeast_asia",
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3207/vct-2027-pacific-kickoff-sea-qualifier-playoffs",
+      "scope": "qualifier",
+      "last_sync_at": "2026-11-18T22:35:55.978168+00:00",
+      "teams_count": 2,
+      "matches_count": 0
+    },
+    {
+      "id": 3192,
+      "event_id": 3192,
+      "name": "VCT 2027 Pacific Cups 1",
+      "nome": "VCT 2027 Pacific Cups 1",
+      "competition": "stage_1",
+      "region": "pacific",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3192/vct-2027-pacific-cups-1",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.662041+00:00",
+      "teams_count": 0,
+      "matches_count": 0
+    },
+    {
+      "id": 3193,
+      "event_id": 3193,
+      "name": "VCT 2027 Pacific Cups 2",
+      "nome": "VCT 2027 Pacific Cups 2",
+      "competition": "stage_2",
+      "region": "pacific",
+      "subregion": null,
+      "status": "upcoming",
+      "url": "https://www.vlr.gg/event/3193/vct-2027-pacific-cups-2",
+      "scope": "main",
+      "last_sync_at": "2026-11-18T22:35:55.733717+00:00",
+      "teams_count": 0,
+      "matches_count": 0
+    }
+  ],
+  "teams": [
+    {
+      "team_id": 25111,
+      "name": "0 intelecto",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 120,
+      "name": "100 Thieves",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 15072,
+      "name": "2Game Esports",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 25292,
+      "name": "505",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 367,
+      "name": "9z Globant",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 1119,
+      "name": "All Gamers",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 23180,
+      "name": "Arashi",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 24246,
+      "name": "ARG.MIX",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 12642,
+      "name": "ARRANCA DREAMS",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 23727,
+      "name": "Aurora Gaming",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 14461,
+      "name": "Barça eSports",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 397,
+      "name": "BBL Esports",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 12010,
+      "name": "Bilibili Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 24496,
+      "name": "BRASIL2002",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 5214,
+      "name": "CGN Esports",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 2131,
+      "name": "Chivas Esports",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 188,
+      "name": "Cloud9",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 10376,
+      "name": "Contra",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 23815,
+      "name": "counterfeit",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 277,
+      "name": "Crazy Raccoon",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 11981,
+      "name": "Dragon Ranger Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 1120,
+      "name": "EDward Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 14478,
+      "name": "Eintracht Frankfurt",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 24258,
+      "name": "EL LEGADO",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 18622,
+      "name": "ELEVATE",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 876,
+      "name": "Enterprise Esports",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 427,
+      "name": "ENVY",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 18494,
+      "name": "F9 EICAR",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 23141,
+      "name": "Fluxo W7M",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 21838,
+      "name": "FlyQuest",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 2593,
+      "name": "FNATIC",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 24320,
+      "name": "fracasados ny",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 17252,
+      "name": "FUEGO",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 4050,
+      "name": "FULL SENSE",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 1184,
+      "name": "FUT Esports",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 11058,
+      "name": "G2 Esports",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 23700,
+      "name": "GAM Esports",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 25330,
+      "name": "GANGUE",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 17,
+      "name": "Gen.G",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 12694,
+      "name": "Gentle Mates",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 14419,
+      "name": "GIANTX",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 13576,
+      "name": "JD Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 11232,
+      "name": "Joblife",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 8877,
+      "name": "Karmine Corp",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 7511,
+      "name": "KRÜ BLAZE",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 2355,
+      "name": "KRÜ Esports",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 18025,
+      "name": "La Masia",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 23777,
+      "name": "LEONS",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 2359,
+      "name": "LEVIATÁN",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 6961,
+      "name": "LOUD",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 24553,
+      "name": "Mafiosos",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 25222,
+      "name": "MALAJUNTA",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 7967,
+      "name": "Mandatory",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 23778,
+      "name": "Manticore",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 12900,
+      "name": "Maryville University",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 24507,
+      "name": "Master Bank",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 23878,
+      "name": "Masterclass",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 7386,
+      "name": "MIBR",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 17945,
+      "name": "MIR",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 21715,
+      "name": "Natus Vincere Junior",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 20741,
+      "name": "Next",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 12064,
+      "name": "Nova Esports",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 1034,
+      "name": "NRG",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 23892,
+      "name": "Oafs",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 25283,
+      "name": "Old School Krew",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 624,
+      "name": "Paper Rex",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 16854,
+      "name": "Piranhas do Caribe",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 17177,
+      "name": "Pixel Lumina",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 6985,
+      "name": "QoR",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 878,
+      "name": "Rex Regum Qeon",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 13920,
+      "name": "SaD Esports",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 2,
+      "name": "Sentinels",
+      "region": "americas",
+      "subregion": null,
+      "events": [
+        3178
+      ]
+    },
+    {
+      "team_id": 623,
+      "name": "Sharper Esports",
+      "region": "pacific",
+      "subregion": "southeast_asia",
+      "events": [
+        3207
+      ]
+    },
+    {
+      "team_id": 9353,
+      "name": "Shopify Rebellion Black",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 14278,
+      "name": "Shopify Rebellion Gold",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 12889,
+      "name": "Squirtle Rangers",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 21459,
+      "name": "STREAMER ARENA",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3184
+      ]
+    },
+    {
+      "team_id": 24478,
+      "name": "SÓ TEM VELHO",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 14,
+      "name": "T1",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    },
+    {
+      "team_id": 1001,
+      "name": "Team Heretics",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 474,
+      "name": "Team Liquid",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 6199,
+      "name": "Team Secret",
+      "region": "pacific",
+      "subregion": "southeast_asia",
+      "events": [
+        3207
+      ]
+    },
+    {
+      "team_id": 19265,
+      "name": "Team Solid",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 2059,
+      "name": "Team Vitality",
+      "region": "emea",
+      "subregion": null,
+      "events": [
+        3176
+      ]
+    },
+    {
+      "team_id": 24401,
+      "name": "TIME DO B3M",
+      "region": "americas",
+      "subregion": "brazil",
+      "events": [
+        3183
+      ]
+    },
+    {
+      "team_id": 12685,
+      "name": "Trace Esports",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 24257,
+      "name": "TRAMITE",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 731,
+      "name": "TYLOO",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 4616,
+      "name": "UCAM Esports Club",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 20209,
+      "name": "University War",
+      "region": "americas",
+      "subregion": "latam",
+      "events": [
+        3185
+      ]
+    },
+    {
+      "team_id": 1224,
+      "name": "Weibo Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 23975,
+      "name": "Wildcard",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 10448,
+      "name": "Winthrop University",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 19391,
+      "name": "WIP Esports",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 13581,
+      "name": "Xi Lai Gaming",
+      "region": "china",
+      "subregion": "china",
+      "events": [
+        3182
+      ]
+    },
+    {
+      "team_id": 16824,
+      "name": "Xora Esports",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 23693,
+      "name": "xXxMasterProMegaTeamxXx",
+      "region": "emea",
+      "subregion": "europe",
+      "events": [
+        3233
+      ]
+    },
+    {
+      "team_id": 23980,
+      "name": "Yellow Dragon Gaming",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 5038,
+      "name": "YFP",
+      "region": "americas",
+      "subregion": "north_america",
+      "events": [
+        3179
+      ]
+    },
+    {
+      "team_id": 5448,
+      "name": "ZETA DIVISION",
+      "region": "pacific",
+      "subregion": null,
+      "events": [
+        3181
+      ]
+    }
+  ],
+  "last_sync_at": "2026-11-18T22:35:55.978289+00:00"
 }

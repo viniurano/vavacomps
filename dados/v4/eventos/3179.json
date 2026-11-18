@@ -1,0 +1,226 @@
+{
+  "event_id": 3179,
+  "equipes": {
+    "188": {
+      "team_id": 188,
+      "nome": "Cloud9",
+      "mapas": []
+    },
+    "23815": {
+      "team_id": 23815,
+      "nome": "counterfeit",
+      "mapas": []
+    },
+    "427": {
+      "team_id": 427,
+      "nome": "ENVY",
+      "mapas": []
+    },
+    "21838": {
+      "team_id": 21838,
+      "nome": "FlyQuest",
+      "mapas": []
+    },
+    "12900": {
+      "team_id": 12900,
+      "nome": "Maryville University",
+      "mapas": []
+    },
+    "23878": {
+      "team_id": 23878,
+      "nome": "Masterclass",
+      "mapas": []
+    },
+    "23892": {
+      "team_id": 23892,
+      "nome": "Oafs",
+      "mapas": []
+    },
+    "6985": {
+      "team_id": 6985,
+      "nome": "QoR",
+      "mapas": []
+    },
+    "13920": {
+      "team_id": 13920,
+      "nome": "SaD Esports",
+      "mapas": []
+    },
+    "9353": {
+      "team_id": 9353,
+      "nome": "Shopify Rebellion Black",
+      "mapas": []
+    },
+    "14278": {
+      "team_id": 14278,
+      "nome": "Shopify Rebellion Gold",
+      "mapas": []
+    },
+    "23975": {
+      "team_id": 23975,
+      "nome": "Wildcard",
+      "mapas": []
+    },
+    "10448": {
+      "team_id": 10448,
+      "nome": "Winthrop University",
+      "mapas": []
+    },
+    "16824": {
+      "team_id": 16824,
+      "nome": "Xora Esports",
+      "mapas": []
+    },
+    "23980": {
+      "team_id": 23980,
+      "nome": "Yellow Dragon Gaming",
+      "mapas": []
+    },
+    "5038": {
+      "team_id": 5038,
+      "nome": "YFP",
+      "mapas": []
+    }
+  },
+  "series": {},
+  "meta": {
+    "fonte": "VLR.gg",
+    "temporada": 2027,
+    "nome_evento": "VCT 2027 America Kickoff North America Qualifier Playoffs",
+    "regiao": "americas",
+    "subregiao": "north_america",
+    "ultima_sincronizacao": "2026-11-18T22:35:55.182672+00:00",
+    "status_catalogo": "upcoming",
+    "coleta_finalizada": false
+  },
+  "partidas": {
+    "791679": {
+      "serie_id": 791679,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 188,
+          "nome": "Cloud9"
+        },
+        {
+          "team_id": 23815,
+          "nome": "counterfeit"
+        }
+      ],
+      "url": "https://www.vlr.gg/791679"
+    },
+    "791680": {
+      "serie_id": 791680,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 427,
+          "nome": "ENVY"
+        },
+        {
+          "team_id": 23980,
+          "nome": "Yellow Dragon Gaming"
+        }
+      ],
+      "url": "https://www.vlr.gg/791680"
+    },
+    "791681": {
+      "serie_id": 791681,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 5038,
+          "nome": "YFP"
+        },
+        {
+          "team_id": 23975,
+          "nome": "Wildcard"
+        }
+      ],
+      "url": "https://www.vlr.gg/791681"
+    },
+    "791682": {
+      "serie_id": 791682,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 6985,
+          "nome": "QoR"
+        },
+        {
+          "team_id": 23892,
+          "nome": "Oafs"
+        }
+      ],
+      "url": "https://www.vlr.gg/791682"
+    },
+    "791683": {
+      "serie_id": 791683,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 21838,
+          "nome": "FlyQuest"
+        },
+        {
+          "team_id": 23878,
+          "nome": "Masterclass"
+        }
+      ],
+      "url": "https://www.vlr.gg/791683"
+    },
+    "791684": {
+      "serie_id": 791684,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 9353,
+          "nome": "Shopify Rebellion Black"
+        },
+        {
+          "team_id": 16824,
+          "nome": "Xora Esports"
+        }
+      ],
+      "url": "https://www.vlr.gg/791684"
+    },
+    "791685": {
+      "serie_id": 791685,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 13920,
+          "nome": "SaD Esports"
+        },
+        {
+          "team_id": 10448,
+          "nome": "Winthrop University"
+        }
+      ],
+      "url": "https://www.vlr.gg/791685"
+    },
+    "791686": {
+      "serie_id": 791686,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 14278,
+          "nome": "Shopify Rebellion Gold"
+        },
+        {
+          "team_id": 12900,
+          "nome": "Maryville University"
+        }
+      ],
+      "url": "https://www.vlr.gg/791686"
+    }
+  }
+}
