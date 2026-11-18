@@ -1,0 +1,45 @@
+name: Vava Comps - sincronizacao automatica VCT 2027
+on:
+  schedule:
+    - cron: "15 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: vava-vct-2027-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout da branch de producao
+        uses: actions/checkout@v4
+        with:
+          ref: feature/backend-dinamico-v3
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Instalar dependencias
+        run: pip install -r backend/requirements.txt
+      - name: Atualizar catalogo de torneios
+        run: python -m backend.v4_discovery sync
+      - name: Identificar eventos, equipes, calendario e resultados de 2027
+        run: python -m backend.v4_season2027
+      - name: Validar Python e JSON
+        run: |
+          python -m compileall -q backend
+          python -m json.tool dados/v4/temporadas/2027.json > /dev/null
+          python -m json.tool dados/v4/catalogo.json > /dev/null
+      - name: Persistir dados na branch de producao
+        run: |
+          git config user.name "vava-comps-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/v4/
+          if ! git diff --cached --quiet; then
+            git commit -m "data(v4): sincronizacao automatica VCT 2027"
+            git push origin HEAD:feature/backend-dinamico-v3
+          fi
