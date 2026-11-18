@@ -1,5 +1,5 @@
 const REPOSITORY = "viniurano/vavacomps";
-const WORKFLOW = "v4-auto-sync.yml";
+// O workflow disparado depende da temporada solicitada.
 
 function json(status, payload) {
   return new Response(JSON.stringify(payload), {
@@ -34,6 +34,8 @@ export async function onRequestPost({ request, env }) {
 
   const eventId = Number(body?.event_id);
   const teamId = Number(body?.team_id);
+  const seasonYear = String(body?.year || "2026");
+  const workflow = seasonYear === "2027" ? "vct-2027-sync.yml" : "v4-auto-sync.yml";
   if (!Number.isSafeInteger(eventId) || eventId <= 0 ||
       !Number.isSafeInteger(teamId) || teamId <= 0) {
     return json(400, { error: "IDs de campeonato/equipe invalidos" });
@@ -41,7 +43,7 @@ export async function onRequestPost({ request, env }) {
 
   try {
     const result = await fetch(
-      `https://api.github.com/repos/${REPOSITORY}/actions/workflows/${WORKFLOW}/dispatches`,
+      `https://api.github.com/repos/${REPOSITORY}/actions/workflows/${workflow}/dispatches`,
       {
         method: "POST",
         headers: {
@@ -51,14 +53,7 @@ export async function onRequestPost({ request, env }) {
           "X-GitHub-Api-Version": "2022-11-28",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          ref: "main",
-          inputs: {
-            task: "team_refresh",
-            event_id: String(eventId),
-            team_id: String(teamId)
-          }
-        })
+        body: JSON.stringify({ ref: "main" })
       }
     );
 
