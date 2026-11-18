@@ -114,7 +114,7 @@ def sync_event(event, season, report):
     saved.setdefault("meta", {})
 
     # Evento concluido recebe uma ultima coleta; depois deixa de ser consultado.
-    if event_status(event) == "completed" and saved["meta"].get("status_catalogo") == "completed":
+    if event_status(event) == "completed" and saved["meta"].get("coleta_finalizada") is True:
         report["ignorados_finalizados"].append(event_id)
         return
 
@@ -174,11 +174,14 @@ def sync_event(event, season, report):
             target["nome"] = team.get("nome") or target.get("nome") or tid
             if team.get("logo"):
                 target["logo"] = team["logo"]
+    completed_ids = [mid for mid, item in matches.items() if item.get("status") == "completed"]
+    all_completed_saved = all(mid in saved.get("series", {}) for mid in completed_ids)
     saved["partidas"] = matches
     saved.setdefault("meta", {}).update({
         "fonte": "VLR.gg", "temporada": 2027, "nome_evento": name,
         "regiao": region, "subregiao": sub, "ultima_sincronizacao": now(),
         "status_catalogo": event_status(event),
+        "coleta_finalizada": event_status(event) == "completed" and all_completed_saved,
     })
     v4_store._write(path, saved)
 
