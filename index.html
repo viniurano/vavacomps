@@ -955,7 +955,7 @@ const sortV4Events = events => [...events].sort((a,b)=>v4EventOrder(a)-v4EventOr
 const V4_LOCAL_CACHE = new Map();
 async function v4LocalEvent(id){
  id=Number(id);
- if(!V4_EVENTS.some(e=>e.id===id))throw Error('Campeonato desconhecido');
+ if(!V4_EVENTS.some(e=>e.id===id)&&!PRO_ACTIVE_SEASON?.events?.some(e=>Number(e.id||e.event_id)===id))throw Error('Campeonato desconhecido');
  if(!V4_LOCAL_CACHE.has(id)){
   const promise=fetch('dados/v4/eventos/'+id+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('JSON do campeonato indisponível: HTTP '+r.status);return r.json()});
   V4_LOCAL_CACHE.set(id,promise);
@@ -970,6 +970,26 @@ async function v4StaticFetch(path){
  if((m=path.match(/^\/api\/eventos\/(\d+)\/participantes$/))){
   const id=Number(m[1]),data=await v4LocalEvent(id);
   return {equipes:v4TeamList(data),map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+ }
+ if((m=path.match(/^\\/api\\/temporadas\\/2027\\/equipes\\/(\\d+)\\/eventos(?:\\/(\\d+))?(?:\\?.*)?$/))){
+  const teamId=Number(m[1]),config=await loadProSeasonConfig(2027);
+  const eventIdMatch=path.match(/^\\/api\\/temporadas\\/2027\\/equipes\\/\\d+\\/eventos\\/(\\d+)$/);
+  if(!eventIdMatch){
+   const team=config.teams?.find(t=>Number(t.team_id)===teamId);
+   const ids=new Set((team?.events||[]).map(Number));
+   const events=(config.events||[]).filter(e=>ids.has(Number(e.id||e.event_id)));
+   return {eventos:events,regioes:team?.region?[team.region]:[],meta:{fonte:'json_local',temporada:2027}};
+  }
+  const eventId=Number(eventIdMatch[1]),data=await v4LocalEvent(eventId),team=data.equipes?.[String(teamId)];
+  if(!team)return {event_id:eventId,equipes:{},map_pool:[],map_pool_confirmada:false,meta:{fonte:'json_local'}};
+  const equipes={[teamId]:team},gameIds=new Set((team.mapas||[]).map(x=>String(x.game_id)));
+  for(const match of team.mapas||[]){
+   const opponentId=String(match.adversario_id),opponent=data.equipes?.[opponentId];
+   if(!opponent)continue;
+   const maps=(opponent.mapas||[]).filter(x=>gameIds.has(String(x.game_id))&&String(x.adversario_id)===String(teamId));
+   if(maps.length)equipes[opponentId]={...opponent,mapas:maps};
+  }
+  return {event_id:eventId,equipes,map_pool:[],map_pool_confirmada:false,meta:{...(data.meta||{}),fonte:'json_local',temporada:2027}};
  }
  if((m=path.match(/^\/api\/temporadas\/2026\/regioes\/([^/]+)\/equipes$/))){
   const region=m[1],events=V4_EVENTS.filter(e=>['americas','pacific','emea','china'].includes(e.regiao)&&(region==='all'||e.regiao===region));
@@ -1131,7 +1151,15 @@ async function loadProData(){
   const subregionName=season?.regions?.find(item=>item.id===region)?.subregions?.find(item=>item.id===subregion)?.name;
   const title='VCT 2027 · '+(competition?.name||'Todos os torneios');
   scope.textContent=title+' · '+regionName+(subregionName?' · '+subregionName:'');
-  if(notice){notice.hidden=false;notice.textContent=season?.events?.length?'A temporada 2027 está configurada. Os eventos serão conectados na próxima etapa.':'Estrutura VCT 2027 carregada. Ainda não há eventos ou equipes cadastrados.'}
+  const events=(season?.events||[]).filter(e=>(tournament==='all'||e.competition===tournament)&&(region==='all'||e.region===region)&&(subregion==='all'||!subregion||e.subregion===subregion));
+  const eventIds=new Set(events.map(e=>Number(e.id||e.event_id)));
+  PRO_TEAMS=(season?.teams||[]).filter(team=>(team.events||[]).some(id=>eventIds.has(Number(id))))
+   .filter(team=>region==='all'||team.region===region)
+   .filter(team=>subregion==='all'||!subregion||team.subregion===subregion)
+   .map(team=>({...team,nome:team.name,eventos:events.filter(e=>(team.events||[]).map(Number).includes(Number(e.id||e.event_id))).map(e=>({...e,nome:e.name}))}))
+   .sort((a,b)=>a.nome.localeCompare(b.nome));
+  PRO_TEAMS.forEach(team=>{PRO_TEAM_IDS.set(team.nome,Number(team.team_id));PRO_TEAM_EVENTS.set(team.nome,sortV4Events(team.eventos));PRO_TEAM_CIRCUITS.set(team.nome,'vct');if(team.region)PRO_TEAM_REGIONS.set(team.nome,team.region)});
+  if(notice){notice.hidden=false;notice.textContent='VCT 2027 · '+events.length+' campeonatos · '+PRO_TEAMS.length+' equipes identificadas · Fonte: VLR.gg · Dados sincronizados automaticamente'+(season?.last_sync_at?' · Última sincronização: '+new Date(season.last_sync_at).toLocaleString('pt-BR'):'')}
   showProLoading(false);renderPro();return;
  }
  scope.textContent=label+' · '+$('proRegion').selectedOptions[0].textContent;
@@ -1211,7 +1239,9 @@ async function loadProTeam(name,eventOverride=null){
  const gc=circuit==='gc',requestId=++proRequestId,notice=document.querySelector('#view-vct .notice');
  proSelectedTeam=name;proSelectedMap=null;PRO_DATA=[];PRO_ERROR='';
  let events=[];
- if(!gc){
+ if(!gc&&$('proYear').value==='2027'){
+  events=PRO_TEAM_EVENTS.get(name)||[];
+ }else if(!gc){
   events=PRO_TEAM_EVENTS.get(name)||[];
   {
    showProLoading(true,'campeonatos de '+name);renderPro();
@@ -1232,7 +1262,7 @@ async function loadProTeam(name,eventOverride=null){
   PRO_ERROR='Não foi possível identificar campeonatos desta equipe.';
   PRO_SELECTED_EVENT=null;showProLoading(false);renderPro();return;
  }
- const url=gc?'/api/eventos/3134/equipes/'+id:'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected;
+ const url=gc?'/api/eventos/3134/equipes/'+id:($('proYear').value==='2027'?'/api/temporadas/2027/equipes/'+id+'/eventos/'+selected:'/api/temporadas/2026/equipes/'+id+'/eventos/'+selected);
  PRO_SELECTED_EVENT=gc?null:selected;
  const picker=$('proEventPicker'),select=$('proTeamEvent');
  picker.hidden=gc;select.replaceChildren();
@@ -1253,7 +1283,7 @@ async function loadProTeam(name,eventOverride=null){
    PRO_POOL_CONFIRMED=false;
   }
   // Nao truncar para sete: um campeonato que mudou de patch pode ter oito mapas.
-  const eventLabel=gc?'Game Changers Championship 2026':(events.find(e=>e.id===Number(selected))?.nome||'VCT 2026');
+  const eventLabel=gc?'Game Changers Championship 2026':(events.find(e=>e.id===Number(selected))?.nome||events.find(e=>e.id===Number(selected))?.name||'VCT '+$('proYear').value);
   proIngestEvent(data,gc?'GC Championship':'Champions',eventLabel,$('proYear').value);
   if(data.meta?.erros?.length&&notice){notice.hidden=false;notice.textContent='Algumas partidas não puderam ser consultadas ('+data.meta.erros.length+').'}
  }catch(err){
