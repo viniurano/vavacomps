@@ -49,9 +49,74 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-18T22:35:52.193761+00:00",
+    "ultima_sincronizacao": "2026-11-19T04:10:42.845721+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false
   },
-  "partidas": {}
+  "partidas": {
+    "792186": {
+      "serie_id": 792186,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 23777,
+          "nome": "LEONS"
+        },
+        {
+          "team_id": 21459,
+          "nome": "STREAMER ARENA"
+        }
+      ],
+      "url": "https://www.vlr.gg/792186"
+    },
+    "792188": {
+      "serie_id": 792188,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 25292,
+          "nome": "505"
+        },
+        {
+          "team_id": 12889,
+          "nome": "Squirtle Rangers"
+        }
+      ],
+      "url": "https://www.vlr.gg/792188"
+    },
+    "792189": {
+      "serie_id": 792189,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 10376,
+          "nome": "Contra"
+        },
+        {
+          "team_id": 25283,
+          "nome": "Old School Krew"
+        }
+      ],
+      "url": "https://www.vlr.gg/792189"
+    },
+    "792187": {
+      "serie_id": 792187,
+      "data": "2026-11-20",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 17252,
+          "nome": "FUEGO"
+        },
+        {
+          "team_id": 2131,
+          "nome": "Chivas Esports"
+        }
+      ],
+      "url": "https://www.vlr.gg/792187"
+    }
+  }
 }

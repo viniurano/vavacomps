@@ -49,9 +49,74 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-18T22:35:52.389275+00:00",
+    "ultima_sincronizacao": "2026-11-19T04:10:44.376998+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false
   },
-  "partidas": {}
+  "partidas": {
+    "792190": {
+      "serie_id": 792190,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 24320,
+          "nome": "fracasados ny"
+        },
+        {
+          "team_id": 24246,
+          "nome": "ARG.MIX"
+        }
+      ],
+      "url": "https://www.vlr.gg/792190"
+    },
+    "792191": {
+      "serie_id": 792191,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 20209,
+          "nome": "University War"
+        },
+        {
+          "team_id": 7511,
+          "nome": "KRÜ BLAZE"
+        }
+      ],
+      "url": "https://www.vlr.gg/792191"
+    },
+    "792192": {
+      "serie_id": 792192,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 367,
+          "nome": "9z Globant"
+        },
+        {
+          "team_id": 24258,
+          "nome": "EL LEGADO"
+        }
+      ],
+      "url": "https://www.vlr.gg/792192"
+    },
+    "792193": {
+      "serie_id": 792193,
+      "data": "2026-11-21",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 25222,
+          "nome": "MALAJUNTA"
+        },
+        {
+          "team_id": 24257,
+          "nome": "TRAMITE"
+        }
+      ],
+      "url": "https://www.vlr.gg/792193"
+    }
+  }
 }
