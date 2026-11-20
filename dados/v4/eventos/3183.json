@@ -89,7 +89,7 @@
     "nome_evento": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "brazil",
-    "ultima_sincronizacao": "2026-11-20T11:33:03.692650+00:00",
+    "ultima_sincronizacao": "2026-11-20T20:11:44.156595+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false
   },
@@ -97,7 +97,7 @@
     "791701": {
       "serie_id": 791701,
       "data": "2026-11-20",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 23141,
@@ -113,7 +113,7 @@
     "791702": {
       "serie_id": 791702,
       "data": "2026-11-20",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 15072,
@@ -129,7 +129,7 @@
     "791703": {
       "serie_id": 791703,
       "data": "2026-11-20",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 19265,
@@ -145,7 +145,7 @@
     "791704": {
       "serie_id": 791704,
       "data": "2026-11-20",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 20741,
