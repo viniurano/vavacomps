@@ -9822,7 +9822,7 @@
     "nome_evento": "VCT 2027 America Kickoff North America Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "north_america",
-    "ultima_sincronizacao": "2026-11-21T17:28:58.720319+00:00",
+    "ultima_sincronizacao": "2026-11-21T23:12:41.997232+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-21T09:46:24.122195+00:00"
@@ -9959,7 +9959,7 @@
     "792903": {
       "serie_id": 792903,
       "data": "2026-11-21",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 10448,
@@ -9975,7 +9975,7 @@
     "792904": {
       "serie_id": 792904,
       "data": "2026-11-21",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 21838,
@@ -9991,7 +9991,7 @@
     "792905": {
       "serie_id": 792905,
       "data": "2026-11-21",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 23980,
@@ -10007,7 +10007,7 @@
     "792906": {
       "serie_id": 792906,
       "data": "2026-11-21",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 6985,
