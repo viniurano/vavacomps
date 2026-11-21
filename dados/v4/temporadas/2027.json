@@ -182,7 +182,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3178/vct-2027-americas-kickoff",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:25.565740+00:00",
+      "last_sync_at": "2026-11-21T17:28:58.803963+00:00",
       "teams_count": 8,
       "matches_count": 0
     },
@@ -197,7 +197,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3188/vct-2027-america-kickoff-latam-final",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:10.501908+00:00",
+      "last_sync_at": "2026-11-21T17:28:50.389611+00:00",
       "teams_count": 0,
       "matches_count": 0
     },
@@ -212,7 +212,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3182/vct-2027-china-kickoff",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:25.825722+00:00",
+      "last_sync_at": "2026-11-21T17:28:58.881641+00:00",
       "teams_count": 10,
       "matches_count": 0
     },
@@ -227,7 +227,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3176/vct-2027-emea-kickoff",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:26.076737+00:00",
+      "last_sync_at": "2026-11-21T17:28:58.955953+00:00",
       "teams_count": 8,
       "matches_count": 0
     },
@@ -242,7 +242,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3181/vct-2027-pacific-kickoff",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:27.283107+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.263647+00:00",
       "teams_count": 8,
       "matches_count": 0
     },
@@ -257,7 +257,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3180/vct-2027-america-kickoff-last-chance-qualifier",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:10.127972+00:00",
+      "last_sync_at": "2026-11-21T17:28:50.320621+00:00",
       "teams_count": 0,
       "matches_count": 0
     },
@@ -272,7 +272,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3236/vct-2027-pacific-kickoff-last-chance",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:27.588230+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.338874+00:00",
       "teams_count": 0,
       "matches_count": 0
     },
@@ -287,7 +287,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3183/vct-2027-america-kickoff-brazil-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:09.847968+00:00",
+      "last_sync_at": "2026-11-21T17:28:50.250547+00:00",
       "teams_count": 16,
       "matches_count": 34
     },
@@ -302,7 +302,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3184/vct-2027-america-kickoff-latam-north-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:12.175587+00:00",
+      "last_sync_at": "2026-11-21T17:28:51.854700+00:00",
       "teams_count": 8,
       "matches_count": 4
     },
@@ -317,7 +317,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3185/vct-2027-america-kickoff-latam-south-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:13.865185+00:00",
+      "last_sync_at": "2026-11-21T17:28:53.287156+00:00",
       "teams_count": 8,
       "matches_count": 4
     },
@@ -332,7 +332,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3179/vct-2027-america-kickoff-north-america-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:25.139746+00:00",
+      "last_sync_at": "2026-11-21T17:28:58.728407+00:00",
       "teams_count": 16,
       "matches_count": 16
     },
@@ -347,7 +347,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3233/vct-2027-emea-kickoff-europe-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:26.395710+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.037987+00:00",
       "teams_count": 16,
       "matches_count": 0
     },
@@ -362,7 +362,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3207/vct-2027-pacific-kickoff-sea-qualifier-playoffs",
       "scope": "qualifier",
-      "last_sync_at": "2026-11-21T09:46:27.867634+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.413621+00:00",
       "teams_count": 2,
       "matches_count": 0
     },
@@ -377,7 +377,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3192/vct-2027-pacific-cups-1",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:26.671453+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.115246+00:00",
       "teams_count": 0,
       "matches_count": 0
     },
@@ -392,7 +392,7 @@
       "status": "upcoming",
       "url": "https://www.vlr.gg/event/3193/vct-2027-pacific-cups-2",
       "scope": "main",
-      "last_sync_at": "2026-11-21T09:46:26.983305+00:00",
+      "last_sync_at": "2026-11-21T17:28:59.182951+00:00",
       "teams_count": 0,
       "matches_count": 0
     }
@@ -1308,5 +1308,5 @@
       ]
     }
   ],
-  "last_sync_at": "2026-11-21T09:46:27.867769+00:00"
+  "last_sync_at": "2026-11-21T17:28:59.413766+00:00"
 }

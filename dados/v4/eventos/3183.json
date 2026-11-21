@@ -9822,7 +9822,7 @@
     "nome_evento": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "brazil",
-    "ultima_sincronizacao": "2026-11-21T09:46:09.840422+00:00",
+    "ultima_sincronizacao": "2026-11-21T17:28:50.242348+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-21T09:46:08.829734+00:00"
@@ -9960,56 +9960,128 @@
       "serie_id": 792029,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 15072,
+          "nome": "2Game Esports"
+        },
+        {
+          "team_id": 24496,
+          "nome": "BRASIL2002"
+        }
+      ],
       "url": "https://www.vlr.gg/792029"
     },
     "792030": {
       "serie_id": 792030,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 18622,
+          "nome": "ELEVATE"
+        },
+        {
+          "team_id": 19265,
+          "nome": "Team Solid"
+        }
+      ],
       "url": "https://www.vlr.gg/792030"
     },
     "792031": {
       "serie_id": 792031,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 24553,
+          "nome": "Mafiosos"
+        },
+        {
+          "team_id": 24478,
+          "nome": "SÓ TEM VELHO"
+        }
+      ],
       "url": "https://www.vlr.gg/792031"
     },
     "792032": {
       "serie_id": 792032,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 23141,
+          "nome": "Fluxo W7M"
+        },
+        {
+          "team_id": 23778,
+          "nome": "Manticore"
+        }
+      ],
       "url": "https://www.vlr.gg/792032"
     },
     "792033": {
       "serie_id": 792033,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 24401,
+          "nome": "TIME DO B3M"
+        },
+        {
+          "team_id": 24507,
+          "nome": "Master Bank"
+        }
+      ],
       "url": "https://www.vlr.gg/792033"
     },
     "792034": {
       "serie_id": 792034,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 12642,
+          "nome": "ARRANCA DREAMS"
+        },
+        {
+          "team_id": 16854,
+          "nome": "Piranhas do Caribe"
+        }
+      ],
       "url": "https://www.vlr.gg/792034"
     },
     "792035": {
       "serie_id": 792035,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 20741,
+          "nome": "Next"
+        },
+        {
+          "team_id": 25330,
+          "nome": "GANGUE"
+        }
+      ],
       "url": "https://www.vlr.gg/792035"
     },
     "792036": {
       "serie_id": 792036,
       "data": "2026-11-21",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 23180,
+          "nome": "Arashi"
+        },
+        {
+          "team_id": 25111,
+          "nome": "0 intelecto"
+        }
+      ],
       "url": "https://www.vlr.gg/792036"
     },
     "792038": {
