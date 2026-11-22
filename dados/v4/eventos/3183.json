@@ -21152,7 +21152,7 @@
     "nome_evento": "VCT 2027 America Kickoff Brazil Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "brazil",
-    "ultima_sincronizacao": "2026-11-22T11:19:25.884948+00:00",
+    "ultima_sincronizacao": "2026-11-22T19:34:27.405391+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-22T03:11:00.346352+00:00"
@@ -21418,28 +21418,64 @@
       "serie_id": 792038,
       "data": "2026-11-22",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 23778,
+          "nome": "Manticore"
+        },
+        {
+          "team_id": 20741,
+          "nome": "Next"
+        }
+      ],
       "url": "https://www.vlr.gg/792038"
     },
     "792039": {
       "serie_id": 792039,
       "data": "2026-11-22",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 18622,
+          "nome": "ELEVATE"
+        },
+        {
+          "team_id": 23180,
+          "nome": "Arashi"
+        }
+      ],
       "url": "https://www.vlr.gg/792039"
     },
     "792040": {
       "serie_id": 792040,
       "data": "2026-11-22",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 24496,
+          "nome": "BRASIL2002"
+        },
+        {
+          "team_id": 12642,
+          "nome": "ARRANCA DREAMS"
+        }
+      ],
       "url": "https://www.vlr.gg/792040"
     },
     "792041": {
       "serie_id": 792041,
       "data": "2026-11-22",
       "status": "upcoming",
-      "equipes": [],
+      "equipes": [
+        {
+          "team_id": 24553,
+          "nome": "Mafiosos"
+        },
+        {
+          "team_id": 24507,
+          "nome": "Master Bank"
+        }
+      ],
       "url": "https://www.vlr.gg/792041"
     },
     "792042": {
