@@ -542,6 +542,544 @@
             "Phoenix",
             "Sova"
           ]
+        },
+        {
+          "serie_id": 793237,
+          "game_id": 297629,
+          "mapa": "Corrode",
+          "adversario": "FUEGO",
+          "adversario_id": 17252,
+          "data": "2026-11-22",
+          "placar": [
+            9,
+            13
+          ],
+          "vitoria": false,
+          "rounds_ataque": 6,
+          "rounds_defesa": 3,
+          "jogadores": [
+            {
+              "nome": "Ryu",
+              "id": 10581,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 1.15,
+                  "acs": 225.0,
+                  "kills": 17,
+                  "deaths": 15,
+                  "assists": 2,
+                  "kd_diff": 2,
+                  "kast": 0.55,
+                  "adr": 149.0,
+                  "hs_percent": 0.37,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 1.62,
+                  "acs": 308.0,
+                  "kills": 11,
+                  "deaths": 6,
+                  "assists": 0,
+                  "kd_diff": 5,
+                  "kast": 0.7,
+                  "adr": 198.0,
+                  "hs_percent": 0.33,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.76,
+                  "acs": 158.0,
+                  "kills": 6,
+                  "deaths": 9,
+                  "assists": 2,
+                  "kd_diff": -3,
+                  "kast": 0.42,
+                  "adr": 108.0,
+                  "hs_percent": 0.44,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "Wallymbo",
+              "id": 69032,
+              "agente": "Neon",
+              "stats": {
+                "overall": {
+                  "rating": 0.98,
+                  "acs": 222.0,
+                  "kills": 18,
+                  "deaths": 18,
+                  "assists": 5,
+                  "kd_diff": 0,
+                  "kast": 0.73,
+                  "adr": 133.0,
+                  "hs_percent": 0.34,
+                  "first_kills": 3,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 1.29,
+                  "acs": 268.0,
+                  "kills": 10,
+                  "deaths": 8,
+                  "assists": 5,
+                  "kd_diff": 2,
+                  "kast": 0.9,
+                  "adr": 160.0,
+                  "hs_percent": 0.31,
+                  "first_kills": 3,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 2
+                },
+                "defend": {
+                  "rating": 0.72,
+                  "acs": 184.0,
+                  "kills": 8,
+                  "deaths": 10,
+                  "assists": 0,
+                  "kd_diff": -2,
+                  "kast": 0.58,
+                  "adr": 110.0,
+                  "hs_percent": 0.4,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "dkdlodi",
+              "id": 50654,
+              "agente": "Hush",
+              "stats": {
+                "overall": {
+                  "rating": 0.88,
+                  "acs": 161.0,
+                  "kills": 13,
+                  "deaths": 17,
+                  "assists": 6,
+                  "kd_diff": -4,
+                  "kast": 0.55,
+                  "adr": 113.0,
+                  "hs_percent": 0.52,
+                  "first_kills": 3,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 0.82,
+                  "acs": 177.0,
+                  "kills": 6,
+                  "deaths": 8,
+                  "assists": 4,
+                  "kd_diff": -2,
+                  "kast": 0.6,
+                  "adr": 115.0,
+                  "hs_percent": 0.55,
+                  "first_kills": 2,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 0.92,
+                  "acs": 149.0,
+                  "kills": 7,
+                  "deaths": 9,
+                  "assists": 2,
+                  "kd_diff": -2,
+                  "kast": 0.5,
+                  "adr": 111.0,
+                  "hs_percent": 0.5,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "Javiierh",
+              "id": 1328,
+              "agente": "Fade",
+              "stats": {
+                "overall": {
+                  "rating": 0.8,
+                  "acs": 173.0,
+                  "kills": 13,
+                  "deaths": 16,
+                  "assists": 6,
+                  "kd_diff": -3,
+                  "kast": 0.55,
+                  "adr": 104.0,
+                  "hs_percent": 0.15,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 1.08,
+                  "acs": 229.0,
+                  "kills": 9,
+                  "deaths": 6,
+                  "assists": 5,
+                  "kd_diff": 3,
+                  "kast": 0.7,
+                  "adr": 126.0,
+                  "hs_percent": 0.09,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 0.57,
+                  "acs": 127.0,
+                  "kills": 4,
+                  "deaths": 10,
+                  "assists": 1,
+                  "kd_diff": -6,
+                  "kast": 0.42,
+                  "adr": 87.0,
+                  "hs_percent": 0.27,
+                  "first_kills": 1,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -2
+                }
+              }
+            },
+            {
+              "nome": "Sxnti",
+              "id": 35619,
+              "agente": "Clove",
+              "stats": {
+                "overall": {
+                  "rating": 0.29,
+                  "acs": 109.0,
+                  "kills": 7,
+                  "deaths": 20,
+                  "assists": 7,
+                  "kd_diff": -13,
+                  "kast": 0.64,
+                  "adr": 75.0,
+                  "hs_percent": 0.24,
+                  "first_kills": 0,
+                  "first_deaths": 6,
+                  "fk_fd_diff": -6
+                },
+                "attack": {
+                  "rating": 0.27,
+                  "acs": 59.0,
+                  "kills": 2,
+                  "deaths": 8,
+                  "assists": 5,
+                  "kd_diff": -6,
+                  "kast": 0.7,
+                  "adr": 39.0,
+                  "hs_percent": 0.25,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                },
+                "defend": {
+                  "rating": 0.31,
+                  "acs": 152.0,
+                  "kills": 5,
+                  "deaths": 12,
+                  "assists": 2,
+                  "kd_diff": -7,
+                  "kast": 0.58,
+                  "adr": 105.0,
+                  "hs_percent": 0.24,
+                  "first_kills": 0,
+                  "first_deaths": 4,
+                  "fk_fd_diff": -4
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Chamber",
+            "Clove",
+            "Fade",
+            "Hush",
+            "Neon"
+          ]
+        },
+        {
+          "serie_id": 793237,
+          "game_id": 297630,
+          "mapa": "Bind",
+          "adversario": "FUEGO",
+          "adversario_id": 17252,
+          "data": "2026-11-22",
+          "placar": [
+            10,
+            13
+          ],
+          "vitoria": false,
+          "rounds_ataque": 4,
+          "rounds_defesa": 6,
+          "jogadores": [
+            {
+              "nome": "Ryu",
+              "id": 10581,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 1.7,
+                  "acs": 347.0,
+                  "kills": 30,
+                  "deaths": 13,
+                  "assists": 3,
+                  "kd_diff": 17,
+                  "kast": 0.74,
+                  "adr": 214.0,
+                  "hs_percent": 0.22,
+                  "first_kills": 6,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 4
+                },
+                "attack": {
+                  "rating": 1.37,
+                  "acs": 312.0,
+                  "kills": 13,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": 5,
+                  "kast": 0.64,
+                  "adr": 181.0,
+                  "hs_percent": 0.47,
+                  "first_kills": 4,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 3
+                },
+                "defend": {
+                  "rating": 2.01,
+                  "acs": 380.0,
+                  "kills": 17,
+                  "deaths": 5,
+                  "assists": 2,
+                  "kd_diff": 12,
+                  "kast": 0.83,
+                  "adr": 245.0,
+                  "hs_percent": 0.05,
+                  "first_kills": 2,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "Sxnti",
+              "id": 35619,
+              "agente": "Brimstone",
+              "stats": {
+                "overall": {
+                  "rating": 1.08,
+                  "acs": 213.0,
+                  "kills": 18,
+                  "deaths": 17,
+                  "assists": 10,
+                  "kd_diff": 1,
+                  "kast": 0.7,
+                  "adr": 141.0,
+                  "hs_percent": 0.21,
+                  "first_kills": 2,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 1.35,
+                  "acs": 267.0,
+                  "kills": 10,
+                  "deaths": 9,
+                  "assists": 8,
+                  "kd_diff": 1,
+                  "kast": 0.82,
+                  "adr": 182.0,
+                  "hs_percent": 0.23,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 0.84,
+                  "acs": 165.0,
+                  "kills": 8,
+                  "deaths": 8,
+                  "assists": 2,
+                  "kd_diff": 0,
+                  "kast": 0.58,
+                  "adr": 103.0,
+                  "hs_percent": 0.19,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "Javiierh",
+              "id": 1328,
+              "agente": "Skye",
+              "stats": {
+                "overall": {
+                  "rating": 0.94,
+                  "acs": 219.0,
+                  "kills": 17,
+                  "deaths": 15,
+                  "assists": 5,
+                  "kd_diff": 2,
+                  "kast": 0.78,
+                  "adr": 158.0,
+                  "hs_percent": 0.1,
+                  "first_kills": 2,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 0.63,
+                  "acs": 152.0,
+                  "kills": 6,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": -2,
+                  "kast": 0.73,
+                  "adr": 99.0,
+                  "hs_percent": 0.07,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 1.22,
+                  "acs": 282.0,
+                  "kills": 11,
+                  "deaths": 7,
+                  "assists": 4,
+                  "kd_diff": 4,
+                  "kast": 0.83,
+                  "adr": 212.0,
+                  "hs_percent": 0.12,
+                  "first_kills": 2,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Wallymbo",
+              "id": 69032,
+              "agente": "Neon",
+              "stats": {
+                "overall": {
+                  "rating": 0.83,
+                  "acs": 179.0,
+                  "kills": 12,
+                  "deaths": 18,
+                  "assists": 10,
+                  "kd_diff": -6,
+                  "kast": 0.83,
+                  "adr": 122.0,
+                  "hs_percent": 0.16,
+                  "first_kills": 3,
+                  "first_deaths": 3,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 1.12,
+                  "acs": 239.0,
+                  "kills": 8,
+                  "deaths": 9,
+                  "assists": 6,
+                  "kd_diff": -1,
+                  "kast": 0.82,
+                  "adr": 157.0,
+                  "hs_percent": 0.17,
+                  "first_kills": 2,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.55,
+                  "acs": 125.0,
+                  "kills": 4,
+                  "deaths": 9,
+                  "assists": 4,
+                  "kd_diff": -5,
+                  "kast": 0.83,
+                  "adr": 90.0,
+                  "hs_percent": 0.15,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "dkdlodi",
+              "id": 50654,
+              "agente": "Phoenix",
+              "stats": {
+                "overall": {
+                  "rating": 0.36,
+                  "acs": 117.0,
+                  "kills": 9,
+                  "deaths": 21,
+                  "assists": 6,
+                  "kd_diff": -12,
+                  "kast": 0.65,
+                  "adr": 83.0,
+                  "hs_percent": 0.56,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 0.13,
+                  "acs": 73.0,
+                  "kills": 2,
+                  "deaths": 10,
+                  "assists": 5,
+                  "kd_diff": -8,
+                  "kast": 0.64,
+                  "adr": 57.0,
+                  "hs_percent": 0.38,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 0.57,
+                  "acs": 158.0,
+                  "kills": 7,
+                  "deaths": 11,
+                  "assists": 1,
+                  "kd_diff": -4,
+                  "kast": 0.67,
+                  "adr": 106.0,
+                  "hs_percent": 0.7,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Brimstone",
+            "Chamber",
+            "Neon",
+            "Phoenix",
+            "Skye"
+          ]
         }
       ]
     },
@@ -1899,6 +2437,544 @@
             "Viper",
             "Yoru"
           ]
+        },
+        {
+          "serie_id": 793236,
+          "game_id": 297626,
+          "mapa": "Summit",
+          "adversario": "LEONS",
+          "adversario_id": 23777,
+          "data": "2026-11-22",
+          "placar": [
+            7,
+            13
+          ],
+          "vitoria": false,
+          "rounds_ataque": 0,
+          "rounds_defesa": 7,
+          "jogadores": [
+            {
+              "nome": "theory",
+              "id": 7618,
+              "agente": "Fade",
+              "stats": {
+                "overall": {
+                  "rating": 1.11,
+                  "acs": 259.0,
+                  "kills": 16,
+                  "deaths": 16,
+                  "assists": 7,
+                  "kd_diff": 0,
+                  "kast": 0.7,
+                  "adr": 166.0,
+                  "hs_percent": 0.4,
+                  "first_kills": 3,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 3
+                },
+                "attack": {
+                  "rating": 0.6,
+                  "acs": 171.0,
+                  "kills": 4,
+                  "deaths": 8,
+                  "assists": 2,
+                  "kd_diff": -4,
+                  "kast": 0.5,
+                  "adr": 102.0,
+                  "hs_percent": 0.36,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 1.45,
+                  "acs": 319.0,
+                  "kills": 12,
+                  "deaths": 8,
+                  "assists": 5,
+                  "kd_diff": 4,
+                  "kast": 0.83,
+                  "adr": 208.0,
+                  "hs_percent": 0.41,
+                  "first_kills": 3,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 3
+                }
+              }
+            },
+            {
+              "nome": "CRUNCH",
+              "id": 21428,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 0.98,
+                  "acs": 214.0,
+                  "kills": 14,
+                  "deaths": 17,
+                  "assists": 5,
+                  "kd_diff": -3,
+                  "kast": 0.55,
+                  "adr": 138.0,
+                  "hs_percent": 0.26,
+                  "first_kills": 4,
+                  "first_deaths": 3,
+                  "fk_fd_diff": 1
+                },
+                "attack": {
+                  "rating": 0.71,
+                  "acs": 159.0,
+                  "kills": 4,
+                  "deaths": 8,
+                  "assists": 0,
+                  "kd_diff": -4,
+                  "kast": 0.25,
+                  "adr": 97.0,
+                  "hs_percent": 0.27,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 1.16,
+                  "acs": 251.0,
+                  "kills": 10,
+                  "deaths": 9,
+                  "assists": 5,
+                  "kd_diff": 1,
+                  "kast": 0.75,
+                  "adr": 165.0,
+                  "hs_percent": 0.25,
+                  "first_kills": 3,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 2
+                }
+              }
+            },
+            {
+              "nome": "Mited",
+              "id": 8056,
+              "agente": "Omen",
+              "stats": {
+                "overall": {
+                  "rating": 0.85,
+                  "acs": 148.0,
+                  "kills": 10,
+                  "deaths": 15,
+                  "assists": 9,
+                  "kd_diff": -5,
+                  "kast": 0.6,
+                  "adr": 106.0,
+                  "hs_percent": 0.4,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 0.17,
+                  "acs": 65.0,
+                  "kills": 1,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": -7,
+                  "kast": 0.25,
+                  "adr": 53.0,
+                  "hs_percent": 0.5,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 1.31,
+                  "acs": 204.0,
+                  "kills": 9,
+                  "deaths": 7,
+                  "assists": 8,
+                  "kd_diff": 2,
+                  "kast": 0.83,
+                  "adr": 142.0,
+                  "hs_percent": 0.38,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Fresht",
+              "id": 593,
+              "agente": "Sage",
+              "stats": {
+                "overall": {
+                  "rating": 0.82,
+                  "acs": 177.0,
+                  "kills": 12,
+                  "deaths": 16,
+                  "assists": 7,
+                  "kd_diff": -4,
+                  "kast": 0.65,
+                  "adr": 123.0,
+                  "hs_percent": 0.43,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 0.42,
+                  "acs": 135.0,
+                  "kills": 3,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": -5,
+                  "kast": 0.5,
+                  "adr": 113.0,
+                  "hs_percent": 0.4,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 1.09,
+                  "acs": 205.0,
+                  "kills": 9,
+                  "deaths": 8,
+                  "assists": 6,
+                  "kd_diff": 1,
+                  "kast": 0.75,
+                  "adr": 130.0,
+                  "hs_percent": 0.45,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Tastyy",
+              "id": 24210,
+              "agente": "Neon",
+              "stats": {
+                "overall": {
+                  "rating": 0.73,
+                  "acs": 183.0,
+                  "kills": 13,
+                  "deaths": 17,
+                  "assists": 3,
+                  "kd_diff": -4,
+                  "kast": 0.65,
+                  "adr": 128.0,
+                  "hs_percent": 0.46,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 0.04,
+                  "acs": 85.0,
+                  "kills": 2,
+                  "deaths": 9,
+                  "assists": 1,
+                  "kd_diff": -7,
+                  "kast": 0.38,
+                  "adr": 65.0,
+                  "hs_percent": 0.43,
+                  "first_kills": 1,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -2
+                },
+                "defend": {
+                  "rating": 1.21,
+                  "acs": 249.0,
+                  "kills": 11,
+                  "deaths": 8,
+                  "assists": 2,
+                  "kd_diff": 3,
+                  "kast": 0.83,
+                  "adr": 169.0,
+                  "hs_percent": 0.46,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Chamber",
+            "Fade",
+            "Neon",
+            "Omen",
+            "Sage"
+          ]
+        },
+        {
+          "serie_id": 793236,
+          "game_id": 297627,
+          "mapa": "Abyss",
+          "adversario": "LEONS",
+          "adversario_id": 23777,
+          "data": "2026-11-22",
+          "placar": [
+            6,
+            13
+          ],
+          "vitoria": false,
+          "rounds_ataque": 4,
+          "rounds_defesa": 2,
+          "jogadores": [
+            {
+              "nome": "Tastyy",
+              "id": 24210,
+              "agente": "Waylay",
+              "stats": {
+                "overall": {
+                  "rating": 0.95,
+                  "acs": 223.0,
+                  "kills": 13,
+                  "deaths": 15,
+                  "assists": 5,
+                  "kd_diff": -2,
+                  "kast": 0.53,
+                  "adr": 138.0,
+                  "hs_percent": 0.27,
+                  "first_kills": 1,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -2
+                },
+                "attack": {
+                  "rating": 1.33,
+                  "acs": 306.0,
+                  "kills": 11,
+                  "deaths": 9,
+                  "assists": 4,
+                  "kd_diff": 2,
+                  "kast": 0.58,
+                  "adr": 192.0,
+                  "hs_percent": 0.3,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.31,
+                  "acs": 80.0,
+                  "kills": 2,
+                  "deaths": 6,
+                  "assists": 1,
+                  "kd_diff": -4,
+                  "kast": 0.43,
+                  "adr": 46.0,
+                  "hs_percent": 0.11,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                }
+              }
+            },
+            {
+              "nome": "Fresht",
+              "id": 593,
+              "agente": "Harbor",
+              "stats": {
+                "overall": {
+                  "rating": 0.92,
+                  "acs": 179.0,
+                  "kills": 11,
+                  "deaths": 16,
+                  "assists": 10,
+                  "kd_diff": -5,
+                  "kast": 0.68,
+                  "adr": 116.0,
+                  "hs_percent": 0.3,
+                  "first_kills": 0,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -3
+                },
+                "attack": {
+                  "rating": 1.3,
+                  "acs": 241.0,
+                  "kills": 10,
+                  "deaths": 9,
+                  "assists": 6,
+                  "kd_diff": 1,
+                  "kast": 0.67,
+                  "adr": 151.0,
+                  "hs_percent": 0.31,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                },
+                "defend": {
+                  "rating": 0.28,
+                  "acs": 73.0,
+                  "kills": 1,
+                  "deaths": 7,
+                  "assists": 4,
+                  "kd_diff": -6,
+                  "kast": 0.71,
+                  "adr": 56.0,
+                  "hs_percent": 0.29,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "CRUNCH",
+              "id": 21428,
+              "agente": "Yoru",
+              "stats": {
+                "overall": {
+                  "rating": 0.72,
+                  "acs": 181.0,
+                  "kills": 13,
+                  "deaths": 17,
+                  "assists": 3,
+                  "kd_diff": -4,
+                  "kast": 0.58,
+                  "adr": 120.0,
+                  "hs_percent": 0.46,
+                  "first_kills": 3,
+                  "first_deaths": 4,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 0.34,
+                  "acs": 123.0,
+                  "kills": 5,
+                  "deaths": 11,
+                  "assists": 3,
+                  "kd_diff": -6,
+                  "kast": 0.67,
+                  "adr": 83.0,
+                  "hs_percent": 0.36,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 1.37,
+                  "acs": 283.0,
+                  "kills": 8,
+                  "deaths": 6,
+                  "assists": 0,
+                  "kd_diff": 2,
+                  "kast": 0.43,
+                  "adr": 182.0,
+                  "hs_percent": 0.54,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "theory",
+              "id": 7618,
+              "agente": "Astra",
+              "stats": {
+                "overall": {
+                  "rating": 0.56,
+                  "acs": 123.0,
+                  "kills": 7,
+                  "deaths": 16,
+                  "assists": 7,
+                  "kd_diff": -9,
+                  "kast": 0.58,
+                  "adr": 74.0,
+                  "hs_percent": 0.11,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 0.43,
+                  "acs": 78.0,
+                  "kills": 3,
+                  "deaths": 10,
+                  "assists": 5,
+                  "kd_diff": -7,
+                  "kast": 0.42,
+                  "adr": 45.0,
+                  "hs_percent": 0.1,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 0.78,
+                  "acs": 202.0,
+                  "kills": 4,
+                  "deaths": 6,
+                  "assists": 2,
+                  "kd_diff": -2,
+                  "kast": 0.86,
+                  "adr": 124.0,
+                  "hs_percent": 0.11,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Mited",
+              "id": 8056,
+              "agente": "Sova",
+              "stats": {
+                "overall": {
+                  "rating": 0.47,
+                  "acs": 135.0,
+                  "kills": 9,
+                  "deaths": 18,
+                  "assists": 4,
+                  "kd_diff": -9,
+                  "kast": 0.58,
+                  "adr": 82.0,
+                  "hs_percent": 0.23,
+                  "first_kills": 2,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 0.48,
+                  "acs": 127.0,
+                  "kills": 6,
+                  "deaths": 11,
+                  "assists": 3,
+                  "kd_diff": -5,
+                  "kast": 0.5,
+                  "adr": 64.0,
+                  "hs_percent": 0.36,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.43,
+                  "acs": 150.0,
+                  "kills": 3,
+                  "deaths": 7,
+                  "assists": 1,
+                  "kd_diff": -4,
+                  "kast": 0.71,
+                  "adr": 113.0,
+                  "hs_percent": 0.09,
+                  "first_kills": 2,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 2
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Astra",
+            "Harbor",
+            "Sova",
+            "Waylay",
+            "Yoru"
+          ]
         }
       ]
     },
@@ -2712,6 +3788,544 @@
             "Omen",
             "Skye"
           ]
+        },
+        {
+          "serie_id": 793237,
+          "game_id": 297629,
+          "mapa": "Corrode",
+          "adversario": "505",
+          "adversario_id": 25292,
+          "data": "2026-11-22",
+          "placar": [
+            13,
+            9
+          ],
+          "vitoria": true,
+          "rounds_ataque": 9,
+          "rounds_defesa": 4,
+          "jogadores": [
+            {
+              "nome": "GeneralSteak",
+              "id": 24026,
+              "agente": "Sova",
+              "stats": {
+                "overall": {
+                  "rating": 1.51,
+                  "acs": 317.0,
+                  "kills": 24,
+                  "deaths": 15,
+                  "assists": 9,
+                  "kd_diff": 9,
+                  "kast": 0.91,
+                  "adr": 196.0,
+                  "hs_percent": 0.27,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "attack": {
+                  "rating": 1.41,
+                  "acs": 248.0,
+                  "kills": 11,
+                  "deaths": 6,
+                  "assists": 4,
+                  "kd_diff": 5,
+                  "kast": 0.83,
+                  "adr": 154.0,
+                  "hs_percent": 0.21,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 1.63,
+                  "acs": 401.0,
+                  "kills": 13,
+                  "deaths": 9,
+                  "assists": 5,
+                  "kd_diff": 4,
+                  "kast": 1.0,
+                  "adr": 246.0,
+                  "hs_percent": 0.32,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Hada",
+              "id": 48012,
+              "agente": "Yoru",
+              "stats": {
+                "overall": {
+                  "rating": 1.24,
+                  "acs": 259.0,
+                  "kills": 21,
+                  "deaths": 15,
+                  "assists": 5,
+                  "kd_diff": 6,
+                  "kast": 0.86,
+                  "adr": 178.0,
+                  "hs_percent": 0.42,
+                  "first_kills": 5,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 3
+                },
+                "attack": {
+                  "rating": 1.51,
+                  "acs": 326.0,
+                  "kills": 14,
+                  "deaths": 7,
+                  "assists": 3,
+                  "kd_diff": 7,
+                  "kast": 0.83,
+                  "adr": 212.0,
+                  "hs_percent": 0.37,
+                  "first_kills": 4,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 3
+                },
+                "defend": {
+                  "rating": 0.91,
+                  "acs": 179.0,
+                  "kills": 7,
+                  "deaths": 8,
+                  "assists": 2,
+                  "kd_diff": -1,
+                  "kast": 0.9,
+                  "adr": 137.0,
+                  "hs_percent": 0.57,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "ezznap",
+              "id": 7639,
+              "agente": "Astra",
+              "stats": {
+                "overall": {
+                  "rating": 1.08,
+                  "acs": 115.0,
+                  "kills": 8,
+                  "deaths": 9,
+                  "assists": 17,
+                  "kd_diff": -1,
+                  "kast": 0.86,
+                  "adr": 74.0,
+                  "hs_percent": 0.14,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 1.38,
+                  "acs": 140.0,
+                  "kills": 5,
+                  "deaths": 3,
+                  "assists": 10,
+                  "kd_diff": 2,
+                  "kast": 0.92,
+                  "adr": 81.0,
+                  "hs_percent": 0.15,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.72,
+                  "acs": 88.0,
+                  "kills": 3,
+                  "deaths": 6,
+                  "assists": 7,
+                  "kd_diff": -3,
+                  "kast": 0.8,
+                  "adr": 66.0,
+                  "hs_percent": 0.13,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "drakk",
+              "id": 10556,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 1.08,
+                  "acs": 216.0,
+                  "kills": 18,
+                  "deaths": 15,
+                  "assists": 1,
+                  "kd_diff": 3,
+                  "kast": 0.64,
+                  "adr": 143.0,
+                  "hs_percent": 0.21,
+                  "first_kills": 6,
+                  "first_deaths": 5,
+                  "fk_fd_diff": 1
+                },
+                "attack": {
+                  "rating": 1.24,
+                  "acs": 273.0,
+                  "kills": 12,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": 4,
+                  "kast": 0.75,
+                  "adr": 169.0,
+                  "hs_percent": 0.22,
+                  "first_kills": 4,
+                  "first_deaths": 2,
+                  "fk_fd_diff": 2
+                },
+                "defend": {
+                  "rating": 0.89,
+                  "acs": 149.0,
+                  "kills": 6,
+                  "deaths": 7,
+                  "assists": 0,
+                  "kd_diff": -1,
+                  "kast": 0.5,
+                  "adr": 111.0,
+                  "hs_percent": 0.2,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "Rei",
+              "id": 42199,
+              "agente": "Phoenix",
+              "stats": {
+                "overall": {
+                  "rating": 1.03,
+                  "acs": 191.0,
+                  "kills": 15,
+                  "deaths": 14,
+                  "assists": 5,
+                  "kd_diff": 1,
+                  "kast": 0.77,
+                  "adr": 127.0,
+                  "hs_percent": 0.67,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 1.09,
+                  "acs": 174.0,
+                  "kills": 8,
+                  "deaths": 6,
+                  "assists": 2,
+                  "kd_diff": 2,
+                  "kast": 0.75,
+                  "adr": 119.0,
+                  "hs_percent": 0.64,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 0.97,
+                  "acs": 212.0,
+                  "kills": 7,
+                  "deaths": 8,
+                  "assists": 3,
+                  "kd_diff": -1,
+                  "kast": 0.8,
+                  "adr": 137.0,
+                  "hs_percent": 0.69,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Astra",
+            "Chamber",
+            "Phoenix",
+            "Sova",
+            "Yoru"
+          ]
+        },
+        {
+          "serie_id": 793237,
+          "game_id": 297630,
+          "mapa": "Bind",
+          "adversario": "505",
+          "adversario_id": 25292,
+          "data": "2026-11-22",
+          "placar": [
+            13,
+            10
+          ],
+          "vitoria": true,
+          "rounds_ataque": 6,
+          "rounds_defesa": 7,
+          "jogadores": [
+            {
+              "nome": "ezznap",
+              "id": 7639,
+              "agente": "Brimstone",
+              "stats": {
+                "overall": {
+                  "rating": 1.42,
+                  "acs": 270.0,
+                  "kills": 18,
+                  "deaths": 17,
+                  "assists": 19,
+                  "kd_diff": 1,
+                  "kast": 0.83,
+                  "adr": 177.0,
+                  "hs_percent": 0.15,
+                  "first_kills": 1,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 1.26,
+                  "acs": 212.0,
+                  "kills": 8,
+                  "deaths": 8,
+                  "assists": 7,
+                  "kd_diff": 0,
+                  "kast": 0.75,
+                  "adr": 129.0,
+                  "hs_percent": 0.2,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                },
+                "defend": {
+                  "rating": 1.6,
+                  "acs": 334.0,
+                  "kills": 10,
+                  "deaths": 9,
+                  "assists": 12,
+                  "kd_diff": 1,
+                  "kast": 0.91,
+                  "adr": 230.0,
+                  "hs_percent": 0.12,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "GeneralSteak",
+              "id": 24026,
+              "agente": "Skye",
+              "stats": {
+                "overall": {
+                  "rating": 1.13,
+                  "acs": 201.0,
+                  "kills": 18,
+                  "deaths": 17,
+                  "assists": 12,
+                  "kd_diff": 1,
+                  "kast": 0.87,
+                  "adr": 138.0,
+                  "hs_percent": 0.41,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 1.3,
+                  "acs": 210.0,
+                  "kills": 9,
+                  "deaths": 8,
+                  "assists": 7,
+                  "kd_diff": 1,
+                  "kast": 0.83,
+                  "adr": 146.0,
+                  "hs_percent": 0.59,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 0.95,
+                  "acs": 192.0,
+                  "kills": 9,
+                  "deaths": 9,
+                  "assists": 5,
+                  "kd_diff": 0,
+                  "kast": 0.91,
+                  "adr": 130.0,
+                  "hs_percent": 0.29,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "Rei",
+              "id": 42199,
+              "agente": "Waylay",
+              "stats": {
+                "overall": {
+                  "rating": 1.07,
+                  "acs": 200.0,
+                  "kills": 17,
+                  "deaths": 16,
+                  "assists": 6,
+                  "kd_diff": 1,
+                  "kast": 0.74,
+                  "adr": 142.0,
+                  "hs_percent": 0.48,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 0.71,
+                  "acs": 181.0,
+                  "kills": 8,
+                  "deaths": 11,
+                  "assists": 1,
+                  "kd_diff": -3,
+                  "kast": 0.58,
+                  "adr": 128.0,
+                  "hs_percent": 0.56,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 1.47,
+                  "acs": 223.0,
+                  "kills": 9,
+                  "deaths": 5,
+                  "assists": 5,
+                  "kd_diff": 4,
+                  "kast": 0.91,
+                  "adr": 158.0,
+                  "hs_percent": 0.41,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Hada",
+              "id": 48012,
+              "agente": "Hush",
+              "stats": {
+                "overall": {
+                  "rating": 0.99,
+                  "acs": 226.0,
+                  "kills": 18,
+                  "deaths": 20,
+                  "assists": 7,
+                  "kd_diff": -2,
+                  "kast": 0.65,
+                  "adr": 156.0,
+                  "hs_percent": 0.39,
+                  "first_kills": 2,
+                  "first_deaths": 4,
+                  "fk_fd_diff": -2
+                },
+                "attack": {
+                  "rating": 0.94,
+                  "acs": 204.0,
+                  "kills": 8,
+                  "deaths": 10,
+                  "assists": 2,
+                  "kd_diff": -2,
+                  "kast": 0.42,
+                  "adr": 136.0,
+                  "hs_percent": 0.53,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 1.05,
+                  "acs": 252.0,
+                  "kills": 10,
+                  "deaths": 10,
+                  "assists": 5,
+                  "kd_diff": 0,
+                  "kast": 0.91,
+                  "adr": 177.0,
+                  "hs_percent": 0.31,
+                  "first_kills": 1,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -2
+                }
+              }
+            },
+            {
+              "nome": "drakk",
+              "id": 10556,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 0.77,
+                  "acs": 157.0,
+                  "kills": 13,
+                  "deaths": 16,
+                  "assists": 0,
+                  "kd_diff": -3,
+                  "kast": 0.48,
+                  "adr": 104.0,
+                  "hs_percent": 0.26,
+                  "first_kills": 4,
+                  "first_deaths": 6,
+                  "fk_fd_diff": -2
+                },
+                "attack": {
+                  "rating": 0.63,
+                  "acs": 172.0,
+                  "kills": 7,
+                  "deaths": 10,
+                  "assists": 0,
+                  "kd_diff": -3,
+                  "kast": 0.42,
+                  "adr": 121.0,
+                  "hs_percent": 0.21,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 0.92,
+                  "acs": 142.0,
+                  "kills": 6,
+                  "deaths": 6,
+                  "assists": 0,
+                  "kd_diff": 0,
+                  "kast": 0.55,
+                  "adr": 85.0,
+                  "hs_percent": 0.33,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Brimstone",
+            "Chamber",
+            "Hush",
+            "Skye",
+            "Waylay"
+          ]
         }
       ]
     },
@@ -3255,6 +4869,544 @@
             "Omen",
             "Raze",
             "Skye"
+          ]
+        },
+        {
+          "serie_id": 793236,
+          "game_id": 297626,
+          "mapa": "Summit",
+          "adversario": "Contra",
+          "adversario_id": 10376,
+          "data": "2026-11-22",
+          "placar": [
+            13,
+            7
+          ],
+          "vitoria": true,
+          "rounds_ataque": 5,
+          "rounds_defesa": 8,
+          "jogadores": [
+            {
+              "nome": "Mephisto",
+              "id": 31476,
+              "agente": "Sage",
+              "stats": {
+                "overall": {
+                  "rating": 1.53,
+                  "acs": 279.0,
+                  "kills": 21,
+                  "deaths": 10,
+                  "assists": 4,
+                  "kd_diff": 11,
+                  "kast": 0.9,
+                  "adr": 170.0,
+                  "hs_percent": 0.23,
+                  "first_kills": 3,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 1.03,
+                  "acs": 216.0,
+                  "kills": 9,
+                  "deaths": 9,
+                  "assists": 3,
+                  "kd_diff": 0,
+                  "kast": 0.83,
+                  "adr": 143.0,
+                  "hs_percent": 0.23,
+                  "first_kills": 2,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 2.28,
+                  "acs": 375.0,
+                  "kills": 12,
+                  "deaths": 1,
+                  "assists": 1,
+                  "kd_diff": 11,
+                  "kast": 1.0,
+                  "adr": 210.0,
+                  "hs_percent": 0.23,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "Jow",
+              "id": 17690,
+              "agente": "Fade",
+              "stats": {
+                "overall": {
+                  "rating": 1.36,
+                  "acs": 243.0,
+                  "kills": 17,
+                  "deaths": 12,
+                  "assists": 10,
+                  "kd_diff": 5,
+                  "kast": 0.85,
+                  "adr": 172.0,
+                  "hs_percent": 0.38,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                },
+                "attack": {
+                  "rating": 1.44,
+                  "acs": 280.0,
+                  "kills": 12,
+                  "deaths": 8,
+                  "assists": 3,
+                  "kd_diff": 4,
+                  "kast": 0.75,
+                  "adr": 186.0,
+                  "hs_percent": 0.39,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                },
+                "defend": {
+                  "rating": 1.25,
+                  "acs": 188.0,
+                  "kills": 5,
+                  "deaths": 4,
+                  "assists": 7,
+                  "kd_diff": 1,
+                  "kast": 1.0,
+                  "adr": 150.0,
+                  "hs_percent": 0.36,
+                  "first_kills": 0,
+                  "first_deaths": 1,
+                  "fk_fd_diff": -1
+                }
+              }
+            },
+            {
+              "nome": "Weegle",
+              "id": 54082,
+              "agente": "Harbor",
+              "stats": {
+                "overall": {
+                  "rating": 1.19,
+                  "acs": 232.0,
+                  "kills": 16,
+                  "deaths": 14,
+                  "assists": 15,
+                  "kd_diff": 2,
+                  "kast": 0.8,
+                  "adr": 147.0,
+                  "hs_percent": 0.41,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 0.59,
+                  "acs": 135.0,
+                  "kills": 5,
+                  "deaths": 11,
+                  "assists": 5,
+                  "kd_diff": -6,
+                  "kast": 0.67,
+                  "adr": 88.0,
+                  "hs_percent": 0.22,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                },
+                "defend": {
+                  "rating": 2.08,
+                  "acs": 379.0,
+                  "kills": 11,
+                  "deaths": 3,
+                  "assists": 10,
+                  "kd_diff": 8,
+                  "kast": 1.0,
+                  "adr": 235.0,
+                  "hs_percent": 0.57,
+                  "first_kills": 0,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Virtyy",
+              "id": 3983,
+              "agente": "Neon",
+              "stats": {
+                "overall": {
+                  "rating": 0.84,
+                  "acs": 208.0,
+                  "kills": 14,
+                  "deaths": 15,
+                  "assists": 5,
+                  "kd_diff": -1,
+                  "kast": 0.75,
+                  "adr": 132.0,
+                  "hs_percent": 0.32,
+                  "first_kills": 4,
+                  "first_deaths": 3,
+                  "fk_fd_diff": 1
+                },
+                "attack": {
+                  "rating": 0.5,
+                  "acs": 181.0,
+                  "kills": 7,
+                  "deaths": 12,
+                  "assists": 4,
+                  "kd_diff": -5,
+                  "kast": 0.67,
+                  "adr": 119.0,
+                  "hs_percent": 0.29,
+                  "first_kills": 0,
+                  "first_deaths": 2,
+                  "fk_fd_diff": -2
+                },
+                "defend": {
+                  "rating": 1.35,
+                  "acs": 250.0,
+                  "kills": 7,
+                  "deaths": 3,
+                  "assists": 1,
+                  "kd_diff": 4,
+                  "kast": 0.88,
+                  "adr": 151.0,
+                  "hs_percent": 0.38,
+                  "first_kills": 4,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 3
+                }
+              }
+            },
+            {
+              "nome": "Dragon",
+              "id": 48802,
+              "agente": "Chamber",
+              "stats": {
+                "overall": {
+                  "rating": 0.81,
+                  "acs": 182.0,
+                  "kills": 13,
+                  "deaths": 14,
+                  "assists": 2,
+                  "kd_diff": -1,
+                  "kast": 0.7,
+                  "adr": 114.0,
+                  "hs_percent": 0.25,
+                  "first_kills": 2,
+                  "first_deaths": 5,
+                  "fk_fd_diff": -3
+                },
+                "attack": {
+                  "rating": 0.48,
+                  "acs": 174.0,
+                  "kills": 7,
+                  "deaths": 11,
+                  "assists": 1,
+                  "kd_diff": -4,
+                  "kast": 0.5,
+                  "adr": 103.0,
+                  "hs_percent": 0.33,
+                  "first_kills": 1,
+                  "first_deaths": 5,
+                  "fk_fd_diff": -4
+                },
+                "defend": {
+                  "rating": 1.3,
+                  "acs": 195.0,
+                  "kills": 6,
+                  "deaths": 3,
+                  "assists": 1,
+                  "kd_diff": 3,
+                  "kast": 1.0,
+                  "adr": 130.0,
+                  "hs_percent": 0.13,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Chamber",
+            "Fade",
+            "Harbor",
+            "Neon",
+            "Sage"
+          ]
+        },
+        {
+          "serie_id": 793236,
+          "game_id": 297627,
+          "mapa": "Abyss",
+          "adversario": "Contra",
+          "adversario_id": 10376,
+          "data": "2026-11-22",
+          "placar": [
+            13,
+            6
+          ],
+          "vitoria": true,
+          "rounds_ataque": 5,
+          "rounds_defesa": 8,
+          "jogadores": [
+            {
+              "nome": "Virtyy",
+              "id": 3983,
+              "agente": "Waylay",
+              "stats": {
+                "overall": {
+                  "rating": 1.74,
+                  "acs": 320.0,
+                  "kills": 24,
+                  "deaths": 9,
+                  "assists": 3,
+                  "kd_diff": 15,
+                  "kast": 0.84,
+                  "adr": 215.0,
+                  "hs_percent": 0.33,
+                  "first_kills": 2,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -1
+                },
+                "attack": {
+                  "rating": 1.39,
+                  "acs": 268.0,
+                  "kills": 8,
+                  "deaths": 3,
+                  "assists": 1,
+                  "kd_diff": 5,
+                  "kast": 0.86,
+                  "adr": 175.0,
+                  "hs_percent": 0.31,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 1.93,
+                  "acs": 351.0,
+                  "kills": 16,
+                  "deaths": 6,
+                  "assists": 2,
+                  "kd_diff": 10,
+                  "kast": 0.83,
+                  "adr": 239.0,
+                  "hs_percent": 0.34,
+                  "first_kills": 1,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -2
+                }
+              }
+            },
+            {
+              "nome": "Mephisto",
+              "id": 31476,
+              "agente": "Astra",
+              "stats": {
+                "overall": {
+                  "rating": 1.39,
+                  "acs": 231.0,
+                  "kills": 18,
+                  "deaths": 10,
+                  "assists": 8,
+                  "kd_diff": 8,
+                  "kast": 0.84,
+                  "adr": 134.0,
+                  "hs_percent": 0.37,
+                  "first_kills": 2,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 1
+                },
+                "attack": {
+                  "rating": 1.62,
+                  "acs": 218.0,
+                  "kills": 6,
+                  "deaths": 3,
+                  "assists": 6,
+                  "kd_diff": 3,
+                  "kast": 1.0,
+                  "adr": 121.0,
+                  "hs_percent": 0.42,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 1.25,
+                  "acs": 239.0,
+                  "kills": 12,
+                  "deaths": 7,
+                  "assists": 2,
+                  "kd_diff": 5,
+                  "kast": 0.75,
+                  "adr": 142.0,
+                  "hs_percent": 0.35,
+                  "first_kills": 1,
+                  "first_deaths": 1,
+                  "fk_fd_diff": 0
+                }
+              }
+            },
+            {
+              "nome": "Jow",
+              "id": 17690,
+              "agente": "Sova",
+              "stats": {
+                "overall": {
+                  "rating": 1.3,
+                  "acs": 173.0,
+                  "kills": 11,
+                  "deaths": 6,
+                  "assists": 2,
+                  "kd_diff": 5,
+                  "kast": 0.79,
+                  "adr": 115.0,
+                  "hs_percent": 0.36,
+                  "first_kills": 2,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 2
+                },
+                "attack": {
+                  "rating": 1.64,
+                  "acs": 174.0,
+                  "kills": 5,
+                  "deaths": 1,
+                  "assists": 1,
+                  "kd_diff": 4,
+                  "kast": 0.86,
+                  "adr": 111.0,
+                  "hs_percent": 0.14,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 1.1,
+                  "acs": 173.0,
+                  "kills": 6,
+                  "deaths": 5,
+                  "assists": 1,
+                  "kd_diff": 1,
+                  "kast": 0.75,
+                  "adr": 117.0,
+                  "hs_percent": 0.47,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                }
+              }
+            },
+            {
+              "nome": "Weegle",
+              "id": 54082,
+              "agente": "Omen",
+              "stats": {
+                "overall": {
+                  "rating": 1.28,
+                  "acs": 263.0,
+                  "kills": 19,
+                  "deaths": 12,
+                  "assists": 3,
+                  "kd_diff": 7,
+                  "kast": 0.84,
+                  "adr": 164.0,
+                  "hs_percent": 0.26,
+                  "first_kills": 3,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 3
+                },
+                "attack": {
+                  "rating": 1.93,
+                  "acs": 398.0,
+                  "kills": 11,
+                  "deaths": 4,
+                  "assists": 2,
+                  "kd_diff": 7,
+                  "kast": 1.0,
+                  "adr": 244.0,
+                  "hs_percent": 0.17,
+                  "first_kills": 1,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 1
+                },
+                "defend": {
+                  "rating": 0.9,
+                  "acs": 185.0,
+                  "kills": 8,
+                  "deaths": 8,
+                  "assists": 1,
+                  "kd_diff": 0,
+                  "kast": 0.75,
+                  "adr": 117.0,
+                  "hs_percent": 0.44,
+                  "first_kills": 2,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 2
+                }
+              }
+            },
+            {
+              "nome": "Dragon",
+              "id": 48802,
+              "agente": "Yoru",
+              "stats": {
+                "overall": {
+                  "rating": 0.59,
+                  "acs": 159.0,
+                  "kills": 10,
+                  "deaths": 16,
+                  "assists": 6,
+                  "kd_diff": -6,
+                  "kast": 0.58,
+                  "adr": 110.0,
+                  "hs_percent": 0.31,
+                  "first_kills": 3,
+                  "first_deaths": 3,
+                  "fk_fd_diff": 0
+                },
+                "attack": {
+                  "rating": 0.24,
+                  "acs": 113.0,
+                  "kills": 2,
+                  "deaths": 7,
+                  "assists": 4,
+                  "kd_diff": -5,
+                  "kast": 0.57,
+                  "adr": 86.0,
+                  "hs_percent": 0.18,
+                  "first_kills": 0,
+                  "first_deaths": 3,
+                  "fk_fd_diff": -3
+                },
+                "defend": {
+                  "rating": 0.79,
+                  "acs": 186.0,
+                  "kills": 8,
+                  "deaths": 9,
+                  "assists": 2,
+                  "kd_diff": -1,
+                  "kast": 0.58,
+                  "adr": 123.0,
+                  "hs_percent": 0.39,
+                  "first_kills": 3,
+                  "first_deaths": 0,
+                  "fk_fd_diff": 3
+                }
+              }
+            }
+          ],
+          "composicao": [
+            "Astra",
+            "Omen",
+            "Sova",
+            "Waylay",
+            "Yoru"
           ]
         }
       ]
@@ -4913,6 +7065,14 @@
     "792189": {
       "ultima_coleta": "2026-11-22T03:11:10.425575+00:00",
       "data": "2026-11-20"
+    },
+    "793236": {
+      "ultima_coleta": "2026-11-23T00:50:23.387502+00:00",
+      "data": "2026-11-22"
+    },
+    "793237": {
+      "ultima_coleta": "2026-11-23T00:50:24.793885+00:00",
+      "data": "2026-11-22"
     }
   },
   "meta": {
@@ -4921,10 +7081,10 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-22T19:34:30.340803+00:00",
+    "ultima_sincronizacao": "2026-11-23T00:50:25.803441+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
-    "ultima_atualizacao": "2026-11-22T03:11:10.425587+00:00"
+    "ultima_atualizacao": "2026-11-23T00:50:24.793901+00:00"
   },
   "partidas": {
     "792186": {
@@ -4994,7 +7154,7 @@
     "793236": {
       "serie_id": 793236,
       "data": "2026-11-22",
-      "status": "upcoming",
+      "status": "completed",
       "equipes": [
         {
           "team_id": 23777,
@@ -5010,7 +7170,7 @@
     "793237": {
       "serie_id": 793237,
       "data": "2026-11-22",
-      "status": "upcoming",
+      "status": "completed",
       "equipes": [
         {
           "team_id": 17252,
@@ -5026,7 +7186,7 @@
     "793238": {
       "serie_id": 793238,
       "data": "2026-11-22",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 2131,
@@ -5042,7 +7202,7 @@
     "793239": {
       "serie_id": 793239,
       "data": "2026-11-22",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 21459,
