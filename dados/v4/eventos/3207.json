@@ -10,6 +10,11 @@
       "team_id": 6199,
       "nome": "Team Secret",
       "mapas": []
+    },
+    "25492": {
+      "team_id": 25492,
+      "nome": "BOOM Team Secret",
+      "mapas": []
     }
   },
   "series": {},
@@ -19,7 +24,7 @@
     "nome_evento": "VCT 2027 Pacific Kickoff Sea Qualifier Playoffs",
     "regiao": "pacific",
     "subregiao": "southeast_asia",
-    "ultima_sincronizacao": "2026-11-23T08:59:53.576594+00:00",
+    "ultima_sincronizacao": "2026-11-23T17:29:50.074555+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false
   },
