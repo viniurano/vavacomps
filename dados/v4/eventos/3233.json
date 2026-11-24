@@ -89,9 +89,138 @@
     "nome_evento": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
     "regiao": "emea",
     "subregiao": "europe",
-    "ultima_sincronizacao": "2026-11-23T21:18:48.211553+00:00",
+    "ultima_sincronizacao": "2026-11-24T06:00:13.052353+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false
   },
-  "partidas": {}
+  "partidas": {
+    "794016": {
+      "serie_id": 794016,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 4616,
+          "nome": "UCAM Esports Club"
+        },
+        {
+          "team_id": 5214,
+          "nome": "CGN Esports"
+        }
+      ],
+      "url": "https://www.vlr.gg/794016"
+    },
+    "794017": {
+      "serie_id": 794017,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 21715,
+          "nome": "Natus Vincere Junior"
+        },
+        {
+          "team_id": 23727,
+          "nome": "Aurora Gaming"
+        }
+      ],
+      "url": "https://www.vlr.gg/794017"
+    },
+    "794018": {
+      "serie_id": 794018,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 7967,
+          "nome": "Mandatory"
+        },
+        {
+          "team_id": 14461,
+          "nome": "Barça eSports"
+        }
+      ],
+      "url": "https://www.vlr.gg/794018"
+    },
+    "794019": {
+      "serie_id": 794019,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 14419,
+          "nome": "GIANTX"
+        },
+        {
+          "team_id": 17177,
+          "nome": "Pixel Lumina"
+        }
+      ],
+      "url": "https://www.vlr.gg/794019"
+    },
+    "794020": {
+      "serie_id": 794020,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 14478,
+          "nome": "Eintracht Frankfurt"
+        },
+        {
+          "team_id": 18494,
+          "nome": "F9 EICAR"
+        }
+      ],
+      "url": "https://www.vlr.gg/794020"
+    },
+    "794021": {
+      "serie_id": 794021,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 876,
+          "nome": "Enterprise Esports"
+        },
+        {
+          "team_id": 23693,
+          "nome": "xXxMasterProMegaTeamxXx"
+        }
+      ],
+      "url": "https://www.vlr.gg/794021"
+    },
+    "794022": {
+      "serie_id": 794022,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 17945,
+          "nome": "MIR"
+        },
+        {
+          "team_id": 18025,
+          "nome": "La Masia"
+        }
+      ],
+      "url": "https://www.vlr.gg/794022"
+    },
+    "794023": {
+      "serie_id": 794023,
+      "data": "2026-11-25",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 11232,
+          "nome": "Joblife"
+        },
+        {
+          "team_id": 19391,
+          "nome": "WIP Esports"
+        }
+      ],
+      "url": "https://www.vlr.gg/794023"
+    }
+  }
 }
