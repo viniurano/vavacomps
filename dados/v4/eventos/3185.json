@@ -9774,7 +9774,7 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-25T12:48:48.310129+00:00",
+    "ultima_sincronizacao": "2026-11-25T22:29:22.319257+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-24T05:59:55.585636+00:00"
@@ -9911,15 +9911,15 @@
     "793991": {
       "serie_id": 793991,
       "data": "2026-11-25",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 367,
           "nome": "9z Globant"
         },
         {
-          "team_id": 24246,
-          "nome": "ARG.MIX"
+          "team_id": 24320,
+          "nome": "fracasados ny"
         }
       ],
       "url": "https://www.vlr.gg/793991"
@@ -9927,15 +9927,15 @@
     "793992": {
       "serie_id": 793992,
       "data": "2026-11-25",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
+        {
+          "team_id": 24246,
+          "nome": "ARG.MIX"
+        },
         {
           "team_id": 24257,
           "nome": "TRAMITE"
-        },
-        {
-          "team_id": 24320,
-          "nome": "fracasados ny"
         }
       ],
       "url": "https://www.vlr.gg/793992"
