@@ -11934,7 +11934,7 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM South Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-26T15:10:37.023447+00:00",
+    "ultima_sincronizacao": "2026-11-26T23:49:42.572848+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-26T05:00:08.764642+00:00"
@@ -12099,6 +12099,66 @@
         }
       ],
       "url": "https://www.vlr.gg/793992"
+    },
+    "794841": {
+      "serie_id": 794841,
+      "data": "2026-11-27",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 24258,
+          "nome": "EL LEGADO"
+        },
+        {
+          "team_id": 24246,
+          "nome": "ARG.MIX"
+        }
+      ],
+      "url": "https://www.vlr.gg/794841"
+    },
+    "794842": {
+      "serie_id": 794842,
+      "data": "2026-11-27",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 20209,
+          "nome": "University War"
+        },
+        {
+          "team_id": 367,
+          "nome": "9z Globant"
+        }
+      ],
+      "url": "https://www.vlr.gg/794842"
+    },
+    "794843": {
+      "serie_id": 794843,
+      "data": "2026-11-27",
+      "status": "completed",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794843"
+    },
+    "794844": {
+      "serie_id": 794844,
+      "data": "2026-11-27",
+      "status": "completed",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794844"
+    },
+    "794845": {
+      "serie_id": 794845,
+      "data": "2026-11-27",
+      "status": "completed",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794845"
+    },
+    "794846": {
+      "serie_id": 794846,
+      "data": "2026-11-27",
+      "status": "completed",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794846"
     }
   }
 }

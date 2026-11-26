@@ -12477,7 +12477,7 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-26T15:10:33.589162+00:00",
+    "ultima_sincronizacao": "2026-11-26T23:49:31.634269+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-25T12:48:37.999200+00:00"
@@ -12646,7 +12646,7 @@
     "794180": {
       "serie_id": 794180,
       "data": "2026-11-26",
-      "status": "upcoming",
+      "status": "live",
       "equipes": [
         {
           "team_id": 23777,
