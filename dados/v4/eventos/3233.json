@@ -10898,7 +10898,7 @@
     "nome_evento": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
     "regiao": "emea",
     "subregiao": "europe",
-    "ultima_sincronizacao": "2026-11-26T05:00:39.449371+00:00",
+    "ultima_sincronizacao": "2026-11-26T15:10:54.153319+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-26T05:00:27.409343+00:00"
@@ -11035,7 +11035,7 @@
     "794454": {
       "serie_id": 794454,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 876,
@@ -11051,7 +11051,7 @@
     "794455": {
       "serie_id": 794455,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 21715,
@@ -11064,42 +11064,10 @@
       ],
       "url": "https://www.vlr.gg/794455"
     },
-    "794456": {
-      "serie_id": 794456,
-      "data": "2026-11-26",
-      "status": "completed",
-      "equipes": [
-        {
-          "team_id": 14478,
-          "nome": "Eintracht Frankfurt"
-        },
-        {
-          "team_id": 14419,
-          "nome": "GIANTX"
-        }
-      ],
-      "url": "https://www.vlr.gg/794456"
-    },
-    "794457": {
-      "serie_id": 794457,
-      "data": "2026-11-26",
-      "status": "completed",
-      "equipes": [
-        {
-          "team_id": 11232,
-          "nome": "Joblife"
-        },
-        {
-          "team_id": 18025,
-          "nome": "La Masia"
-        }
-      ],
-      "url": "https://www.vlr.gg/794457"
-    },
     "794458": {
       "serie_id": 794458,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 5214,
@@ -11115,7 +11083,7 @@
     "794459": {
       "serie_id": 794459,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 17177,
@@ -11128,10 +11096,42 @@
       ],
       "url": "https://www.vlr.gg/794459"
     },
+    "794456": {
+      "serie_id": 794456,
+      "data": "2026-11-26",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 14478,
+          "nome": "Eintracht Frankfurt"
+        },
+        {
+          "team_id": 14419,
+          "nome": "GIANTX"
+        }
+      ],
+      "url": "https://www.vlr.gg/794456"
+    },
+    "794457": {
+      "serie_id": 794457,
+      "data": "2026-11-26",
+      "status": "upcoming",
+      "equipes": [
+        {
+          "team_id": 11232,
+          "nome": "Joblife"
+        },
+        {
+          "team_id": 18025,
+          "nome": "La Masia"
+        }
+      ],
+      "url": "https://www.vlr.gg/794457"
+    },
     "794460": {
       "serie_id": 794460,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 23727,
@@ -11147,7 +11147,7 @@
     "794461": {
       "serie_id": 794461,
       "data": "2026-11-26",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 7967,
