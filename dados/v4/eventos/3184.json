@@ -6752,7 +6752,7 @@
     },
     "23777": {
       "team_id": 23777,
-      "nome": "Leones",
+      "nome": "LEONES",
       "mapas": [
         {
           "serie_id": 792186,
@@ -12477,7 +12477,7 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-26T23:49:31.634269+00:00",
+    "ultima_sincronizacao": "2026-11-27T08:23:58.932786+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-25T12:48:37.999200+00:00"
@@ -12490,7 +12490,7 @@
       "equipes": [
         {
           "team_id": 23777,
-          "nome": "Leones"
+          "nome": "LEONES"
         },
         {
           "team_id": 21459,
@@ -12554,7 +12554,7 @@
       "equipes": [
         {
           "team_id": 23777,
-          "nome": "Leones"
+          "nome": "LEONES"
         },
         {
           "team_id": 10376,
@@ -12645,12 +12645,12 @@
     },
     "794180": {
       "serie_id": 794180,
-      "data": "2026-11-26",
-      "status": "live",
+      "data": "2026-11-28",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 23777,
-          "nome": "Leones"
+          "nome": "LEONES"
         },
         {
           "team_id": 10376,
@@ -12661,7 +12661,7 @@
     },
     "794181": {
       "serie_id": 794181,
-      "data": "2026-11-26",
+      "data": "2026-11-28",
       "status": "upcoming",
       "equipes": [
         {
