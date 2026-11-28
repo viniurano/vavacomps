@@ -12477,7 +12477,7 @@
     "nome_evento": "VCT 2027 America Kickoff LATAM North Qualifier Playoffs",
     "regiao": "americas",
     "subregiao": "latam",
-    "ultima_sincronizacao": "2026-11-27T18:56:19.455884+00:00",
+    "ultima_sincronizacao": "2026-11-28T01:57:18.935187+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-25T12:48:37.999200+00:00"
@@ -12675,33 +12675,33 @@
       ],
       "url": "https://www.vlr.gg/794181"
     },
-    "794182": {
-      "serie_id": 794182,
-      "data": "2026-11-28",
-      "status": "completed",
-      "equipes": [],
-      "url": "https://www.vlr.gg/794182"
-    },
-    "794183": {
-      "serie_id": 794183,
-      "data": "2026-11-28",
-      "status": "completed",
-      "equipes": [],
-      "url": "https://www.vlr.gg/794183"
-    },
     "794184": {
       "serie_id": 794184,
-      "data": "2026-11-28",
-      "status": "completed",
+      "data": "2026-12-04",
+      "status": "upcoming",
       "equipes": [],
       "url": "https://www.vlr.gg/794184"
     },
+    "794182": {
+      "serie_id": 794182,
+      "data": "2026-12-04",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794182"
+    },
     "794185": {
       "serie_id": 794185,
-      "data": "2026-11-28",
-      "status": "completed",
+      "data": "2026-12-05",
+      "status": "upcoming",
       "equipes": [],
       "url": "https://www.vlr.gg/794185"
+    },
+    "794183": {
+      "serie_id": 794183,
+      "data": "2026-12-06",
+      "status": "upcoming",
+      "equipes": [],
+      "url": "https://www.vlr.gg/794183"
     }
   }
 }
