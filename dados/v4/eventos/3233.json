@@ -33020,7 +33020,7 @@
     "nome_evento": "VCT 2027 EMEA Kickoff Europe Qualifier Playoffs",
     "regiao": "emea",
     "subregiao": "europe",
-    "ultima_sincronizacao": "2026-11-28T01:58:01.980495+00:00",
+    "ultima_sincronizacao": "2026-11-28T10:22:31.475783+00:00",
     "status_catalogo": "upcoming",
     "coleta_finalizada": false,
     "ultima_atualizacao": "2026-11-28T01:57:52.650581+00:00"
@@ -33413,7 +33413,7 @@
     "795388": {
       "serie_id": 795388,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 5214,
@@ -33429,7 +33429,7 @@
     "795389": {
       "serie_id": 795389,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 14461,
@@ -33445,7 +33445,7 @@
     "795390": {
       "serie_id": 795390,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 4616,
@@ -33461,7 +33461,7 @@
     "795391": {
       "serie_id": 795391,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 17945,
@@ -33477,7 +33477,7 @@
     "795392": {
       "serie_id": 795392,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 876,
@@ -33493,7 +33493,7 @@
     "795393": {
       "serie_id": 795393,
       "data": "2026-11-28",
-      "status": "completed",
+      "status": "upcoming",
       "equipes": [
         {
           "team_id": 7967,
